@@ -1,0 +1,1430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Averon Systems — Salesforce & Full Stack Development</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;1,700&family=Instrument+Sans:ital,opsz,wght@0,4..35,400;0,4..35,500;0,4..35,600;1,4..35,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+
+<style>
+/* =============================================
+   RESET & ROOT
+   ============================================= */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+
+:root {
+  --cream:    #F5F0E8;
+  --warm:     #EDE7D9;
+  --paper:    #FAF7F2;
+  --ink:      #1A1612;
+  --ink2:     #3D3530;
+  --ink3:     #6B5F57;
+  --rust:     #C4503A;
+  --rust-l:   #D96B52;
+  --forest:   #2D5448;
+  --gold:     #B8860B;
+  --gold-l:   #D4A017;
+  --border:   rgba(26,22,18,0.12);
+  --border2:  rgba(26,22,18,0.06);
+  --shadow:   0 2px 24px rgba(26,22,18,0.10);
+  --shadow2:  0 8px 48px rgba(26,22,18,0.14);
+  --fh:       'Playfair Display', Georgia, serif;
+  --fb:       'Instrument Sans', sans-serif;
+  --fm:       'JetBrains Mono', monospace;
+  --r:        10px;
+  --r2:       18px;
+  --r3:       28px;
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--fb);
+  font-size: 16px;
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--warm); }
+::-webkit-scrollbar-thumb { background: var(--rust); border-radius: 3px; }
+
+/* =============================================
+   UTILITIES
+   ============================================= */
+.container { max-width: 1160px; margin: 0 auto; padding: 0 32px; }
+
+.eyebrow {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: var(--fm); font-size: 11px; font-weight: 500;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--rust); margin-bottom: 20px;
+}
+.eyebrow::before {
+  content: '';
+  display: block; width: 28px; height: 1.5px;
+  background: var(--rust); border-radius: 2px;
+}
+
+h1,h2,h3,h4 { font-family: var(--fh); line-height: 1.15; color: var(--ink); }
+
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--fb); font-size: 14px; font-weight: 600;
+  padding: 13px 26px; border-radius: var(--r);
+  text-decoration: none; cursor: pointer; border: none;
+  transition: all 0.22s ease; letter-spacing: 0.01em;
+}
+.btn-primary { background: var(--ink); color: var(--cream); }
+.btn-primary:hover { background: var(--rust); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(196,80,58,0.28); }
+.btn-outline { background: transparent; color: var(--ink); border: 1.5px solid var(--border); }
+.btn-outline:hover { border-color: var(--ink); background: var(--ink); color: var(--cream); }
+.btn-rust { background: var(--rust); color: #fff; }
+.btn-rust:hover { background: var(--rust-l); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(196,80,58,0.3); }
+.arr { display: inline-block; transition: transform 0.2s; }
+.btn:hover .arr { transform: translateX(3px); }
+
+.tag {
+  font-family: var(--fm); font-size: 11px; font-weight: 500;
+  padding: 4px 11px; border-radius: 6px;
+  background: var(--warm); border: 1px solid var(--border); color: var(--ink2);
+}
+.tag.t-rust  { background: rgba(196,80,58,0.08); border-color: rgba(196,80,58,0.2); color: var(--rust); }
+.tag.t-forest{ background: rgba(45,84,72,0.08);  border-color: rgba(45,84,72,0.2);  color: var(--forest); }
+.tag.t-gold  { background: rgba(184,134,11,0.08);border-color: rgba(184,134,11,0.2);color: var(--gold); }
+.tag-cloud { display: flex; flex-wrap: wrap; gap: 7px; }
+
+/* =============================================
+   NAV
+   ============================================= */
+.nav-wrap {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 900;
+  background: rgba(250,247,242,0.93);
+  backdrop-filter: blur(14px) saturate(160%);
+  border-bottom: 1px solid var(--border);
+}
+.nav-inner {
+  display: flex; align-items: center; justify-content: space-between;
+  height: 66px;
+}
+.logo-wrap { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--ink); }
+.logo-mark {
+  width: 36px; height: 36px; border-radius: 8px;
+  background: var(--ink); color: var(--cream);
+  font-family: var(--fh); font-size: 18px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.logo-text { font-family: var(--fh); font-size: 19px; font-weight: 700; line-height: 1; }
+.logo-sub  { font-family: var(--fb); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink3); margin-top: 1px; }
+
+.nav-menu { display: flex; gap: 32px; list-style: none; }
+.nav-menu a {
+  text-decoration: none; color: var(--ink3); font-size: 14px; font-weight: 500;
+  transition: color 0.2s; position: relative; padding-bottom: 2px;
+}
+.nav-menu a::after {
+  content: ''; position: absolute; bottom: -2px; left: 0;
+  width: 0; height: 1.5px; background: var(--rust); transition: width 0.25s;
+}
+.nav-menu a:hover { color: var(--ink); }
+.nav-menu a:hover::after, .nav-menu a.active::after { width: 100%; }
+.nav-menu a.active { color: var(--ink); }
+.nav-actions { display: flex; gap: 10px; align-items: center; }
+
+/* =============================================
+   HERO
+   ============================================= */
+.hero {
+  padding: 130px 0 0;
+  background: var(--cream);
+  position: relative; overflow: hidden;
+  border-bottom: 1px solid var(--border);
+}
+.hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image: repeating-linear-gradient(
+    0deg, transparent, transparent 39px,
+    rgba(26,22,18,0.03) 39px, rgba(26,22,18,0.03) 40px
+  );
+  pointer-events: none;
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1fr 400px;
+  gap: 0;
+  align-items: stretch;
+  min-height: 80vh;
+}
+
+.hero-left {
+  padding: 60px 64px 80px 0;
+  display: flex; flex-direction: column; justify-content: center;
+  border-right: 1px solid var(--border);
+}
+
+.hero-kicker {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: #fff; border: 1px solid var(--border);
+  border-radius: var(--r); padding: 7px 14px; margin-bottom: 32px; width: fit-content;
+}
+.kicker-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--forest); animation: blink 2.4s ease infinite; flex-shrink: 0; }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+.kicker-text { font-family: var(--fm); font-size: 11px; color: var(--forest); font-weight: 500; letter-spacing: 0.1em; }
+
+.hero h1 { font-size: clamp(42px, 5.5vw, 74px); font-weight: 800; line-height: 1.07; margin-bottom: 26px; }
+.hero h1 em { font-style: italic; color: var(--rust); }
+.hero-desc { font-size: 18px; color: var(--ink3); max-width: 520px; line-height: 1.8; margin-bottom: 44px; font-weight: 400; }
+.hero-ctas { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 56px; }
+
+.hero-proof {
+  display: flex; gap: 48px;
+  padding-top: 40px; border-top: 1px solid var(--border);
+}
+.proof-num { font-family: var(--fh); font-size: 38px; font-weight: 800; color: var(--ink); line-height: 1; }
+.proof-num sup { font-size: 20px; color: var(--rust); }
+.proof-label { font-size: 13px; color: var(--ink3); margin-top: 4px; }
+
+.hero-right {
+  padding: 48px 0 48px 40px;
+  display: flex; flex-direction: column; gap: 14px;
+}
+.hero-card {
+  background: #fff; border: 1px solid var(--border);
+  border-radius: var(--r2); padding: 26px 28px;
+  box-shadow: var(--shadow); flex: 1;
+  transition: transform 0.25s, box-shadow 0.25s;
+}
+.hero-card:hover { transform: translateY(-2px); box-shadow: var(--shadow2); }
+.hc-label { font-family: var(--fm); font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink3); margin-bottom: 8px; }
+.hc-title { font-family: var(--fh); font-size: 17px; font-weight: 700; margin-bottom: 8px; }
+.hc-desc  { font-size: 13px; color: var(--ink3); line-height: 1.65; margin-bottom: 14px; }
+.status-row { display: flex; align-items: center; justify-content: space-between; padding-top: 12px; border-top: 1px solid var(--border2); }
+.status-pill { display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: var(--forest); }
+.status-pill span { width: 6px; height: 6px; border-radius: 50%; background: var(--forest); animation: blink 2s infinite; flex-shrink: 0; }
+.status-time { font-family: var(--fm); font-size: 11px; color: var(--ink3); }
+
+/* =============================================
+   TRUST MARQUEE
+   ============================================= */
+.trust-bar { background: var(--ink); padding: 16px 0; overflow: hidden; }
+.marquee-track { display: flex; animation: marquee 28s linear infinite; width: max-content; }
+.marquee-track:hover { animation-play-state: paused; }
+@keyframes marquee { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+.marquee-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 0 48px; white-space: nowrap;
+  font-family: var(--fm); font-size: 11px; color: rgba(245,240,232,0.45);
+  font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase;
+  border-right: 1px solid rgba(255,255,255,0.07);
+}
+.marquee-item .mdot { width: 5px; height: 5px; border-radius: 50%; background: var(--rust); flex-shrink: 0; }
+.marquee-item strong { color: rgba(245,240,232,0.85); font-weight: 600; }
+
+/* =============================================
+   SHARED SECTION HEADERS
+   ============================================= */
+.s-hdr { margin-bottom: 72px; }
+.s-hdr.centered { text-align: center; }
+.s-hdr.centered .eyebrow { margin-left: auto; margin-right: auto; }
+.s-hdr h2 { font-size: clamp(30px, 3.8vw, 52px); font-weight: 800; margin-bottom: 18px; line-height: 1.12; }
+.s-hdr p { font-size: 17px; color: var(--ink3); max-width: 560px; font-weight: 400; line-height: 1.8; }
+.s-hdr.centered p { margin: 0 auto; }
+
+/* =============================================
+   SERVICES
+   ============================================= */
+.services-section { padding: 110px 0; background: var(--paper); }
+
+.svc-layout { display: grid; grid-template-columns: 280px 1fr; gap: 80px; align-items: start; }
+
+.svc-sticky { position: sticky; top: 100px; }
+.svc-sticky h2 { font-size: 38px; font-weight: 800; margin-bottom: 18px; line-height: 1.15; }
+.svc-sticky p { font-size: 15px; color: var(--ink3); line-height: 1.8; margin-bottom: 30px; }
+.svc-nav { list-style: none; display: flex; flex-direction: column; gap: 4px; }
+.svc-nav a {
+  display: flex; align-items: center; gap: 10px;
+  text-decoration: none; color: var(--ink3); font-size: 14px; font-weight: 500;
+  padding: 10px 14px; border-radius: var(--r); transition: all 0.2s; border: 1px solid transparent;
+}
+.svc-nav a:hover, .svc-nav a.active { background: #fff; color: var(--ink); border-color: var(--border); box-shadow: var(--shadow); }
+.svc-nav .sn { font-family: var(--fm); font-size: 10px; color: var(--rust); font-weight: 500; }
+
+.svc-cards { display: flex; flex-direction: column; gap: 28px; }
+.svc-card {
+  background: #fff; border: 1px solid var(--border);
+  border-radius: var(--r3); overflow: hidden;
+  transition: box-shadow 0.3s, transform 0.3s;
+}
+.svc-card:hover { box-shadow: var(--shadow2); transform: translateY(-3px); }
+
+.svc-top {
+  padding: 44px 48px 36px;
+  position: relative; border-bottom: 1px solid var(--border2);
+}
+.svc-big-num {
+  position: absolute; top: 32px; right: 44px;
+  font-family: var(--fm); font-size: 52px; font-weight: 500;
+  color: rgba(26,22,18,0.04); line-height: 1; pointer-events: none;
+}
+.svc-icon {
+  width: 54px; height: 54px; border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 26px; margin-bottom: 22px;
+}
+.si-r { background: rgba(196,80,58,0.1); border: 1px solid rgba(196,80,58,0.18); }
+.si-g { background: rgba(45,84,72,0.1);  border: 1px solid rgba(45,84,72,0.18);  }
+.si-y { background: rgba(184,134,11,0.1);border: 1px solid rgba(184,134,11,0.18);}
+
+.svc-card h3 { font-size: 25px; font-weight: 700; margin-bottom: 14px; }
+.svc-desc { font-size: 15px; color: var(--ink3); line-height: 1.8; max-width: 600px; }
+
+.svc-bottom { padding: 28px 48px 38px; display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.svc-feat { display: flex; align-items: flex-start; gap: 10px; }
+.svc-chk {
+  width: 20px; height: 20px; border-radius: 6px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center; font-size: 11px; margin-top: 2px;
+}
+.chk-r { background: rgba(196,80,58,0.1); color: var(--rust); }
+.chk-g { background: rgba(45,84,72,0.1);  color: var(--forest); }
+.chk-y { background: rgba(184,134,11,0.1);color: var(--gold); }
+.svc-feat-t { font-size: 14px; color: var(--ink2); font-weight: 500; }
+
+/* =============================================
+   TECH STACK
+   ============================================= */
+.techstack-section {
+  padding: 110px 0;
+  background: var(--ink); position: relative; overflow: hidden;
+}
+.techstack-section::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image:
+    radial-gradient(circle at 15% 50%, rgba(196,80,58,0.07) 0%, transparent 55%),
+    radial-gradient(circle at 85% 25%, rgba(45,84,72,0.08) 0%, transparent 50%);
+  pointer-events: none;
+}
+.techstack-section .eyebrow { color: var(--rust-l); }
+.techstack-section .eyebrow::before { background: var(--rust-l); }
+.techstack-section h2 { color: var(--cream); }
+.techstack-section .s-hdr p { color: rgba(245,240,232,0.52); }
+
+.stack-cols {
+  display: grid; grid-template-columns: repeat(3,1fr);
+  gap: 2px; background: rgba(255,255,255,0.05);
+  border-radius: var(--r2); overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.07);
+}
+.stack-col {
+  background: rgba(20,16,12,0.92);
+  padding: 38px 34px;
+}
+.stack-col:not(:last-child) { border-right: 1px solid rgba(255,255,255,0.05); }
+.sc-head {
+  display: flex; align-items: center; gap: 12px;
+  margin-bottom: 30px; padding-bottom: 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+}
+.sc-icon {
+  width: 42px; height: 42px; border-radius: 10px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center; font-size: 20px;
+}
+.sci-r { background: rgba(196,80,58,0.15); }
+.sci-g { background: rgba(45,84,72,0.2);   }
+.sci-y { background: rgba(184,134,11,0.15);}
+.sc-lbl   { font-family: var(--fm); font-size: 10px; color: rgba(245,240,232,0.3); letter-spacing: 0.14em; text-transform: uppercase; }
+.sc-title { font-family: var(--fh); font-size: 17px; font-weight: 700; color: var(--cream); margin-top: 2px; }
+
+.t-row {
+  display: flex; align-items: center; gap: 14px;
+  padding: 13px 14px; border-radius: var(--r);
+  margin-bottom: 7px; cursor: default; transition: background 0.2s;
+}
+.t-row:hover { background: rgba(255,255,255,0.04); }
+.t-row:last-child { margin-bottom: 0; }
+.t-emoji { font-size: 21px; flex-shrink: 0; width: 34px; text-align: center; }
+.t-name { font-size: 15px; font-weight: 600; color: rgba(245,240,232,0.88); }
+.t-role { font-size: 12px; color: rgba(245,240,232,0.36); margin-top: 1px; }
+.t-badge {
+  margin-left: auto; flex-shrink: 0;
+  font-family: var(--fm); font-size: 10px; font-weight: 500;
+  padding: 3px 9px; border-radius: 5px;
+}
+.tb-c { background: rgba(196,80,58,0.18); color: var(--rust-l); }
+.tb-p { background: rgba(45,84,72,0.25);  color: #5da68c; }
+.tb-t { background: rgba(184,134,11,0.18);color: var(--gold-l); }
+
+/* =============================================
+   ABOUT
+   ============================================= */
+.about-section { padding: 110px 0; background: var(--cream); }
+.about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 96px; align-items: center; }
+
+.about-visual { position: relative; }
+.about-bg-num {
+  font-family: var(--fh); font-size: 180px; font-weight: 800; line-height: 1;
+  color: rgba(26,22,18,0.04); position: absolute; top: -30px; left: -20px;
+  pointer-events: none; user-select: none;
+}
+.about-main-card {
+  background: #fff; border: 1px solid var(--border); border-radius: var(--r2);
+  overflow: hidden; box-shadow: var(--shadow); position: relative; z-index: 1;
+}
+.amc-top { padding: 34px 38px 28px; background: var(--warm); border-bottom: 1px solid var(--border2); }
+.amc-top h3 { font-size: 21px; font-weight: 700; margin-bottom: 7px; }
+.amc-top p { font-size: 14px; color: var(--ink3); }
+.amc-body { padding: 30px 38px; }
+.val-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+.val-item { }
+.val-icon { font-size: 22px; margin-bottom: 8px; }
+.val-item h4 { font-size: 14px; font-weight: 700; margin-bottom: 4px; font-family: var(--fb); }
+.val-item p { font-size: 13px; color: var(--ink3); line-height: 1.6; }
+.about-float {
+  position: absolute; background: var(--rust); color: #fff;
+  border-radius: var(--r2); padding: 22px 26px;
+  bottom: -28px; right: -28px; box-shadow: 0 12px 40px rgba(196,80,58,0.3); z-index: 2;
+}
+.af-num   { font-family: var(--fh); font-size: 42px; font-weight: 800; line-height: 1; }
+.af-label { font-size: 13px; font-weight: 500; opacity: 0.85; margin-top: 4px; }
+
+.about-copy h2 { font-size: clamp(28px,3.5vw,46px); font-weight: 800; margin-bottom: 22px; line-height: 1.12; }
+.about-copy h2 em { font-style: italic; color: var(--rust); }
+.about-copy p { font-size: 16px; color: var(--ink3); margin-bottom: 18px; line-height: 1.85; }
+.pillars { display: flex; flex-direction: column; gap: 18px; margin-top: 38px; }
+.pillar {
+  display: flex; gap: 16px; align-items: flex-start;
+  padding: 20px 22px; background: #fff;
+  border: 1px solid var(--border); border-radius: var(--r2); transition: box-shadow 0.2s;
+}
+.pillar:hover { box-shadow: var(--shadow); }
+.pillar-icon {
+  width: 42px; height: 42px; border-radius: 12px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center; font-size: 21px;
+}
+.pi-r { background: rgba(196,80,58,0.1); }
+.pi-g { background: rgba(45,84,72,0.1);  }
+.pi-y { background: rgba(184,134,11,0.1);}
+.pillar h4 { font-size: 15px; font-weight: 700; margin-bottom: 4px; font-family: var(--fb); }
+.pillar p  { font-size: 13.5px; color: var(--ink3); line-height: 1.65; }
+
+/* =============================================
+   PROCESS
+   ============================================= */
+.process-section { padding: 110px 0; background: var(--paper); }
+.process-steps {
+  display: grid; grid-template-columns: repeat(4,1fr);
+  position: relative; gap: 0;
+}
+.process-steps::before {
+  content: '';
+  position: absolute; top: 40px;
+  left: calc(12.5% + 20px); right: calc(12.5% + 20px);
+  height: 1px; background: var(--border); z-index: 0;
+}
+.p-step {
+  padding: 0 18px;
+  display: flex; flex-direction: column; align-items: center; text-align: center;
+  position: relative; z-index: 1;
+}
+.p-circle {
+  width: 80px; height: 80px; border-radius: 50%;
+  background: #fff; border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 26px; box-shadow: var(--shadow); transition: all 0.25s;
+}
+.p-step:hover .p-circle { background: var(--ink); border-color: var(--ink); box-shadow: 0 8px 28px rgba(26,22,18,0.2); }
+.p-num { font-family: var(--fh); font-size: 22px; font-weight: 800; color: var(--rust); transition: color 0.25s; }
+.p-step:hover .p-num { color: var(--cream); }
+.p-step h3 { font-size: 18px; font-weight: 700; margin-bottom: 10px; }
+.p-step p  { font-size: 14px; color: var(--ink3); line-height: 1.75; }
+
+/* =============================================
+   TEAM
+   ============================================= */
+.team-section { padding: 110px 0; background: var(--warm); }
+.team-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 26px; }
+.team-card {
+  background: var(--paper); border: 1px solid var(--border);
+  border-radius: var(--r2); overflow: hidden; transition: transform 0.28s, box-shadow 0.28s;
+}
+.team-card:hover { transform: translateY(-5px); box-shadow: var(--shadow2); }
+.tc-head {
+  padding: 38px 34px 30px; position: relative; border-bottom: 1px solid var(--border2);
+}
+.tc-avatar {
+  width: 68px; height: 68px; border-radius: 50%; font-size: 30px;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--cream); border: 3px solid var(--border); margin-bottom: 18px;
+}
+.tc-exp {
+  position: absolute; top: 34px; right: 30px;
+  font-family: var(--fm); font-size: 10px; color: var(--ink3);
+  background: var(--warm); border: 1px solid var(--border);
+  padding: 4px 10px; border-radius: 6px;
+}
+.tc-name { font-size: 21px; font-weight: 700; margin-bottom: 4px; }
+.tc-role { font-family: var(--fm); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--rust); font-weight: 500; }
+.tc-body { padding: 26px 34px 30px; }
+.tc-bio { font-size: 14px; color: var(--ink3); line-height: 1.8; margin-bottom: 18px; }
+.tc-skills { display: flex; flex-wrap: wrap; gap: 7px; }
+.tc-skill {
+  font-size: 12px; font-weight: 600; padding: 4px 11px; border-radius: 7px;
+  background: var(--cream); border: 1px solid var(--border); color: var(--ink2);
+}
+
+/* =============================================
+   TESTIMONIALS
+   ============================================= */
+.testi-section { padding: 110px 0; background: var(--paper); }
+.testi-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 22px; }
+.testi-card {
+  background: #fff; border: 1px solid var(--border);
+  border-radius: var(--r2); padding: 38px 34px;
+  display: flex; flex-direction: column; position: relative;
+  transition: box-shadow 0.25s, transform 0.25s;
+}
+.testi-card:hover { box-shadow: var(--shadow2); transform: translateY(-3px); }
+.testi-card.dark { background: var(--ink); border-color: transparent; }
+.testi-card.dark .testi-text { color: rgba(245,240,232,0.68); }
+.testi-card.dark .testi-name { color: var(--cream); }
+.testi-card.dark .testi-co   { color: rgba(245,240,232,0.42); }
+.testi-card.dark .t-person   { border-top-color: rgba(255,255,255,0.07); }
+.t-qmark {
+  font-family: var(--fh); font-size: 64px; line-height: 1;
+  color: var(--rust); opacity: 0.18;
+  position: absolute; top: 26px; right: 30px; pointer-events: none;
+}
+.t-stars { color: #c9920a; font-size: 15px; letter-spacing: 3px; margin-bottom: 18px; }
+.testi-card.dark .t-stars { color: #f5c842; }
+.testi-text { font-size: 15px; color: var(--ink3); line-height: 1.85; font-style: italic; flex: 1; margin-bottom: 26px; }
+.t-person { display: flex; align-items: center; gap: 13px; padding-top: 20px; border-top: 1px solid var(--border2); }
+.t-ava {
+  width: 44px; height: 44px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px; background: var(--warm); border: 1px solid var(--border); flex-shrink: 0;
+}
+.testi-card.dark .t-ava { background: rgba(255,255,255,0.07); border-color: rgba(255,255,255,0.1); }
+.testi-name { font-weight: 700; font-size: 15px; }
+.testi-co   { font-size: 12px; color: var(--ink3); margin-top: 1px; }
+
+/* =============================================
+   CONTACT
+   ============================================= */
+.contact-section { padding: 110px 0; background: var(--cream); }
+.contact-grid { display: grid; grid-template-columns: 400px 1fr; gap: 80px; align-items: start; }
+
+.c-left h2 { font-size: clamp(28px,3.5vw,46px); font-weight: 800; line-height: 1.12; margin-bottom: 18px; }
+.c-left h2 em { font-style: italic; color: var(--rust); }
+.c-left p   { font-size: 16px; color: var(--ink3); margin-bottom: 40px; line-height: 1.8; }
+
+.c-details { display: flex; flex-direction: column; gap: 16px; }
+.c-detail {
+  display: flex; align-items: flex-start; gap: 15px;
+  padding: 18px 20px; background: #fff;
+  border: 1px solid var(--border); border-radius: var(--r2); transition: box-shadow 0.2s;
+}
+.c-detail:hover { box-shadow: var(--shadow); }
+.c-icon {
+  width: 42px; height: 42px; border-radius: 11px; flex-shrink: 0;
+  background: var(--warm); border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center; font-size: 19px;
+}
+.c-lbl   { font-family: var(--fm); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink3); margin-bottom: 4px; }
+.c-value { font-size: 15px; font-weight: 600; color: var(--ink); }
+
+.c-form {
+  background: #fff; border: 1px solid var(--border);
+  border-radius: var(--r3); padding: 50px 50px 46px; box-shadow: var(--shadow);
+}
+.cf-title { font-size: 25px; font-weight: 800; margin-bottom: 6px; font-family: var(--fh); }
+.cf-sub   { font-size: 14px; color: var(--ink3); margin-bottom: 34px; }
+.f-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.f-grp { margin-bottom: 18px; }
+.f-grp label {
+  display: block; font-family: var(--fm); font-size: 11px; font-weight: 500;
+  letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink3); margin-bottom: 8px;
+}
+.f-grp input, .f-grp select, .f-grp textarea {
+  width: 100%; padding: 13px 16px;
+  background: var(--paper); border: 1.5px solid var(--border);
+  border-radius: var(--r); color: var(--ink); font-family: var(--fb); font-size: 15px;
+  outline: none; transition: border-color 0.2s, box-shadow 0.2s; appearance: none;
+}
+.f-grp input:focus, .f-grp select:focus, .f-grp textarea:focus {
+  border-color: var(--rust); box-shadow: 0 0 0 3px rgba(196,80,58,0.1); background: #fff;
+}
+.f-grp input::placeholder, .f-grp textarea::placeholder { color: var(--ink3); opacity: 0.5; }
+.f-grp textarea { resize: vertical; min-height: 130px; }
+.f-note { font-size: 13px; color: var(--ink3); margin-top: 14px; text-align: center; }
+
+/* =============================================
+   FOOTER
+   ============================================= */
+footer { background: var(--ink); padding: 78px 0 36px; }
+.ft-top {
+  display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 60px; margin-bottom: 60px;
+}
+.ft-brand .logo-text  { color: var(--cream); }
+.ft-brand .logo-sub   { color: rgba(245,240,232,0.3); }
+.ft-brand .logo-mark  { background: var(--cream); color: var(--ink); }
+.ft-brand p { font-size: 14px; color: rgba(245,240,232,0.42); line-height: 1.8; max-width: 280px; margin-top: 16px; }
+.ft-col h4 {
+  font-family: var(--fm); font-size: 10px; font-weight: 500;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  color: rgba(245,240,232,0.3); margin-bottom: 20px;
+}
+.ft-col ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+.ft-col a { text-decoration: none; color: rgba(245,240,232,0.58); font-size: 14px; transition: color 0.2s; }
+.ft-col a:hover { color: var(--cream); }
+.ft-bottom {
+  border-top: 1px solid rgba(255,255,255,0.06);
+  padding-top: 30px; display: flex; justify-content: space-between; align-items: center;
+}
+.ft-bottom p { font-size: 13px; color: rgba(245,240,232,0.28); }
+.social-row { display: flex; gap: 10px; }
+.s-btn {
+  width: 38px; height: 38px; border-radius: var(--r);
+  background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08);
+  display: flex; align-items: center; justify-content: center;
+  text-decoration: none; font-size: 15px; transition: all 0.2s;
+}
+.s-btn:hover { background: var(--rust); border-color: var(--rust); transform: translateY(-2px); }
+
+/* =============================================
+   SCROLL ANIMATIONS
+   ============================================= */
+.reveal {
+  opacity: 0; transform: translateY(26px);
+  transition: opacity 0.65s ease, transform 0.65s ease;
+}
+.reveal.on { opacity: 1; transform: translateY(0); }
+.d1 { transition-delay: 0.08s; }
+.d2 { transition-delay: 0.16s; }
+.d3 { transition-delay: 0.24s; }
+.d4 { transition-delay: 0.32s; }
+
+/* =============================================
+   RESPONSIVE
+   ============================================= */
+@media (max-width: 1060px) {
+  .hero-grid   { grid-template-columns: 1fr; }
+  .hero-right  { display: none; }
+  .hero-left   { padding: 40px 0 80px; border-right: none; }
+  .svc-layout  { grid-template-columns: 1fr; }
+  .svc-sticky  { position: static; }
+  .svc-nav     { flex-direction: row; flex-wrap: wrap; }
+  .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 52px; }
+  .about-float { right: 0; }
+  .stack-cols  { grid-template-columns: 1fr; }
+  .stack-col:not(:last-child) { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.05); }
+  .ft-top { grid-template-columns: 1fr 1fr; gap: 40px; }
+}
+@media (max-width: 768px) {
+  .nav-menu { display: none; }
+  .nav-actions .btn-outline { display: none; }
+  .team-grid, .testi-grid { grid-template-columns: 1fr; }
+  .process-steps { grid-template-columns: 1fr 1fr; }
+  .process-steps::before { display: none; }
+  .svc-bottom { grid-template-columns: 1fr; }
+  .svc-top, .svc-bottom { padding-left: 26px; padding-right: 26px; }
+  .c-form { padding: 30px 24px; }
+  .f-row  { grid-template-columns: 1fr; }
+  .ft-top { grid-template-columns: 1fr; }
+  .ft-bottom { flex-direction: column; gap: 18px; text-align: center; }
+  .hero-proof { flex-wrap: wrap; gap: 28px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ======================================================
+     NAV
+     ====================================================== -->
+<div class="nav-wrap">
+  <div class="container">
+    <div class="nav-inner">
+      <a href="#home" class="logo-wrap">
+        <div class="logo-mark">A</div>
+        <div>
+          <div class="logo-text">Averon</div>
+          <div class="logo-sub">Systems</div>
+        </div>
+      </a>
+      <ul class="nav-menu">
+        <li><a href="#services">Services</a></li>
+        <li><a href="#techstack">Tech Stack</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#team">Team</a></li>
+        <li><a href="#testimonials">Clients</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <div class="nav-actions">
+        <a href="#contact" class="btn btn-outline">Get a Quote</a>
+        <a href="#contact" class="btn btn-primary">Start a Project <span class="arr">→</span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ======================================================
+     01 · HERO
+     ====================================================== -->
+<section class="hero" id="home">
+  <div class="container">
+    <div class="hero-grid">
+
+      <div class="hero-left reveal">
+        <div class="hero-kicker">
+          <span class="kicker-dot"></span>
+          <span class="kicker-text">Salesforce & Full Stack — Based in Pune, India</span>
+        </div>
+
+        <h1>We Build Software<br/>That <em>Actually</em><br/>Moves Business</h1>
+
+        <p class="hero-desc">
+          End-to-end Salesforce CRM development and modern full-stack engineering — React, React Native, Node.js, Python. Trusted by several companies to ship fast, clean, and scalable digital products.
+        </p>
+
+        <div class="hero-ctas">
+          <a href="#contact" class="btn btn-rust">Let's Talk About Your Project <span class="arr">→</span></a>
+          <a href="#services" class="btn btn-outline">See What We Do</a>
+        </div>
+
+        <div class="hero-proof">
+          <div><div class="proof-num">15<sup>+</sup></div><div class="proof-label">Projects Delivered</div></div>
+          <div><div class="proof-num">10<sup>+</sup></div><div class="proof-label">Happy Clients</div></div>
+          <div><div class="proof-num">2<sup>+</sup></div><div class="proof-label">Years in Business</div></div>
+          <div><div class="proof-num">98<sup>%</sup></div><div class="proof-label">On-Time Delivery</div></div>
+        </div>
+      </div>
+
+      <div class="hero-right reveal d2">
+        <div class="hero-card">
+          <div class="hc-label">Service — 01</div>
+          <div class="hc-title">Salesforce CRM</div>
+          <div class="hc-desc">Full implementation, Apex development, LWC, integrations & managed support.</div>
+          <div class="tag-cloud">
+            <span class="tag t-rust">Sales Cloud</span>
+             <span class="tag t-rust">Service Cloud</span>
+              <span class="tag t-rust">Experience Cloud</span>
+               <span class="tag t-rust">CPQ</span>
+               <span class="tag t-rust">Customisation Over Salesforce Platform</span>
+                <span class="tag t-rust">Salesforce Admin</span>
+            <span class="tag t-rust">Apex</span>
+            <span class="tag t-rust">LWC</span>
+             <span class="tag t-rust">Visualforce</span>
+              <span class="tag t-rust">Integerations</span>
+               <span class="tag t-rust">Reports and DashBoard</span>
+
+            <!-- <span class="tag t-rust">CPQ</span> -->
+          </div>
+          <div class="status-row">
+            <div class="status-pill"><span></span>Available now</div>
+            <div class="status-time">Response &lt; 24h</div>
+          </div>
+        </div>
+        <div class="hero-card">
+          <div class="hc-label">Service — 02</div>
+          <div class="hc-title">Full Stack Web Dev</div>
+          <div class="hc-desc">React.js frontends with Node.js or Python backends. Clean APIs, cloud-ready.</div>
+          <div class="tag-cloud">
+            <span class="tag t-forest">React.js</span>
+            <span class="tag t-forest">Node.js</span>
+            <span class="tag t-forest">Python</span>
+          </div>
+        </div>
+        <div class="hero-card">
+          <div class="hc-label">Service — 03</div>
+          <div class="hc-title">Mobile Apps</div>
+          <div class="hc-desc">Cross-platform iOS & Android apps using React Native — one codebase, native feel.</div>
+          <div class="tag-cloud">
+            <span class="tag t-gold">React Native</span>
+            <span class="tag t-gold">iOS</span>
+            <span class="tag t-gold">Android</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ======================================================
+     TRUST MARQUEE
+     ====================================================== -->
+<div class="trust-bar" aria-hidden="true">
+  <div class="marquee-track">
+    <div class="marquee-item"><span class="mdot"></span><strong>Salesforce</strong> Certified</div>
+    <div class="marquee-item"><span class="mdot"></span><strong>React.js</strong> Experts</div>
+    <div class="marquee-item"><span class="mdot"></span><strong>React Native</strong> Mobile</div>
+    <div class="marquee-item"><span class="mdot"></span><strong>Node.js</strong> Backend</div>
+    <div class="marquee-item"><span class="mdot"></span><strong>Python</strong> Development</div>
+    <div class="marquee-item"><span class="mdot"></span><strong>Apex & LWC</strong> Specialists</div>
+    <div class="marquee-item"><span class="mdot"></span><strong>15+</strong> Projects</div>
+    <div class="marquee-item"><span class="mdot"></span><strong>10+</strong> Happy Clients</div>
+    <div class="marquee-item"><span class="mdot"></span><strong>Salesforce</strong> Certified</div>
+    <div class="marquee-item"><span class="mdot"></span><strong>React.js</strong> Experts</div>
+    <div class="marquee-item"><span class="mdot"></span><strong>React Native</strong> Mobile</div>
+    <div class="marquee-item"><span class="mdot"></span><strong>Node.js</strong> Backend</div>
+    <div class="marquee-item"><span class="mdot"></span><strong>Python</strong> Development</div>
+    <div class="marquee-item"><span class="mdot"></span><strong>Apex & LWC</strong> Specialists</div>
+    <div class="marquee-item"><span class="mdot"></span><strong>15+</strong> Projects</div>
+    <div class="marquee-item"><span class="mdot"></span><strong>8+</strong> Happy Clients</div>
+  </div>
+</div>
+
+<!-- ======================================================
+     02 · SERVICES
+     ====================================================== -->
+<section class="services-section" id="services">
+  <div class="container">
+    <div class="svc-layout">
+
+      <div class="svc-sticky reveal">
+        <div class="eyebrow">What We Do</div>
+        <h2>Three Services. Done Well.</h2>
+        <p>We don't try to be everything. We focus deeply on three areas and deliver real results in each one.</p>
+        <ul class="svc-nav">
+          <li><a href="#svc-sf" class="active"><span class="sn">01 /</span> Salesforce CRM</a></li>
+          <li><a href="#svc-web"><span class="sn">02 /</span> Full Stack Web</a></li>
+          <li><a href="#svc-mob"><span class="sn">03 /</span> Mobile Apps</a></li>
+        </ul>
+      </div>
+
+      <div class="svc-cards">
+
+        <!-- Salesforce -->
+        <div class="svc-card reveal" id="svc-sf">
+          <div class="svc-top">
+            <div class="svc-big-num">01</div>
+            <div class="svc-icon si-r">☁️</div>
+            <h3>Salesforce CRM Development & Support</h3>
+            <p class="svc-desc">We handle the full Salesforce lifecycle — from initial discovery and architecture through implementation, customisation, integration, with 7 day free support. Whether you're starting fresh or untangling a messy legacy org, we bring structure and clarity to your CRM.</p>
+            <div class="tag-cloud" style="margin-top:20px;">
+              <span class="tag t-rust">Sales Cloud</span>
+              <span class="tag t-rust">Service Cloud</span>
+              <span class="tag t-rust">Marketing Cloud</span>
+              <span class="tag t-rust">Apex</span>
+              <span class="tag t-rust">Lightning Web Components</span>
+              <span class="tag t-rust">CPQ</span>
+              <span class="tag t-rust">Experience Cloud</span>
+              <span class="tag t-rust">REST & SOAP Integrations</span>
+            </div>
+          </div>
+          <div class="svc-bottom">
+            <div class="svc-feat"><div class="svc-chk chk-r">✓</div><span class="svc-feat-t">End-to-end implementation</span></div>
+            <div class="svc-feat"><div class="svc-chk chk-r">✓</div><span class="svc-feat-t">Custom Apex & LWC development</span></div>
+            <div class="svc-feat"><div class="svc-chk chk-r">✓</div><span class="svc-feat-t">Third-party integrations</span></div>
+            <div class="svc-feat"><div class="svc-chk chk-r">✓</div><span class="svc-feat-t">Data migration & cleansing</span></div>
+            <div class="svc-feat"><div class="svc-chk chk-r">✓</div><span class="svc-feat-t">Ongoing managed support</span></div>
+            <div class="svc-feat"><div class="svc-chk chk-r">✓</div><span class="svc-feat-t">User training & adoption</span></div>
+          </div>
+        </div>
+
+        <!-- Full Stack -->
+        <div class="svc-card reveal d1" id="svc-web">
+          <div class="svc-top">
+            <div class="svc-big-num">02</div>
+            <div class="svc-icon si-g">⚙️</div>
+            <h3>Full Stack Web Development</h3>
+            <p class="svc-desc">From product dashboards to enterprise web platforms — we architect and build using React.js on the frontend and Node.js or Python on the backend. Clean APIs, tested code, and systems built to scale as your user base grows.</p>
+            <div class="tag-cloud" style="margin-top:20px;">
+              <span class="tag t-forest">React.js</span>
+              <span class="tag t-forest">Node.js</span>
+              <span class="tag t-forest">Python</span>
+              <span class="tag t-forest">Django / FastAPI</span>
+              <span class="tag t-forest">REST & GraphQL</span>
+              <span class="tag t-forest">PostgreSQL</span>
+              <span class="tag t-forest">AWS / GCP</span>
+            </div>
+          </div>
+          <div class="svc-bottom">
+            <div class="svc-feat"><div class="svc-chk chk-g">✓</div><span class="svc-feat-t">SaaS & dashboard platforms</span></div>
+            <div class="svc-feat"><div class="svc-chk chk-g">✓</div><span class="svc-feat-t">REST & GraphQL API design</span></div>
+            <div class="svc-feat"><div class="svc-chk chk-g">✓</div><span class="svc-feat-t">Database design & optimisation</span></div>
+            <div class="svc-feat"><div class="svc-chk chk-g">✓</div><span class="svc-feat-t">Cloud deployment & DevOps</span></div>
+            <div class="svc-feat"><div class="svc-chk chk-g">✓</div><span class="svc-feat-t">Performance & security audits</span></div>
+            <div class="svc-feat"><div class="svc-chk chk-g">✓</div><span class="svc-feat-t">Code review & tech rescue</span></div>
+          </div>
+        </div>
+
+        <!-- Mobile -->
+        <div class="svc-card reveal d1" id="svc-mob">
+          <div class="svc-top">
+            <div class="svc-big-num">03</div>
+            <div class="svc-icon si-y">📱</div>
+            <h3>Mobile App Development</h3>
+            <p class="svc-desc">We build cross-platform mobile applications with React Native — delivering native-quality experiences for iOS and Android from a single codebase. Faster to market, easier to maintain, without compromising on performance or feel.</p>
+            <div class="tag-cloud" style="margin-top:20px;">
+              <span class="tag t-gold">React Native</span>
+              <span class="tag t-gold">iOS</span>
+              <span class="tag t-gold">Android</span>
+              <span class="tag t-gold">Expo</span>
+              <span class="tag t-gold">Push Notifications</span>
+              <span class="tag t-gold">Offline Support</span>
+            </div>
+          </div>
+          <div class="svc-bottom">
+            <div class="svc-feat"><div class="svc-chk chk-y">✓</div><span class="svc-feat-t">Single codebase, both platforms</span></div>
+            <div class="svc-feat"><div class="svc-chk chk-y">✓</div><span class="svc-feat-t">App Store & Play Store launch</span></div>
+            <div class="svc-feat"><div class="svc-chk chk-y">✓</div><span class="svc-feat-t">Native device API integrations</span></div>
+            <div class="svc-feat"><div class="svc-chk chk-y">✓</div><span class="svc-feat-t">Offline-first architecture</span></div>
+            <div class="svc-feat"><div class="svc-chk chk-y">✓</div><span class="svc-feat-t">Push notifications & analytics</span></div>
+            <div class="svc-feat"><div class="svc-chk chk-y">✓</div><span class="svc-feat-t">Ongoing maintenance & updates</span></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================================================
+     03 · TECH STACK
+     ====================================================== -->
+<section class="techstack-section" id="techstack">
+  <div class="container">
+    <div class="s-hdr centered reveal">
+      <div class="eyebrow">Our Arsenal</div>
+      <h2>Tools We Use Every Day</h2>
+      <p>Carefully chosen technologies that are proven, well-supported, and genuinely suited to what we build.</p>
+    </div>
+    <div class="stack-cols reveal d1">
+
+      <div class="stack-col">
+        <div class="sc-head">
+          <div class="sc-icon sci-r">⚛️</div>
+          <div>
+            <div class="sc-lbl">Layer</div>
+            <div class="sc-title">Frontend</div>
+          </div>
+        </div>
+        <div class="t-row">
+          <div class="t-emoji">⚛️</div>
+          <div><div class="t-name">React.js</div><div class="t-role">UI Library</div></div>
+          <div class="t-badge tb-c">Core</div>
+        </div>
+        <div class="t-row">
+          <div class="t-emoji">📱</div>
+          <div><div class="t-name">React Native</div><div class="t-role">Mobile Apps</div></div>
+          <div class="t-badge tb-c">Core</div>
+        </div>
+        <div class="t-row">
+          <div class="t-emoji">🔷</div>
+          <div><div class="t-name">TypeScript</div><div class="t-role">Type Safety</div></div>
+          <div class="t-badge tb-p">Primary</div>
+        </div>
+        <div class="t-row">
+          <div class="t-emoji">🎨</div>
+          <div><div class="t-name">Tailwind CSS</div><div class="t-role">Styling</div></div>
+          <div class="t-badge tb-p">Primary</div>
+        </div>
+        <div class="t-row">
+          <div class="t-emoji">⚡</div>
+          <div><div class="t-name">Next.js / Vite</div><div class="t-role">Build & SSR</div></div>
+          <div class="t-badge tb-p">Primary</div>
+        </div>
+      </div>
+
+      <div class="stack-col">
+        <div class="sc-head">
+          <div class="sc-icon sci-g">🔧</div>
+          <div>
+            <div class="sc-lbl">Layer</div>
+            <div class="sc-title">Backend</div>
+          </div>
+        </div>
+        <div class="t-row">
+          <div class="t-emoji">🟢</div>
+          <div><div class="t-name">Node.js</div><div class="t-role">Runtime + Express</div></div>
+          <div class="t-badge tb-c">Core</div>
+        </div>
+        <div class="t-row">
+          <div class="t-emoji">🐍</div>
+          <div><div class="t-name">Python</div><div class="t-role">Django / FastAPI</div></div>
+          <div class="t-badge tb-c">Core</div>
+        </div>
+        <div class="t-row">
+          <div class="t-emoji">🐘</div>
+          <div><div class="t-name">PostgreSQL</div><div class="t-role">Primary Database</div></div>
+          <div class="t-badge tb-p">Primary</div>
+        </div>
+        <div class="t-row">
+          <div class="t-emoji">🔴</div>
+          <div><div class="t-name">Redis</div><div class="t-role">Cache & Queues</div></div>
+          <div class="t-badge tb-p">Primary</div>
+        </div>
+        <div class="t-row">
+          <div class="t-emoji">🐳</div>
+          <div><div class="t-name">Docker + CI/CD</div><div class="t-role">Deployment</div></div>
+          <div class="t-badge tb-p">Primary</div>
+        </div>
+      </div>
+
+      <div class="stack-col">
+        <div class="sc-head">
+          <div class="sc-icon sci-y">☁️</div>
+          <div>
+            <div class="sc-lbl">Platform</div>
+            <div class="sc-title">Salesforce</div>
+          </div>
+        </div>
+        <div class="t-row">
+          <div class="t-emoji">☁️</div>
+          <div><div class="t-name">Sales Cloud</div><div class="t-role">CRM Core</div></div>
+          <div class="t-badge tb-t">Certified</div>
+        </div>
+        <div class="t-row">
+          <div class="t-emoji">🎧</div>
+          <div><div class="t-name">Service Cloud</div><div class="t-role">Support Ops</div></div>
+          <div class="t-badge tb-t">Certified</div>
+        </div>
+        <div class="t-row">
+          <div class="t-emoji">⚡</div>
+          <div><div class="t-name">Apex & LWC</div><div class="t-role">Custom Dev</div></div>
+          <div class="t-badge tb-c">Core</div>
+        </div>
+        <div class="t-row">
+          <div class="t-emoji">🔗</div>
+          <div><div class="t-name">REST / SOAP APIs</div><div class="t-role">Integrations</div></div>
+          <div class="t-badge tb-p">Primary</div>
+        </div>
+        <div class="t-row">
+          <div class="t-emoji">🟠</div>
+          <div><div class="t-name">AWS / GCP</div><div class="t-role">Cloud Hosting</div></div>
+          <div class="t-badge tb-p">Primary</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ======================================================
+     04 · ABOUT
+     ====================================================== -->
+<section class="about-section" id="about">
+  <div class="container">
+    <div class="about-grid">
+
+      <div class="about-visual reveal">
+        <div class="about-bg-num">5+</div>
+        <div class="about-main-card">
+          <div class="amc-top">
+            <h3>Why teams choose us</h3>
+            <p>A straightforward answer from the people who work with us daily.</p>
+          </div>
+          <div class="amc-body">
+            <div class="val-grid">
+              <div class="val-item">
+                <div class="val-icon">🎯</div>
+                <h4>Deep Specialisation</h4>
+                <p>We don't do everything. We do three things really well.</p>
+              </div>
+              <div class="val-item">
+                <div class="val-icon">🤝</div>
+                <h4>Long-Term Thinking</h4>
+                <p>We build for maintainability, not just the demo.</p>
+              </div>
+              <div class="val-item">
+                <div class="val-icon">🔍</div>
+                <h4>Transparent Process</h4>
+                <p>Weekly demos, clear timelines, honest updates.</p>
+              </div>
+              <div class="val-item">
+                <div class="val-icon">📐</div>
+                <h4>Clean Architecture</h4>
+                <p>Code your future developers will thank you for.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="about-float">
+          <div class="af-num">98%</div>
+          <div class="af-label">On-time delivery rate</div>
+        </div>
+      </div>
+
+      <div class="about-copy reveal d2">
+        <div class="eyebrow">Who We Are</div>
+        <h2>A Small Team That Punches <em>Well Above</em> Its Weight</h2>
+        <p>Averon Systems was built on one simple belief: a focused, senior team with genuine expertise will always outperform a large generalist agency with a junior bench.</p>
+        <p>We work with startups building their first CRM and enterprises modernising decade-old platforms. In both cases, we bring the same level of care — thoughtful architecture, clear communication, and code that doesn't embarrass you six months later.</p>
+
+        <div class="pillars">
+          <div class="pillar">
+            <div class="pillar-icon pi-r">☁️</div>
+            <div>
+              <h4>Salesforce-First Mindset</h4>
+              <p>Our Salesforce practitioners hold multiple certifications across Admin, Developer, Architect, and Consultant tracks — built over years of real project delivery.</p>
+            </div>
+          </div>
+          <div class="pillar">
+            <div class="pillar-icon pi-g">🛠️</div>
+            <div>
+              <h4>Engineering That Scales</h4>
+              <p>Every system we build is designed with growth in mind. Proper data modelling, test coverage, CI/CD pipelines — foundations that hold when traffic doubles.</p>
+            </div>
+          </div>
+          <div class="pillar">
+            <div class="pillar-icon pi-y">🤝</div>
+            <div>
+              <h4>A True Partnership Model</h4>
+              <p>We embed into your team — weekly syncs, shared boards, fast responses. We behave like colleagues, not contractors.</p>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top:36px;">
+          <a href="#contact" class="btn btn-primary">Start the Conversation <span class="arr">→</span></a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ======================================================
+     05 · PROCESS
+     ====================================================== -->
+<section class="process-section">
+  <div class="container">
+    <div class="s-hdr centered reveal">
+      <div class="eyebrow">How We Work</div>
+      <h2>A Process That Keeps You in Control</h2>
+      <p>Clear stages, no surprises. Every project follows a proven rhythm that keeps delivery on track and clients genuinely informed.</p>
+    </div>
+    <div class="process-steps">
+      <div class="p-step reveal">
+        <div class="p-circle"><div class="p-num">01</div></div>
+        <h3>Discovery</h3>
+        <p>We learn your business goals, existing systems, and user needs. No assumptions — just careful listening and the right questions.</p>
+      </div>
+      <div class="p-step reveal d1">
+        <div class="p-circle"><div class="p-num">02</div></div>
+        <h3>Architecture</h3>
+        <p>We design the technical blueprint — data models, API contracts, component structure — before a single line of code is written.</p>
+      </div>
+      <div class="p-step reveal d2">
+        <div class="p-circle"><div class="p-num">03</div></div>
+        <h3>Development</h3>
+        <p>Two-week sprints, regular demos, continuous feedback. You always know exactly where the project stands.</p>
+      </div>
+      <div class="p-step reveal d3">
+        <div class="p-circle"><div class="p-num">04</div></div>
+        <h3>Launch & Support</h3>
+        <p>Smooth go-live, handover docs, team training, and ongoing support that keeps your solution healthy long-term.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================================================
+     06 · TEAM
+     ====================================================== -->
+<section class="team-section" id="team">
+  <div class="container">
+    <div class="s-hdr centered reveal">
+      <div class="eyebrow">The People</div>
+      <h2>The Experts Who'll Build Your Product</h2>
+      <p>A handpicked group of senior engineers and consultants. No juniors learning on your project.</p>
+    </div>
+    <div class="team-grid">
+
+      <div class="team-card reveal">
+        <div class="tc-head">
+          <div class="tc-avatar">👨‍💼</div>
+          <div class="tc-exp">8 yrs</div>
+          <div class="tc-name">Arjun Sharma</div>
+          <div class="tc-role">Founder · Salesforce Architect</div>
+        </div>
+        <div class="tc-body">
+          <p class="tc-bio">8+ years designing Salesforce solutions for enterprise clients across BFSI, retail, and logistics. Certified across Admin, Developer, Platform App Builder, and Sales Cloud Consultant tracks.</p>
+          <div class="tc-skills">
+            <span class="tc-skill">Salesforce</span>
+            <span class="tc-skill">Apex</span>
+            <span class="tc-skill">LWC</span>
+            <span class="tc-skill">CPQ</span>
+            <span class="tc-skill">Architecture</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="team-card reveal d1">
+        <div class="tc-head">
+          <div class="tc-avatar">👩‍💻</div>
+          <div class="tc-exp">7 yrs</div>
+          <div class="tc-name">Priya Mehta</div>
+          <div class="tc-role">Lead Full Stack Engineer</div>
+        </div>
+        <div class="tc-body">
+          <p class="tc-bio">Specialises in React and Node.js with deep experience building SaaS platforms and data-intensive dashboards. Known for clean component design and scalable API architecture.</p>
+          <div class="tc-skills">
+            <span class="tc-skill">React.js</span>
+            <span class="tc-skill">Node.js</span>
+            <span class="tc-skill">Python</span>
+            <span class="tc-skill">AWS</span>
+            <span class="tc-skill">PostgreSQL</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="team-card reveal d2">
+        <div class="tc-head">
+          <div class="tc-avatar">👨‍🔬</div>
+          <div class="tc-exp">6 yrs</div>
+          <div class="tc-name">Rahul Kapoor</div>
+          <div class="tc-role">Mobile & DevOps Lead</div>
+        </div>
+        <div class="tc-body">
+          <p class="tc-bio">Leads React Native development and cloud infrastructure. Has shipped 20+ apps to both stores, with expertise in offline-first architecture and real-time features.</p>
+          <div class="tc-skills">
+            <span class="tc-skill">React Native</span>
+            <span class="tc-skill">Expo</span>
+            <span class="tc-skill">Docker</span>
+            <span class="tc-skill">CI/CD</span>
+            <span class="tc-skill">iOS / Android</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ======================================================
+     07 · TESTIMONIALS
+     ====================================================== -->
+<section class="testi-section" id="testimonials">
+  <div class="container">
+    <div class="s-hdr centered reveal">
+      <div class="eyebrow">Client Stories</div>
+      <h2>What Clients Actually Say</h2>
+      <p>From the teams we've worked with — in their own words, not ours.</p>
+    </div>
+    <div class="testi-grid">
+
+      <div class="testi-card reveal">
+        <div class="t-qmark">"</div>
+        <div class="t-stars">★★★★★</div>
+        <p class="testi-text">Averon completely rebuilt our Salesforce org from the ground up. What used to take our sales team 40 minutes now takes five. The Apex work they delivered is clean, documented, and our admins can actually maintain it.</p>
+        <div class="t-person">
+          <div class="t-ava">👤</div>
+          <div>
+            <div class="testi-name">Sarah Mitchell</div>
+            <div class="testi-co">VP Sales — NexaRetail Inc.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testi-card dark reveal d1">
+        <div class="t-qmark">"</div>
+        <div class="t-stars">★★★★★</div>
+        <p class="testi-text">We'd had two failed mobile projects before Averon. They spent two weeks in discovery before writing a line of code — and it showed. Delivered on time, on budget. The app now has 50k active users.</p>
+        <div class="t-person">
+          <div class="t-ava">👤</div>
+          <div>
+            <div class="testi-name">David Chen</div>
+            <div class="testi-co">CTO — UrbanPulse</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testi-card reveal d2">
+        <div class="t-qmark">"</div>
+        <div class="t-stars">★★★★★</div>
+        <p class="testi-text">The Node.js backend they built handles over 500k transactions a day without missing a beat. Their architecture decisions were thoughtful and future-proof. Genuinely glad we chose them over cheaper alternatives.</p>
+        <div class="t-person">
+          <div class="t-ava">👤</div>
+          <div>
+            <div class="testi-name">Aisha Patel</div>
+            <div class="testi-co">Head of Engineering — FinoEdge</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ======================================================
+     08 · CONTACT
+     ====================================================== -->
+<section class="contact-section" id="contact">
+  <div class="container">
+    <div class="contact-grid">
+
+      <div class="c-left reveal">
+        <div class="eyebrow">Get In Touch</div>
+        <h2>Let's Build Something <em>Worth Building</em></h2>
+        <p>Tell us about your project. We'll review it, ask the right questions, and come back with an honest assessment — not a sales pitch.</p>
+
+        <div class="c-details">
+          <div class="c-detail">
+            <div class="c-icon">📧</div>
+            <div><div class="c-lbl">Email</div><div class="c-value">hello@AveronSystems.com</div></div>
+          </div>
+          <div class="c-detail">
+            <div class="c-icon">📞</div>
+            <div><div class="c-lbl">Phone</div><div class="c-value">+91 98765 43210</div></div>
+          </div>
+          <div class="c-detail">
+            <div class="c-icon">📍</div>
+            <div><div class="c-lbl">Location</div><div class="c-value">Baner, Pune, Maharashtra — India</div></div>
+          </div>
+          <div class="c-detail">
+            <div class="c-icon">🕐</div>
+            <div><div class="c-lbl">Hours</div><div class="c-value">Mon–Fri · 9:00 AM – 7:00 PM IST</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="c-form reveal d2">
+        <div class="cf-title">Send Us a Message</div>
+        <div class="cf-sub">We typically respond within one business day.</div>
+
+        <div class="f-row">
+          <div class="f-grp">
+            <label>First Name</label>
+            <input type="text" placeholder="John"/>
+          </div>
+          <div class="f-grp">
+            <label>Last Name</label>
+            <input type="text" placeholder="Doe"/>
+          </div>
+        </div>
+        <div class="f-grp">
+          <label>Work Email</label>
+          <input type="email" placeholder="john@company.com"/>
+        </div>
+        <div class="f-grp">
+          <label>Company Name</label>
+          <input type="text" placeholder="Your Company"/>
+        </div>
+        <div class="f-grp">
+          <label>What Do You Need?</label>
+          <select>
+            <option value="">Select a service...</option>
+            <option>Salesforce CRM — New Implementation</option>
+            <option>Salesforce CRM — Support & Enhancement</option>
+            <option>Full Stack Web Development</option>
+            <option>Mobile App — React Native</option>
+            <option>End-to-End Project (Multiple Services)</option>
+            <option>Technical Consultation / Discovery</option>
+             <option>Other Services</option>
+          </select>
+        </div>
+        <div class="f-grp">
+          <label>Tell Us About Your Project</label>
+          <textarea placeholder="What are you trying to build? What's broken? What's the timeline? Any detail helps us give you a more useful first response."></textarea>
+        </div>
+        <a href="a.ksinghworks@gmail.com" class="btn btn-rust" style="width:100%; justify-content:center; padding:15px 28px; font-size:15px;">
+          Send Message <span class="arr">→</span>
+        </a>
+        <p class="f-note">No spam. No obligation. Just a real conversation.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ======================================================
+     FOOTER
+     ====================================================== -->
+<footer>
+  <div class="container">
+    <div class="ft-top">
+      <div class="ft-brand">
+        <a href="#home" class="logo-wrap" style="margin-bottom:0;">
+          <div class="logo-mark">T</div>
+          <div>
+            <div class="logo-text">Averon</div>
+            <div class="logo-sub">Systems</div>
+          </div>
+        </a>
+        <p>Salesforce CRM development and full-stack engineering for businesses that want software that actually works. Based in Pune — working globally.</p>
+      </div>
+      <div class="ft-col">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="#services">Salesforce CRM</a></li>
+          <li><a href="#services">Full Stack Dev</a></li>
+          <li><a href="#services">Mobile Apps</a></li>
+          <li><a href="#services">CRM Support</a></li>
+          <li><a href="#services">Integrations</a></li>
+        </ul>
+      </div>
+      <div class="ft-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#about">About Us</a></li>
+          <li><a href="#team">Our Team</a></li>
+          <li><a href="#techstack">Tech Stack</a></li>
+          <li><a href="#contact">Careers</a></li>
+          <li><a href="#contact">Blog</a></li>
+        </ul>
+      </div>
+      <div class="ft-col">
+        <h4>Connect</h4>
+        <ul>
+          <li><a href="#">LinkedIn</a></li>
+          <li><a href="#">Twitter / X</a></li>
+          <li><a href="#">GitHub</a></li>
+          <li><a href="#">Clutch.co</a></li>
+          <li><a href="#contact">Contact Us</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="ft-bottom">
+      <p>© 2026 Averon Systems. All rights reserved. Made with care in Pune, India.</p>
+      <div class="social-row">
+        <a href="#" class="s-btn">💼</a>
+        <a href="#" class="s-btn">🐦</a>
+        <a href="#" class="s-btn">👾</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('on'); obs.unobserve(e.target); }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+  // Nav highlight
+  const sects  = document.querySelectorAll('section[id]');
+  const navAs  = document.querySelectorAll('.nav-menu a');
+  const onScroll = () => {
+    let cur = '';
+    sects.forEach(s => { if (scrollY >= s.offsetTop - 120) cur = s.id; });
+    navAs.forEach(a => {
+      const active = a.getAttribute('href') === '#' + cur;
+      a.classList.toggle('active', active);
+    });
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  // Service sidebar highlight
+  const svcIds   = ['svc-sf','svc-web','svc-mob'];
+  const svcLinks = document.querySelectorAll('.svc-nav a');
+  window.addEventListener('scroll', () => {
+    let cur = '';
+    svcIds.forEach(id => {
+      const el = document.getElementById(id);
+      if (el && scrollY >= el.offsetTop - 180) cur = id;
+    });
+    svcLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + cur));
+  }, { passive: true });
+</script>
+</body>
+</html>

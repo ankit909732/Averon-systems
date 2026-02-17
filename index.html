@@ -2,1429 +2,1534 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>TechForce Solutions — Salesforce & Full Stack Development</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>TechForce Solutions — Salesforce CRM &amp; Full-Stack Engineering</title>
+<meta name="description" content="End-to-end Salesforce CRM development and modern full-stack engineering. React, React Native, Node.js, Python. Based in Pune, India."/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;1,700&family=Instrument+Sans:ital,opsz,wght@0,4..35,400;0,4..35,500;0,4..35,600;1,4..35,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
-
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,700;0,800;0,900;1,700;1,800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
 <style>
-/* =============================================
-   RESET & ROOT
-   ============================================= */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; font-size: 16px; }
-
-:root {
-  --cream:    #F5F0E8;
-  --warm:     #EDE7D9;
-  --paper:    #FAF7F2;
-  --ink:      #1A1612;
-  --ink2:     #3D3530;
-  --ink3:     #6B5F57;
-  --rust:     #C4503A;
-  --rust-l:   #D96B52;
-  --forest:   #2D5448;
-  --gold:     #B8860B;
-  --gold-l:   #D4A017;
-  --border:   rgba(26,22,18,0.12);
-  --border2:  rgba(26,22,18,0.06);
-  --shadow:   0 2px 24px rgba(26,22,18,0.10);
-  --shadow2:  0 8px 48px rgba(26,22,18,0.14);
-  --fh:       'Playfair Display', Georgia, serif;
-  --fb:       'Instrument Sans', sans-serif;
-  --fm:       'JetBrains Mono', monospace;
-  --r:        10px;
-  --r2:       18px;
-  --r3:       28px;
+/* ========================================
+   RESET & CUSTOM PROPERTIES
+   ======================================== */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --cream:#F5F0E8;--warm:#EDE7D9;--paper:#FAF7F2;--white:#FFFFFF;
+  --ink:#1A1612;--ink2:#3D3530;--ink3:#6B5F57;
+  --rust:#C4503A;--rust-l:#E8826E;--rust-d:#A03A28;
+  --forest:#2D5448;--forest-l:#5DA68C;
+  --gold:#B8860B;--gold-l:#D4A017;
+  --border:rgba(26,22,18,.09);--border2:rgba(26,22,18,.05);
+  --r:10px;--r2:14px;--r3:18px;--r4:24px;
+  --shadow-sm:0 2px 8px rgba(26,22,18,.04);
+  --shadow:0 4px 20px rgba(26,22,18,.06);
+  --shadow-lg:0 8px 40px rgba(26,22,18,.1);
+  --shadow-xl:0 20px 60px rgba(26,22,18,.12);
+  --ease:cubic-bezier(.4,0,.2,1);
+  --spring:cubic-bezier(.34,1.56,.64,1);
+  --fh:'Playfair Display',Georgia,serif;
+  --fb:'Inter',system-ui,sans-serif;
+  --fm:'JetBrains Mono',monospace;
+  --glow-rust:0 0 40px rgba(196,80,58,.3);
+  --glow-forest:0 0 40px rgba(45,84,72,.3);
 }
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;scroll-padding-top:80px}
+body{font-family:var(--fb);color:var(--ink);background:var(--cream);line-height:1.6;overflow-x:hidden;cursor:default}
+body.dark{--cream:#0F0F0F;--warm:#1A1A1A;--paper:#141414;--white:#1E1E1E;--ink:#E8E4DE;--ink2:#B8B0A4;--ink3:#7A7268;--border:rgba(255,255,255,.08);--border2:rgba(255,255,255,.04);--shadow-sm:0 2px 8px rgba(0,0,0,.2);--shadow:0 4px 20px rgba(0,0,0,.3);--shadow-lg:0 8px 40px rgba(0,0,0,.4);--shadow-xl:0 20px 60px rgba(0,0,0,.5)}
+img,svg{display:block;max-width:100%}
+a{color:inherit}
+::selection{background:var(--rust);color:#fff}
+.container{max-width:1200px;margin:0 auto;padding:0 32px}
 
-body {
-  background: var(--paper);
-  color: var(--ink);
-  font-family: var(--fb);
-  font-size: 16px;
-  line-height: 1.7;
-  overflow-x: hidden;
+/* ========================================
+   SVG ICON SYSTEM
+   ======================================== */
+.i{display:inline-flex;align-items:center;justify-content:center;flex-shrink:0}
+.i svg{width:100%;height:100%;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.i-filled svg{fill:currentColor;stroke:none}
+.i-14{width:14px;height:14px}.i-16{width:16px;height:16px}.i-18{width:18px;height:18px}
+.i-20{width:20px;height:20px}.i-22{width:22px;height:22px}.i-24{width:24px;height:24px}
+.i-28{width:28px;height:28px}.i-32{width:32px;height:32px}
+
+/* ========================================
+   UTILITY CLASSES
+   ======================================== */
+.eyebrow{display:inline-flex;align-items:center;gap:10px;font-family:var(--fm);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--rust);font-weight:500;margin-bottom:18px}
+.eyebrow::before{content:'';width:22px;height:1.5px;background:var(--rust);border-radius:2px}
+.btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--fb);font-weight:600;text-decoration:none;border:none;cursor:pointer;transition:all .4s var(--ease);border-radius:var(--r);position:relative;overflow:hidden;isolation:isolate}
+.btn::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.15),transparent);opacity:0;transition:opacity .3s;z-index:0}
+.btn:hover::before{opacity:1}
+.btn-rust{background:var(--rust);color:#fff;padding:13px 28px;font-size:14px;box-shadow:0 4px 14px rgba(196,80,58,.25)}
+.btn-rust:hover{background:var(--rust-d);box-shadow:var(--glow-rust);transform:translateY(-2px)}
+.btn-primary{background:var(--ink);color:var(--cream);padding:13px 28px;font-size:14px}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg)}
+.btn-outline{background:transparent;color:var(--ink);padding:12px 26px;font-size:14px;border:1.5px solid var(--border)}
+.btn-outline:hover{border-color:var(--ink);background:rgba(26,22,18,.03)}
+.btn .arr{transition:transform .3s var(--ease);display:inline-block}
+.btn:hover .arr{transform:translateX(4px)}
+.tag{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:500;padding:4px 10px;border-radius:7px;transition:all .3s var(--spring)}
+.tags{display:flex;flex-wrap:wrap;gap:6px}
+.tag.tr{background:rgba(196,80,58,.08);color:var(--rust);border:1px solid rgba(196,80,58,.12)}
+.tag.tg{background:rgba(45,84,72,.08);color:var(--forest);border:1px solid rgba(45,84,72,.12)}
+.tag.ty{background:rgba(184,134,11,.08);color:var(--gold);border:1px solid rgba(184,134,11,.12)}
+.tag:hover{transform:translateY(-2px) scale(1.02)}
+
+/* ========================================
+   ANIMATED GRADIENT MESH (HERO BG)
+   ======================================== */
+.mesh-gradient{position:absolute;inset:0;overflow:hidden;z-index:0;pointer-events:none}
+.mesh-blob{position:absolute;border-radius:50%;filter:blur(80px);opacity:.35;animation:blobFloat 20s ease-in-out infinite alternate}
+.mesh-blob:nth-child(1){width:500px;height:500px;background:radial-gradient(circle,rgba(196,80,58,.4),transparent 70%);top:-10%;right:-5%;animation-duration:22s}
+.mesh-blob:nth-child(2){width:400px;height:400px;background:radial-gradient(circle,rgba(45,84,72,.35),transparent 70%);bottom:-10%;left:-8%;animation-delay:-7s;animation-duration:18s}
+.mesh-blob:nth-child(3){width:350px;height:350px;background:radial-gradient(circle,rgba(184,134,11,.25),transparent 70%);top:30%;left:40%;animation-delay:-12s;animation-duration:25s}
+@keyframes blobFloat{0%{transform:translate(0,0) scale(1) rotate(0deg)}33%{transform:translate(30px,-40px) scale(1.1) rotate(60deg)}66%{transform:translate(-20px,30px) scale(.9) rotate(120deg)}100%{transform:translate(40px,20px) scale(1.05) rotate(180deg)}}
+
+/* Dot Grid Background */
+.dot-grid{position:absolute;inset:0;background-image:radial-gradient(circle,rgba(26,22,18,.06) 1px,transparent 1px);background-size:28px 28px;pointer-events:none;z-index:0}
+body.dark .dot-grid{background-image:radial-gradient(circle,rgba(255,255,255,.04) 1px,transparent 1px)}
+
+/* Grain Texture */
+.grain{position:fixed;inset:0;pointer-events:none;z-index:9999;opacity:.028;mix-blend-mode:multiply;background:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+
+/* ========================================
+   CUSTOM CURSOR
+   ======================================== */
+@media(pointer:fine){
+.cursor-dot{width:8px;height:8px;border-radius:50%;background:var(--rust);position:fixed;pointer-events:none;z-index:99999;transition:transform .15s,opacity .15s}
+.cursor-ring{width:36px;height:36px;border-radius:50%;border:1.5px solid rgba(196,80,58,.35);position:fixed;pointer-events:none;z-index:99998;transition:width .3s var(--spring),height .3s var(--spring),border-color .3s,background .3s}
+.cursor-ring.hov{width:52px;height:52px;border-color:var(--rust);background:rgba(196,80,58,.06)}
 }
+@media(pointer:coarse){.cursor-dot,.cursor-ring{display:none}}
 
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: var(--warm); }
-::-webkit-scrollbar-thumb { background: var(--rust); border-radius: 3px; }
+/* ========================================
+   PAGE LOADER
+   ======================================== */
+.loader{position:fixed;inset:0;z-index:100000;background:var(--ink);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;transition:opacity .5s .2s,visibility .5s .2s}
+.loader.done{opacity:0;visibility:hidden;pointer-events:none}
+.loader-mark{font-family:var(--fh);font-size:44px;font-weight:800;color:var(--cream);animation:pulse 1.2s ease infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.6;transform:scale(.96)}}
+.loader-track{width:180px;height:3px;background:rgba(245,240,232,.08);border-radius:4px;overflow:hidden}
+.loader-bar{height:100%;width:0;background:linear-gradient(90deg,var(--rust),var(--rust-l));border-radius:4px;transition:width .15s}
 
-/* =============================================
-   UTILITIES
-   ============================================= */
-.container { max-width: 1160px; margin: 0 auto; padding: 0 32px; }
+/* ========================================
+   SCROLL PROGRESS
+   ======================================== */
+.scroll-prog{position:fixed;top:0;left:0;height:2.5px;background:linear-gradient(90deg,var(--rust),var(--gold-l),var(--forest-l));z-index:9990;width:0;transition:none}
 
-.eyebrow {
-  display: inline-flex; align-items: center; gap: 10px;
-  font-family: var(--fm); font-size: 11px; font-weight: 500;
-  letter-spacing: 0.18em; text-transform: uppercase;
-  color: var(--rust); margin-bottom: 20px;
-}
-.eyebrow::before {
-  content: '';
-  display: block; width: 28px; height: 1.5px;
-  background: var(--rust); border-radius: 2px;
-}
+/* ========================================
+   BACK TO TOP
+   ======================================== */
+.btt{position:fixed;bottom:28px;right:28px;width:46px;height:46px;border-radius:50%;background:var(--ink);color:var(--cream);border:1px solid rgba(255,255,255,.1);cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:900;opacity:0;transform:translateY(16px);transition:all .4s var(--ease);box-shadow:var(--shadow-lg)}
+.btt.vis{opacity:1;transform:none}
+.btt:hover{background:var(--rust);border-color:var(--rust);transform:translateY(-4px);box-shadow:var(--glow-rust)}
 
-h1,h2,h3,h4 { font-family: var(--fh); line-height: 1.15; color: var(--ink); }
+/* ========================================
+   DARK MODE TOGGLE
+   ======================================== */
+.dm-toggle{width:38px;height:38px;border-radius:50%;background:rgba(26,22,18,.05);border:1px solid var(--border);cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--ink3);transition:all .3s var(--ease);flex-shrink:0}
+.dm-toggle:hover{background:rgba(26,22,18,.1);color:var(--ink)}
+body.dark .dm-toggle{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.1)}
 
-.btn {
-  display: inline-flex; align-items: center; gap: 8px;
-  font-family: var(--fb); font-size: 14px; font-weight: 600;
-  padding: 13px 26px; border-radius: var(--r);
-  text-decoration: none; cursor: pointer; border: none;
-  transition: all 0.22s ease; letter-spacing: 0.01em;
-}
-.btn-primary { background: var(--ink); color: var(--cream); }
-.btn-primary:hover { background: var(--rust); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(196,80,58,0.28); }
-.btn-outline { background: transparent; color: var(--ink); border: 1.5px solid var(--border); }
-.btn-outline:hover { border-color: var(--ink); background: var(--ink); color: var(--cream); }
-.btn-rust { background: var(--rust); color: #fff; }
-.btn-rust:hover { background: var(--rust-l); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(196,80,58,0.3); }
-.arr { display: inline-block; transition: transform 0.2s; }
-.btn:hover .arr { transform: translateX(3px); }
-
-.tag {
-  font-family: var(--fm); font-size: 11px; font-weight: 500;
-  padding: 4px 11px; border-radius: 6px;
-  background: var(--warm); border: 1px solid var(--border); color: var(--ink2);
-}
-.tag.t-rust  { background: rgba(196,80,58,0.08); border-color: rgba(196,80,58,0.2); color: var(--rust); }
-.tag.t-forest{ background: rgba(45,84,72,0.08);  border-color: rgba(45,84,72,0.2);  color: var(--forest); }
-.tag.t-gold  { background: rgba(184,134,11,0.08);border-color: rgba(184,134,11,0.2);color: var(--gold); }
-.tag-cloud { display: flex; flex-wrap: wrap; gap: 7px; }
-
-/* =============================================
+/* ========================================
    NAV
-   ============================================= */
-.nav-wrap {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 900;
-  background: rgba(250,247,242,0.93);
-  backdrop-filter: blur(14px) saturate(160%);
-  border-bottom: 1px solid var(--border);
-}
-.nav-inner {
-  display: flex; align-items: center; justify-content: space-between;
-  height: 66px;
-}
-.logo-wrap { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--ink); }
-.logo-mark {
-  width: 36px; height: 36px; border-radius: 8px;
-  background: var(--ink); color: var(--cream);
-  font-family: var(--fh); font-size: 18px; font-weight: 700;
-  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
-}
-.logo-text { font-family: var(--fh); font-size: 19px; font-weight: 700; line-height: 1; }
-.logo-sub  { font-family: var(--fb); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink3); margin-top: 1px; }
+   ======================================== */
+.nav{position:fixed;top:14px;left:50%;transform:translateX(-50%);z-index:900;background:rgba(250,247,242,.82);backdrop-filter:blur(24px) saturate(180%);-webkit-backdrop-filter:blur(24px) saturate(180%);border:1px solid var(--border);border-radius:60px;padding:0 8px;transition:all .4s var(--ease);box-shadow:0 4px 28px rgba(26,22,18,.07)}
+body.dark .nav{background:rgba(15,15,15,.82)}
+.nav.scrolled{box-shadow:0 4px 40px rgba(26,22,18,.12)}
+.nav.hide{transform:translateX(-50%) translateY(-120%)}
+.nav-in{display:flex;align-items:center;gap:4px;height:52px;padding:0 6px}
+.logo{display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--ink);padding:0 10px}
+.logo-m{width:30px;height:30px;border-radius:8px;background:var(--ink);color:var(--cream);font-family:var(--fh);font-size:15px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:transform .4s var(--spring)}
+body.dark .logo-m{background:var(--cream);color:var(--ink)}
+.logo:hover .logo-m{transform:rotate(-8deg) scale(1.05)}
+.logo-t{font-family:var(--fh);font-size:16px;font-weight:700;line-height:1}
+.nmenu{display:flex;gap:2px;list-style:none;margin:0 6px}
+.nmenu a{text-decoration:none;color:var(--ink3);font-size:13px;font-weight:500;padding:7px 13px;border-radius:30px;transition:all .25s}
+.nmenu a:hover,.nmenu a.act{color:var(--ink);background:rgba(26,22,18,.06)}
+body.dark .nmenu a:hover,body.dark .nmenu a.act{background:rgba(255,255,255,.06)}
+.nav-btns{display:flex;gap:8px;align-items:center}
+.nav-btns .btn{font-size:12px;padding:8px 18px;border-radius:30px}
 
-.nav-menu { display: flex; gap: 32px; list-style: none; }
-.nav-menu a {
-  text-decoration: none; color: var(--ink3); font-size: 14px; font-weight: 500;
-  transition: color 0.2s; position: relative; padding-bottom: 2px;
-}
-.nav-menu a::after {
-  content: ''; position: absolute; bottom: -2px; left: 0;
-  width: 0; height: 1.5px; background: var(--rust); transition: width 0.25s;
-}
-.nav-menu a:hover { color: var(--ink); }
-.nav-menu a:hover::after, .nav-menu a.active::after { width: 100%; }
-.nav-menu a.active { color: var(--ink); }
-.nav-actions { display: flex; gap: 10px; align-items: center; }
+/* Hamburger */
+.hbg{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px;border:none;background:none;z-index:1001}
+.hbg span{display:block;width:20px;height:1.5px;background:var(--ink);border-radius:2px;transition:all .35s var(--ease);transform-origin:center}
+.hbg.on span:nth-child(1){transform:rotate(45deg) translate(4.5px,4.5px)}
+.hbg.on span:nth-child(2){opacity:0;transform:scaleX(0)}
+.hbg.on span:nth-child(3){transform:rotate(-45deg) translate(4.5px,-4.5px)}
 
-/* =============================================
+/* Mobile Panel */
+.mob-nav{display:none;position:fixed;inset:0;z-index:998;background:rgba(250,247,242,.98);backdrop-filter:blur(30px);flex-direction:column;align-items:center;justify-content:center;gap:0;opacity:0;transition:opacity .4s var(--ease)}
+body.dark .mob-nav{background:rgba(15,15,15,.98)}
+.mob-nav.open{display:flex;opacity:1}
+.mob-nav a{text-decoration:none;color:var(--ink);font-family:var(--fh);font-size:28px;font-weight:700;padding:12px 0;transition:color .2s;opacity:0;transform:translateY(16px)}
+.mob-nav.open a{opacity:1;transform:none;transition:opacity .4s ease,transform .4s ease,color .2s}
+.mob-nav.open a:nth-child(1){transition-delay:.08s}
+.mob-nav.open a:nth-child(2){transition-delay:.12s}
+.mob-nav.open a:nth-child(3){transition-delay:.16s}
+.mob-nav.open a:nth-child(4){transition-delay:.2s}
+.mob-nav.open a:nth-child(5){transition-delay:.24s}
+.mob-nav.open a:nth-child(6){transition-delay:.28s}
+.mob-nav.open a:nth-child(7){transition-delay:.32s}
+.mob-nav a:hover{color:var(--rust)}
+
+/* ========================================
    HERO
-   ============================================= */
-.hero {
-  padding: 130px 0 0;
-  background: var(--cream);
-  position: relative; overflow: hidden;
-  border-bottom: 1px solid var(--border);
-}
-.hero::before {
-  content: '';
-  position: absolute; inset: 0;
-  background-image: repeating-linear-gradient(
-    0deg, transparent, transparent 39px,
-    rgba(26,22,18,0.03) 39px, rgba(26,22,18,0.03) 40px
-  );
-  pointer-events: none;
-}
+   ======================================== */
+.hero{padding:120px 0 0;background:var(--cream);position:relative;overflow:hidden;border-bottom:1px solid var(--border)}
+.hero .dot-grid{opacity:.5}
 
-.hero-grid {
-  display: grid;
-  grid-template-columns: 1fr 400px;
-  gap: 0;
-  align-items: stretch;
-  min-height: 80vh;
-}
+.hero-g{display:grid;grid-template-columns:1fr 400px;gap:0;align-items:stretch;min-height:82vh}
+.hero-l{padding:52px 56px 72px 0;display:flex;flex-direction:column;justify-content:center;border-right:1px solid var(--border);position:relative;z-index:1}
 
-.hero-left {
-  padding: 60px 64px 80px 0;
-  display: flex; flex-direction: column; justify-content: center;
-  border-right: 1px solid var(--border);
-}
+.hero-kick{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.7);backdrop-filter:blur(12px);border:1px solid var(--border);border-radius:var(--r);padding:7px 14px;margin-bottom:28px;width:fit-content;animation:fadeDown .7s var(--ease) .5s both}
+body.dark .hero-kick{background:rgba(255,255,255,.04)}
+@keyframes fadeDown{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:none}}
+.kick-dot{width:7px;height:7px;border-radius:50%;background:var(--forest);animation:blink 2.4s ease infinite;flex-shrink:0}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+.kick-txt{font-family:var(--fm);font-size:11px;color:var(--forest);font-weight:500;letter-spacing:.1em}
 
-.hero-kicker {
-  display: inline-flex; align-items: center; gap: 8px;
-  background: #fff; border: 1px solid var(--border);
-  border-radius: var(--r); padding: 7px 14px; margin-bottom: 32px; width: fit-content;
-}
-.kicker-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--forest); animation: blink 2.4s ease infinite; flex-shrink: 0; }
-@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
-.kicker-text { font-family: var(--fm); font-size: 11px; color: var(--forest); font-weight: 500; letter-spacing: 0.1em; }
+.hero h1{font-size:clamp(38px,5.5vw,72px);font-weight:800;line-height:1.06;margin-bottom:24px}
+.hero h1 em{font-style:italic;color:var(--rust);position:relative}
+.hero h1 em::after{content:'';position:absolute;bottom:2px;left:0;right:0;height:3px;background:var(--rust);opacity:.3;border-radius:2px}
+.hero h1 .ln{display:block;overflow:hidden}
+.hero h1 .ln-in{display:block;animation:lnUp .85s var(--ease) both}
+.hero h1 .ln:nth-child(1) .ln-in{animation-delay:.6s}
+.hero h1 .ln:nth-child(2) .ln-in{animation-delay:.72s}
+.hero h1 .ln:nth-child(3) .ln-in{animation-delay:.84s}
+@keyframes lnUp{from{transform:translateY(105%)}to{transform:none}}
 
-.hero h1 { font-size: clamp(42px, 5.5vw, 74px); font-weight: 800; line-height: 1.07; margin-bottom: 26px; }
-.hero h1 em { font-style: italic; color: var(--rust); }
-.hero-desc { font-size: 18px; color: var(--ink3); max-width: 520px; line-height: 1.8; margin-bottom: 44px; font-weight: 400; }
-.hero-ctas { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 56px; }
+.hero-p{font-size:17px;color:var(--ink3);max-width:500px;line-height:1.85;margin-bottom:36px;font-weight:400;animation:fadeUp .8s var(--ease) 1s both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+.hero-ctas{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:48px;animation:fadeUp .8s var(--ease) 1.12s both}
 
-.hero-proof {
-  display: flex; gap: 48px;
-  padding-top: 40px; border-top: 1px solid var(--border);
-}
-.proof-num { font-family: var(--fh); font-size: 38px; font-weight: 800; color: var(--ink); line-height: 1; }
-.proof-num sup { font-size: 20px; color: var(--rust); }
-.proof-label { font-size: 13px; color: var(--ink3); margin-top: 4px; }
+/* Animated Proof Bar */
+.hero-proof{display:flex;gap:40px;padding-top:32px;border-top:1px solid var(--border);animation:fadeUp .8s var(--ease) 1.25s both}
+.pf-item{position:relative}
+.pf-num{font-family:var(--fh);font-size:36px;font-weight:800;color:var(--ink);line-height:1;transition:color .3s}
+.pf-item:hover .pf-num{color:var(--rust)}
+.pf-num sup{font-size:16px;color:var(--rust)}
+.pf-label{font-size:12px;color:var(--ink3);margin-top:3px}
 
-.hero-right {
-  padding: 48px 0 48px 40px;
-  display: flex; flex-direction: column; gap: 14px;
-}
-.hero-card {
-  background: #fff; border: 1px solid var(--border);
-  border-radius: var(--r2); padding: 26px 28px;
-  box-shadow: var(--shadow); flex: 1;
-  transition: transform 0.25s, box-shadow 0.25s;
-}
-.hero-card:hover { transform: translateY(-2px); box-shadow: var(--shadow2); }
-.hc-label { font-family: var(--fm); font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink3); margin-bottom: 8px; }
-.hc-title { font-family: var(--fh); font-size: 17px; font-weight: 700; margin-bottom: 8px; }
-.hc-desc  { font-size: 13px; color: var(--ink3); line-height: 1.65; margin-bottom: 14px; }
-.status-row { display: flex; align-items: center; justify-content: space-between; padding-top: 12px; border-top: 1px solid var(--border2); }
-.status-pill { display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: var(--forest); }
-.status-pill span { width: 6px; height: 6px; border-radius: 50%; background: var(--forest); animation: blink 2s infinite; flex-shrink: 0; }
-.status-time { font-family: var(--fm); font-size: 11px; color: var(--ink3); }
+/* Hero Right Cards */
+.hero-r{padding:40px 0 40px 36px;display:flex;flex-direction:column;gap:12px;animation:fadeUp .8s var(--ease) .8s both;position:relative;z-index:1}
+.hcard{background:rgba(255,255,255,.75);backdrop-filter:blur(16px);border:1px solid var(--border);border-radius:var(--r2);padding:22px 24px;box-shadow:var(--shadow-sm);flex:1;transition:all .4s var(--spring);will-change:transform;position:relative;overflow:hidden}
+body.dark .hcard{background:rgba(255,255,255,.04)}
+.hcard::before{content:'';position:absolute;inset:0;opacity:0;transition:opacity .4s;background:radial-gradient(600px circle at var(--mouse-x,50%) var(--mouse-y,50%),rgba(196,80,58,.04),transparent 60%);pointer-events:none}
+.hcard:hover::before{opacity:1}
+.hcard:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
+.hc-top{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.hc-ic{width:42px;height:42px;border-radius:11px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.hc-ic.ir{background:rgba(196,80,58,.1);color:var(--rust)}
+.hc-ic.ig{background:rgba(45,84,72,.1);color:var(--forest)}
+.hc-ic.iy{background:rgba(184,134,11,.1);color:var(--gold)}
+.hc-lbl{font-family:var(--fm);font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink3)}
+.hc-ttl{font-family:var(--fh);font-size:15px;font-weight:700}
+.hc-desc{font-size:13px;color:var(--ink3);line-height:1.65;margin-bottom:12px}
+.hc-foot{display:flex;align-items:center;justify-content:space-between;padding-top:10px;border-top:1px solid var(--border2)}
+.status{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--forest)}
+.status span{width:6px;height:6px;border-radius:50%;background:var(--forest);animation:blink 2s infinite;flex-shrink:0}
+.hc-time{font-family:var(--fm);font-size:11px;color:var(--ink3)}
 
-/* =============================================
+/* ========================================
+   CLIENT LOGOS — INFINITE SCROLL
+   ======================================== */
+.logos{padding:52px 0;background:var(--paper);border-bottom:1px solid var(--border2);overflow:hidden}
+.logos-lbl{text-align:center;font-family:var(--fm);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink3);margin-bottom:28px}
+.logo-scroll{display:flex;width:max-content;animation:logoScroll 30s linear infinite}
+.logo-scroll:hover{animation-play-state:paused}
+@keyframes logoScroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.logo-co{display:flex;align-items:center;gap:8px;font-family:var(--fb);font-size:15px;font-weight:700;color:var(--ink);letter-spacing:-.02em;white-space:nowrap;padding:0 36px;opacity:.3;transition:opacity .4s;filter:grayscale(1)}
+.logo-co:hover{opacity:.7;filter:grayscale(0)}
+.logo-co .i{opacity:.5}
+
+/* ========================================
    TRUST MARQUEE
-   ============================================= */
-.trust-bar { background: var(--ink); padding: 16px 0; overflow: hidden; }
-.marquee-track { display: flex; animation: marquee 28s linear infinite; width: max-content; }
-.marquee-track:hover { animation-play-state: paused; }
-@keyframes marquee { from{transform:translateX(0)} to{transform:translateX(-50%)} }
-.marquee-item {
-  display: flex; align-items: center; gap: 10px;
-  padding: 0 48px; white-space: nowrap;
-  font-family: var(--fm); font-size: 11px; color: rgba(245,240,232,0.45);
-  font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase;
-  border-right: 1px solid rgba(255,255,255,0.07);
-}
-.marquee-item .mdot { width: 5px; height: 5px; border-radius: 50%; background: var(--rust); flex-shrink: 0; }
-.marquee-item strong { color: rgba(245,240,232,0.85); font-weight: 600; }
+   ======================================== */
+.marquee-wrap{background:var(--ink);padding:13px 0;overflow:hidden;position:relative}
+body.dark .marquee-wrap{background:#0A0A0A}
+.marquee-wrap::before,.marquee-wrap::after{content:'';position:absolute;top:0;bottom:0;width:70px;z-index:2;pointer-events:none}
+.marquee-wrap::before{left:0;background:linear-gradient(90deg,var(--ink),transparent)}
+.marquee-wrap::after{right:0;background:linear-gradient(-90deg,var(--ink),transparent)}
+body.dark .marquee-wrap::before{background:linear-gradient(90deg,#0A0A0A,transparent)}
+body.dark .marquee-wrap::after{background:linear-gradient(-90deg,#0A0A0A,transparent)}
+.marquee{display:flex;animation:marquee 32s linear infinite;width:max-content}
+.marquee:hover{animation-play-state:paused}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.mq-item{display:flex;align-items:center;gap:10px;padding:0 40px;white-space:nowrap;font-family:var(--fm);font-size:11px;color:rgba(245,240,232,.38);font-weight:500;letter-spacing:.08em;text-transform:uppercase;border-right:1px solid rgba(255,255,255,.05)}
+.mq-item .mq-dot{width:5px;height:5px;border-radius:50%;background:var(--rust);flex-shrink:0}
+.mq-item strong{color:rgba(245,240,232,.82);font-weight:600}
 
-/* =============================================
-   SHARED SECTION HEADERS
-   ============================================= */
-.s-hdr { margin-bottom: 72px; }
-.s-hdr.centered { text-align: center; }
-.s-hdr.centered .eyebrow { margin-left: auto; margin-right: auto; }
-.s-hdr h2 { font-size: clamp(30px, 3.8vw, 52px); font-weight: 800; margin-bottom: 18px; line-height: 1.12; }
-.s-hdr p { font-size: 17px; color: var(--ink3); max-width: 560px; font-weight: 400; line-height: 1.8; }
-.s-hdr.centered p { margin: 0 auto; }
+/* ========================================
+   BIG NUMBERS / STATS (NEW SECTION — Stripe-inspired)
+   ======================================== */
+.stats-sec{padding:100px 0;background:var(--cream);position:relative;overflow:hidden}
+.stats-sec .dot-grid{opacity:.3}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;position:relative;z-index:1}
+.stat-box{text-align:center;padding:48px 24px;position:relative;transition:all .5s var(--ease)}
+.stat-box::after{content:'';position:absolute;top:20%;bottom:20%;right:0;width:1px;background:var(--border)}
+.stat-box:last-child::after{display:none}
+.stat-num{font-family:var(--fh);font-size:clamp(42px,5.5vw,72px);font-weight:900;line-height:1;color:var(--ink);margin-bottom:8px;transition:color .4s}
+.stat-num .ticker{display:inline-block}
+.stat-num sup{font-size:clamp(18px,2vw,28px);color:var(--rust)}
+.stat-box:hover .stat-num{color:var(--rust)}
+.stat-label{font-size:14px;color:var(--ink3);font-weight:500}
+.stat-sub{font-family:var(--fm);font-size:11px;color:var(--ink3);opacity:.5;margin-top:4px;letter-spacing:.05em}
 
-/* =============================================
-   SERVICES
-   ============================================= */
-.services-section { padding: 110px 0; background: var(--paper); }
+/* ========================================
+   SECTION HEADERS
+   ======================================== */
+.shdr{margin-bottom:68px}
+.shdr.cen{text-align:center}
+.shdr.cen .eyebrow{margin-left:auto;margin-right:auto}
+.shdr h2{font-size:clamp(28px,3.8vw,48px);font-weight:800;margin-bottom:14px;line-height:1.12}
+.shdr p{font-size:17px;color:var(--ink3);max-width:520px;font-weight:400;line-height:1.8}
+.shdr.cen p{margin:0 auto}
 
-.svc-layout { display: grid; grid-template-columns: 280px 1fr; gap: 80px; align-items: start; }
+/* ========================================
+   SERVICES — TABBED CARDS (Stripe-inspired)
+   ======================================== */
+.svc-sec{padding:110px 0;background:var(--paper)}
+.svc-lay{display:grid;grid-template-columns:260px 1fr;gap:72px;align-items:start}
+.svc-side{position:sticky;top:96px}
+.svc-side h2{font-size:34px;font-weight:800;margin-bottom:16px;line-height:1.15}
+.svc-side>p{font-size:15px;color:var(--ink3);line-height:1.8;margin-bottom:28px}
+.svc-links{list-style:none;display:flex;flex-direction:column;gap:4px}
+.svc-links a{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink3);font-size:14px;font-weight:500;padding:10px 14px;border-radius:var(--r);transition:all .3s var(--ease);border:1px solid transparent;position:relative;overflow:hidden}
+.svc-links a::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--rust);border-radius:0 2px 2px 0;transform:scaleY(0);transition:transform .3s var(--ease)}
+.svc-links a:hover,.svc-links a.act{background:rgba(255,255,255,.8);color:var(--ink);border-color:var(--border);box-shadow:var(--shadow-sm)}
+body.dark .svc-links a:hover,body.dark .svc-links a.act{background:rgba(255,255,255,.04)}
+.svc-links a.act::before{transform:scaleY(1)}
+.svc-links .sn{font-family:var(--fm);font-size:10px;color:var(--rust);font-weight:500}
 
-.svc-sticky { position: sticky; top: 100px; }
-.svc-sticky h2 { font-size: 38px; font-weight: 800; margin-bottom: 18px; line-height: 1.15; }
-.svc-sticky p { font-size: 15px; color: var(--ink3); line-height: 1.8; margin-bottom: 30px; }
-.svc-nav { list-style: none; display: flex; flex-direction: column; gap: 4px; }
-.svc-nav a {
-  display: flex; align-items: center; gap: 10px;
-  text-decoration: none; color: var(--ink3); font-size: 14px; font-weight: 500;
-  padding: 10px 14px; border-radius: var(--r); transition: all 0.2s; border: 1px solid transparent;
-}
-.svc-nav a:hover, .svc-nav a.active { background: #fff; color: var(--ink); border-color: var(--border); box-shadow: var(--shadow); }
-.svc-nav .sn { font-family: var(--fm); font-size: 10px; color: var(--rust); font-weight: 500; }
+.svc-cards{display:flex;flex-direction:column;gap:24px}
+.svc-card{background:rgba(255,255,255,.85);backdrop-filter:blur(12px);border:1px solid var(--border);border-radius:var(--r3);overflow:hidden;transition:box-shadow .4s var(--ease),transform .4s var(--spring);will-change:transform;position:relative}
+body.dark .svc-card{background:rgba(255,255,255,.03)}
+.svc-card::before{content:'';position:absolute;inset:0;opacity:0;transition:opacity .4s;background:radial-gradient(800px circle at var(--mouse-x,50%) var(--mouse-y,50%),rgba(196,80,58,.03),transparent 50%);pointer-events:none;z-index:0}
+.svc-card:hover::before{opacity:1}
+.svc-card:hover{box-shadow:var(--shadow-xl);transform:translateY(-4px)}
+.sc-top{padding:40px 44px 32px;position:relative;border-bottom:1px solid var(--border2)}
+.sc-bignum{position:absolute;top:28px;right:40px;font-family:var(--fm);font-size:48px;font-weight:500;color:rgba(26,22,18,.035);line-height:1;pointer-events:none}
+body.dark .sc-bignum{color:rgba(255,255,255,.03)}
+.sc-icon{width:50px;height:50px;border-radius:14px;display:flex;align-items:center;justify-content:center;margin-bottom:20px;transition:transform .4s var(--spring)}
+.svc-card:hover .sc-icon{transform:scale(1.1) rotate(-3deg)}
+.sc-icon.sir{background:rgba(196,80,58,.1);border:1px solid rgba(196,80,58,.16);color:var(--rust)}
+.sc-icon.sig{background:rgba(45,84,72,.1);border:1px solid rgba(45,84,72,.16);color:var(--forest)}
+.sc-icon.siy{background:rgba(184,134,11,.1);border:1px solid rgba(184,134,11,.16);color:var(--gold)}
+.svc-card h3{font-size:22px;font-weight:700;margin-bottom:12px}
+.sc-desc{font-size:15px;color:var(--ink3);line-height:1.8;max-width:580px}
+.sc-bot{padding:24px 44px 34px;display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.sc-ft{display:flex;align-items:flex-start;gap:10px}
+.sc-chk{width:20px;height:20px;border-radius:6px;flex-shrink:0;display:flex;align-items:center;justify-content:center;margin-top:2px;transition:transform .3s var(--spring)}
+.sc-ft:hover .sc-chk{transform:scale(1.15)}
+.chk-r{background:rgba(196,80,58,.1);color:var(--rust)}
+.chk-g{background:rgba(45,84,72,.1);color:var(--forest)}
+.chk-y{background:rgba(184,134,11,.1);color:var(--gold)}
+.sc-ft span{font-size:14px;color:var(--ink2);font-weight:500}
 
-.svc-cards { display: flex; flex-direction: column; gap: 28px; }
-.svc-card {
-  background: #fff; border: 1px solid var(--border);
-  border-radius: var(--r3); overflow: hidden;
-  transition: box-shadow 0.3s, transform 0.3s;
-}
-.svc-card:hover { box-shadow: var(--shadow2); transform: translateY(-3px); }
+/* ========================================
+   CASE STUDIES — FULL-WIDTH HOVER REVEAL
+   ======================================== */
+.cases-sec{padding:110px 0;background:var(--cream);overflow:hidden}
+.cases-list{display:flex;flex-direction:column;gap:0;border-top:1px solid var(--border)}
+.case-row{display:grid;grid-template-columns:1fr 1fr;align-items:center;border-bottom:1px solid var(--border);padding:36px 0;cursor:pointer;transition:all .4s var(--ease);position:relative;overflow:hidden}
+.case-row::before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(196,80,58,.02),transparent);opacity:0;transition:opacity .4s}
+.case-row:hover::before{opacity:1}
+.case-row:hover{padding:40px 0}
+.case-left{display:flex;align-items:center;gap:24px}
+.case-idx{font-family:var(--fm);font-size:13px;color:var(--ink3);min-width:32px}
+.case-info h3{font-family:var(--fh);font-size:24px;font-weight:700;margin-bottom:4px;transition:color .3s}
+.case-row:hover .case-info h3{color:var(--rust)}
+.case-tag{font-family:var(--fm);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3)}
+.case-right{display:flex;align-items:center;justify-content:flex-end;gap:28px}
+.case-metrics{display:flex;gap:28px}
+.cm-item{text-align:right}
+.cm-num{font-family:var(--fh);font-size:20px;font-weight:800}
+.cm-lbl{font-size:11px;color:var(--ink3);margin-top:1px}
+.case-arrow{width:42px;height:42px;border-radius:50%;background:var(--ink);color:var(--cream);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .4s var(--spring);transform:scale(0);opacity:0}
+.case-row:hover .case-arrow{transform:scale(1);opacity:1}
+/* Mobile horizontal scroll fallback */
+.cases-scr-mobile{display:none}
 
-.svc-top {
-  padding: 44px 48px 36px;
-  position: relative; border-bottom: 1px solid var(--border2);
-}
-.svc-big-num {
-  position: absolute; top: 32px; right: 44px;
-  font-family: var(--fm); font-size: 52px; font-weight: 500;
-  color: rgba(26,22,18,0.04); line-height: 1; pointer-events: none;
-}
-.svc-icon {
-  width: 54px; height: 54px; border-radius: 14px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 26px; margin-bottom: 22px;
-}
-.si-r { background: rgba(196,80,58,0.1); border: 1px solid rgba(196,80,58,0.18); }
-.si-g { background: rgba(45,84,72,0.1);  border: 1px solid rgba(45,84,72,0.18);  }
-.si-y { background: rgba(184,134,11,0.1);border: 1px solid rgba(184,134,11,0.18);}
+/* ========================================
+   CODE TERMINAL (NEW — Linear-inspired)
+   ======================================== */
+.code-sec{padding:100px 0;background:var(--ink);position:relative;overflow:hidden}
+body.dark .code-sec{background:#0A0A0A}
+.code-sec::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 20% 50%,rgba(196,80,58,.06),transparent 55%),radial-gradient(circle at 80% 30%,rgba(45,84,72,.06),transparent 50%);pointer-events:none}
+.code-grid{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center;position:relative;z-index:1}
+.code-copy h2{font-size:clamp(26px,3.5vw,42px);font-weight:800;color:var(--cream);margin-bottom:16px;line-height:1.12}
+.code-copy h2 em{font-style:italic;color:var(--rust-l)}
+.code-copy>p{font-size:16px;color:rgba(245,240,232,.45);margin-bottom:24px;line-height:1.85}
+.code-features{display:flex;flex-direction:column;gap:14px;margin-top:28px}
+.code-feat{display:flex;align-items:center;gap:12px}
+.cf-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.cf-dot.r{background:var(--rust-l)}.cf-dot.g{background:var(--forest-l)}.cf-dot.y{background:var(--gold-l)}
+.code-feat span{font-size:15px;color:rgba(245,240,232,.65);font-weight:500}
 
-.svc-card h3 { font-size: 25px; font-weight: 700; margin-bottom: 14px; }
-.svc-desc { font-size: 15px; color: var(--ink3); line-height: 1.8; max-width: 600px; }
+.terminal{background:#0D0D0D;border:1px solid rgba(255,255,255,.08);border-radius:var(--r3);overflow:hidden;box-shadow:0 20px 80px rgba(0,0,0,.4);position:relative}
+.term-bar{display:flex;align-items:center;gap:8px;padding:14px 18px;background:rgba(255,255,255,.03);border-bottom:1px solid rgba(255,255,255,.06)}
+.term-dot{width:10px;height:10px;border-radius:50%}
+.term-dot.red{background:#FF5F57}.term-dot.yellow{background:#FEBC2E}.term-dot.green{background:#28C840}
+.term-title{flex:1;text-align:center;font-family:var(--fm);font-size:11px;color:rgba(245,240,232,.25)}
+.term-body{padding:22px 24px;font-family:var(--fm);font-size:13px;line-height:2;overflow:hidden}
+.term-line{display:flex;gap:12px;opacity:0;animation:termLine .4s var(--ease) both}
+.term-line:nth-child(1){animation-delay:.3s}.term-line:nth-child(2){animation-delay:.6s}
+.term-line:nth-child(3){animation-delay:.9s}.term-line:nth-child(4){animation-delay:1.2s}
+.term-line:nth-child(5){animation-delay:1.5s}.term-line:nth-child(6){animation-delay:1.8s}
+.term-line:nth-child(7){animation-delay:2.1s}.term-line:nth-child(8){animation-delay:2.4s}
+@keyframes termLine{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.term-line .ln{color:rgba(245,240,232,.15);min-width:24px;text-align:right;user-select:none}
+.term-line .kw{color:#C4503A}.term-line .fn{color:#5DA68C}.term-line .str{color:#D4A017}
+.term-line .cm{color:rgba(245,240,232,.2);font-style:italic}
+.term-line .tx{color:rgba(245,240,232,.55)}
+.term-line .op{color:rgba(245,240,232,.3)}
+.term-cursor{display:inline-block;width:8px;height:16px;background:var(--rust-l);animation:cursorBlink 1s step-end infinite;vertical-align:middle;margin-left:2px;border-radius:1px}
+@keyframes cursorBlink{0%,100%{opacity:1}50%{opacity:0}}
 
-.svc-bottom { padding: 28px 48px 38px; display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-.svc-feat { display: flex; align-items: flex-start; gap: 10px; }
-.svc-chk {
-  width: 20px; height: 20px; border-radius: 6px; flex-shrink: 0;
-  display: flex; align-items: center; justify-content: center; font-size: 11px; margin-top: 2px;
-}
-.chk-r { background: rgba(196,80,58,0.1); color: var(--rust); }
-.chk-g { background: rgba(45,84,72,0.1);  color: var(--forest); }
-.chk-y { background: rgba(184,134,11,0.1);color: var(--gold); }
-.svc-feat-t { font-size: 14px; color: var(--ink2); font-weight: 500; }
-
-/* =============================================
+/* ========================================
    TECH STACK
-   ============================================= */
-.techstack-section {
-  padding: 110px 0;
-  background: var(--ink); position: relative; overflow: hidden;
-}
-.techstack-section::before {
-  content: '';
-  position: absolute; inset: 0;
-  background-image:
-    radial-gradient(circle at 15% 50%, rgba(196,80,58,0.07) 0%, transparent 55%),
-    radial-gradient(circle at 85% 25%, rgba(45,84,72,0.08) 0%, transparent 50%);
-  pointer-events: none;
-}
-.techstack-section .eyebrow { color: var(--rust-l); }
-.techstack-section .eyebrow::before { background: var(--rust-l); }
-.techstack-section h2 { color: var(--cream); }
-.techstack-section .s-hdr p { color: rgba(245,240,232,0.52); }
+   ======================================== */
+.tech-sec{padding:110px 0;background:var(--paper);position:relative;overflow:hidden}
+.stack-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--border);border-radius:var(--r2);overflow:hidden;border:1px solid var(--border)}
+.stack-col{background:var(--paper);padding:32px 28px;transition:background .4s}
+.stack-col:hover{background:rgba(255,255,255,.6)}
+body.dark .stack-col:hover{background:rgba(255,255,255,.03)}
+.stk-head{display:flex;align-items:center;gap:12px;margin-bottom:24px;padding-bottom:16px;border-bottom:1px solid var(--border)}
+.stk-ic{width:38px;height:38px;border-radius:10px;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.stk-ic.sir{background:rgba(196,80,58,.1);color:var(--rust)}
+.stk-ic.sig{background:rgba(45,84,72,.1);color:var(--forest)}
+.stk-ic.siy{background:rgba(184,134,11,.1);color:var(--gold)}
+.stk-lbl{font-family:var(--fm);font-size:10px;color:var(--ink3);letter-spacing:.13em;text-transform:uppercase}
+.stk-title{font-family:var(--fh);font-size:16px;font-weight:700;margin-top:2px}
 
-.stack-cols {
-  display: grid; grid-template-columns: repeat(3,1fr);
-  gap: 2px; background: rgba(255,255,255,0.05);
-  border-radius: var(--r2); overflow: hidden;
-  border: 1px solid rgba(255,255,255,0.07);
-}
-.stack-col {
-  background: rgba(20,16,12,0.92);
-  padding: 38px 34px;
-}
-.stack-col:not(:last-child) { border-right: 1px solid rgba(255,255,255,0.05); }
-.sc-head {
-  display: flex; align-items: center; gap: 12px;
-  margin-bottom: 30px; padding-bottom: 20px;
-  border-bottom: 1px solid rgba(255,255,255,0.07);
-}
-.sc-icon {
-  width: 42px; height: 42px; border-radius: 10px; flex-shrink: 0;
-  display: flex; align-items: center; justify-content: center; font-size: 20px;
-}
-.sci-r { background: rgba(196,80,58,0.15); }
-.sci-g { background: rgba(45,84,72,0.2);   }
-.sci-y { background: rgba(184,134,11,0.15);}
-.sc-lbl   { font-family: var(--fm); font-size: 10px; color: rgba(245,240,232,0.3); letter-spacing: 0.14em; text-transform: uppercase; }
-.sc-title { font-family: var(--fh); font-size: 17px; font-weight: 700; color: var(--cream); margin-top: 2px; }
+.tr{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:var(--r);margin-bottom:5px;cursor:default;transition:all .3s var(--ease)}
+.tr:hover{transform:translateX(4px);background:rgba(26,22,18,.03)}
+body.dark .tr:hover{background:rgba(255,255,255,.03)}
+.tr-ic{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:rgba(26,22,18,.04)}
+body.dark .tr-ic{background:rgba(255,255,255,.04)}
+.tr-name{font-size:14px;font-weight:600}
+.tr-role{font-size:11px;color:var(--ink3);margin-top:1px}
+.tr-badge{margin-left:auto;flex-shrink:0;font-family:var(--fm);font-size:10px;font-weight:500;padding:3px 9px;border-radius:5px}
+.tb-c{background:rgba(196,80,58,.1);color:var(--rust)}
+.tb-p{background:rgba(45,84,72,.1);color:var(--forest)}
+.tb-t{background:rgba(184,134,11,.1);color:var(--gold)}
 
-.t-row {
-  display: flex; align-items: center; gap: 14px;
-  padding: 13px 14px; border-radius: var(--r);
-  margin-bottom: 7px; cursor: default; transition: background 0.2s;
-}
-.t-row:hover { background: rgba(255,255,255,0.04); }
-.t-row:last-child { margin-bottom: 0; }
-.t-emoji { font-size: 21px; flex-shrink: 0; width: 34px; text-align: center; }
-.t-name { font-size: 15px; font-weight: 600; color: rgba(245,240,232,0.88); }
-.t-role { font-size: 12px; color: rgba(245,240,232,0.36); margin-top: 1px; }
-.t-badge {
-  margin-left: auto; flex-shrink: 0;
-  font-family: var(--fm); font-size: 10px; font-weight: 500;
-  padding: 3px 9px; border-radius: 5px;
-}
-.tb-c { background: rgba(196,80,58,0.18); color: var(--rust-l); }
-.tb-p { background: rgba(45,84,72,0.25);  color: #5da68c; }
-.tb-t { background: rgba(184,134,11,0.18);color: var(--gold-l); }
-
-/* =============================================
+/* ========================================
    ABOUT
-   ============================================= */
-.about-section { padding: 110px 0; background: var(--cream); }
-.about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 96px; align-items: center; }
+   ======================================== */
+.about-sec{padding:110px 0;background:var(--cream)}
+.about-g{display:grid;grid-template-columns:1fr 1fr;gap:88px;align-items:center}
+.about-vis{position:relative}
+.about-bgn{font-family:var(--fh);font-size:160px;font-weight:800;line-height:1;color:rgba(26,22,18,.035);position:absolute;top:-25px;left:-16px;pointer-events:none;user-select:none}
+body.dark .about-bgn{color:rgba(255,255,255,.03)}
+.about-card{background:rgba(255,255,255,.82);backdrop-filter:blur(14px);border:1px solid var(--border);border-radius:var(--r2);overflow:hidden;box-shadow:var(--shadow);position:relative;z-index:1;transition:box-shadow .4s,transform .4s var(--spring)}
+body.dark .about-card{background:rgba(255,255,255,.04)}
+.about-card:hover{box-shadow:var(--shadow-lg);transform:translateY(-3px)}
+.ac-top{padding:28px 32px 22px;background:var(--warm);border-bottom:1px solid var(--border2)}
+.ac-top h3{font-size:18px;font-weight:700;margin-bottom:5px}
+.ac-top p{font-size:14px;color:var(--ink3)}
+.ac-body{padding:24px 32px}
+.vals{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.val .val-ic{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:8px;transition:transform .4s var(--spring)}
+.val:hover .val-ic{transform:scale(1.12) rotate(-5deg)}
+.vic-r{background:rgba(196,80,58,.1);color:var(--rust)}
+.vic-g{background:rgba(45,84,72,.1);color:var(--forest)}
+.vic-y{background:rgba(184,134,11,.1);color:var(--gold)}
+.vic-n{background:rgba(26,22,18,.05);color:var(--ink2)}
+body.dark .vic-n{background:rgba(255,255,255,.05)}
+.val h4{font-size:14px;font-weight:700;margin-bottom:3px;font-family:var(--fb)}
+.val p{font-size:13px;color:var(--ink3);line-height:1.6}
+.about-float{position:absolute;background:var(--rust);color:#fff;border-radius:var(--r2);padding:20px 24px;bottom:-24px;right:-24px;box-shadow:0 12px 40px rgba(196,80,58,.3);z-index:2;transition:transform .4s var(--spring)}
+.about-float:hover{transform:scale(1.05) rotate(-2deg)}
+.af-num{font-family:var(--fh);font-size:36px;font-weight:800;line-height:1}
+.af-lbl{font-size:13px;font-weight:500;opacity:.82;margin-top:3px}
 
-.about-visual { position: relative; }
-.about-bg-num {
-  font-family: var(--fh); font-size: 180px; font-weight: 800; line-height: 1;
-  color: rgba(26,22,18,0.04); position: absolute; top: -30px; left: -20px;
-  pointer-events: none; user-select: none;
-}
-.about-main-card {
-  background: #fff; border: 1px solid var(--border); border-radius: var(--r2);
-  overflow: hidden; box-shadow: var(--shadow); position: relative; z-index: 1;
-}
-.amc-top { padding: 34px 38px 28px; background: var(--warm); border-bottom: 1px solid var(--border2); }
-.amc-top h3 { font-size: 21px; font-weight: 700; margin-bottom: 7px; }
-.amc-top p { font-size: 14px; color: var(--ink3); }
-.amc-body { padding: 30px 38px; }
-.val-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
-.val-item { }
-.val-icon { font-size: 22px; margin-bottom: 8px; }
-.val-item h4 { font-size: 14px; font-weight: 700; margin-bottom: 4px; font-family: var(--fb); }
-.val-item p { font-size: 13px; color: var(--ink3); line-height: 1.6; }
-.about-float {
-  position: absolute; background: var(--rust); color: #fff;
-  border-radius: var(--r2); padding: 22px 26px;
-  bottom: -28px; right: -28px; box-shadow: 0 12px 40px rgba(196,80,58,0.3); z-index: 2;
-}
-.af-num   { font-family: var(--fh); font-size: 42px; font-weight: 800; line-height: 1; }
-.af-label { font-size: 13px; font-weight: 500; opacity: 0.85; margin-top: 4px; }
+.about-copy h2{font-size:clamp(26px,3.5vw,42px);font-weight:800;margin-bottom:20px;line-height:1.12}
+.about-copy h2 em{font-style:italic;color:var(--rust)}
+.about-copy>p{font-size:16px;color:var(--ink3);margin-bottom:16px;line-height:1.85}
+.pillars{display:flex;flex-direction:column;gap:14px;margin-top:32px}
+.pillar{display:flex;gap:14px;align-items:flex-start;padding:18px 20px;background:rgba(255,255,255,.65);backdrop-filter:blur(8px);border:1px solid var(--border);border-radius:var(--r2);transition:box-shadow .3s,transform .3s var(--spring)}
+body.dark .pillar{background:rgba(255,255,255,.03)}
+.pillar:hover{box-shadow:var(--shadow);transform:translateX(6px)}
+.pl-ic{width:40px;height:40px;border-radius:11px;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:transform .3s var(--spring)}
+.pillar:hover .pl-ic{transform:scale(1.12)}
+.pl-r{background:rgba(196,80,58,.1);color:var(--rust)}
+.pl-g{background:rgba(45,84,72,.1);color:var(--forest)}
+.pl-y{background:rgba(184,134,11,.1);color:var(--gold)}
+.pillar h4{font-size:15px;font-weight:700;margin-bottom:3px;font-family:var(--fb)}
+.pillar p{font-size:13.5px;color:var(--ink3);line-height:1.65}
 
-.about-copy h2 { font-size: clamp(28px,3.5vw,46px); font-weight: 800; margin-bottom: 22px; line-height: 1.12; }
-.about-copy h2 em { font-style: italic; color: var(--rust); }
-.about-copy p { font-size: 16px; color: var(--ink3); margin-bottom: 18px; line-height: 1.85; }
-.pillars { display: flex; flex-direction: column; gap: 18px; margin-top: 38px; }
-.pillar {
-  display: flex; gap: 16px; align-items: flex-start;
-  padding: 20px 22px; background: #fff;
-  border: 1px solid var(--border); border-radius: var(--r2); transition: box-shadow 0.2s;
-}
-.pillar:hover { box-shadow: var(--shadow); }
-.pillar-icon {
-  width: 42px; height: 42px; border-radius: 12px; flex-shrink: 0;
-  display: flex; align-items: center; justify-content: center; font-size: 21px;
-}
-.pi-r { background: rgba(196,80,58,0.1); }
-.pi-g { background: rgba(45,84,72,0.1);  }
-.pi-y { background: rgba(184,134,11,0.1);}
-.pillar h4 { font-size: 15px; font-weight: 700; margin-bottom: 4px; font-family: var(--fb); }
-.pillar p  { font-size: 13.5px; color: var(--ink3); line-height: 1.65; }
+/* ========================================
+   PROCESS — ANIMATED TIMELINE
+   ======================================== */
+.proc-sec{padding:110px 0;background:var(--paper)}
+.proc-steps{display:grid;grid-template-columns:repeat(4,1fr);position:relative;gap:0}
+.proc-steps::before{content:'';position:absolute;top:40px;left:calc(12.5% + 20px);right:calc(12.5% + 20px);height:2px;background:var(--border);z-index:0}
+.proc-line-fill{position:absolute;top:40px;left:calc(12.5% + 20px);height:2px;background:linear-gradient(90deg,var(--rust),var(--gold),var(--forest));z-index:0;width:0;transition:width 1.5s var(--ease);border-radius:2px}
+.proc-steps.animated .proc-line-fill{width:calc(100% - 25% - 40px)}
+.p-step{padding:0 14px;display:flex;flex-direction:column;align-items:center;text-align:center;position:relative;z-index:1}
+.p-num{font-family:var(--fm);font-size:10px;color:var(--rust);letter-spacing:.15em;margin-bottom:10px;opacity:0;transform:translateY(8px);transition:all .5s var(--ease)}
+.proc-steps.animated .p-num{opacity:1;transform:none}
+.proc-steps.animated .p-step:nth-child(1) .p-num{transition-delay:.1s}
+.proc-steps.animated .p-step:nth-child(2) .p-num{transition-delay:.3s}
+.proc-steps.animated .p-step:nth-child(3) .p-num{transition-delay:.5s}
+.proc-steps.animated .p-step:nth-child(4) .p-num{transition-delay:.7s}
+.p-circ{width:80px;height:80px;border-radius:50%;background:rgba(255,255,255,.85);backdrop-filter:blur(8px);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;margin-bottom:22px;box-shadow:var(--shadow);transition:all .4s var(--spring);color:var(--rust)}
+body.dark .p-circ{background:rgba(255,255,255,.04)}
+.p-step:hover .p-circ{background:var(--ink);border-color:var(--ink);box-shadow:0 8px 28px rgba(26,22,18,.2);transform:scale(1.06);color:var(--cream)}
+body.dark .p-step:hover .p-circ{background:var(--rust);border-color:var(--rust)}
+.p-step h3{font-size:17px;font-weight:700;margin-bottom:8px}
+.p-step p{font-size:14px;color:var(--ink3);line-height:1.75}
 
-/* =============================================
-   PROCESS
-   ============================================= */
-.process-section { padding: 110px 0; background: var(--paper); }
-.process-steps {
-  display: grid; grid-template-columns: repeat(4,1fr);
-  position: relative; gap: 0;
-}
-.process-steps::before {
-  content: '';
-  position: absolute; top: 40px;
-  left: calc(12.5% + 20px); right: calc(12.5% + 20px);
-  height: 1px; background: var(--border); z-index: 0;
-}
-.p-step {
-  padding: 0 18px;
-  display: flex; flex-direction: column; align-items: center; text-align: center;
-  position: relative; z-index: 1;
-}
-.p-circle {
-  width: 80px; height: 80px; border-radius: 50%;
-  background: #fff; border: 1px solid var(--border);
-  display: flex; align-items: center; justify-content: center;
-  margin-bottom: 26px; box-shadow: var(--shadow); transition: all 0.25s;
-}
-.p-step:hover .p-circle { background: var(--ink); border-color: var(--ink); box-shadow: 0 8px 28px rgba(26,22,18,0.2); }
-.p-num { font-family: var(--fh); font-size: 22px; font-weight: 800; color: var(--rust); transition: color 0.25s; }
-.p-step:hover .p-num { color: var(--cream); }
-.p-step h3 { font-size: 18px; font-weight: 700; margin-bottom: 10px; }
-.p-step p  { font-size: 14px; color: var(--ink3); line-height: 1.75; }
-
-/* =============================================
+/* ========================================
    TEAM
-   ============================================= */
-.team-section { padding: 110px 0; background: var(--warm); }
-.team-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 26px; }
-.team-card {
-  background: var(--paper); border: 1px solid var(--border);
-  border-radius: var(--r2); overflow: hidden; transition: transform 0.28s, box-shadow 0.28s;
-}
-.team-card:hover { transform: translateY(-5px); box-shadow: var(--shadow2); }
-.tc-head {
-  padding: 38px 34px 30px; position: relative; border-bottom: 1px solid var(--border2);
-}
-.tc-avatar {
-  width: 68px; height: 68px; border-radius: 50%; font-size: 30px;
-  display: flex; align-items: center; justify-content: center;
-  background: var(--cream); border: 3px solid var(--border); margin-bottom: 18px;
-}
-.tc-exp {
-  position: absolute; top: 34px; right: 30px;
-  font-family: var(--fm); font-size: 10px; color: var(--ink3);
-  background: var(--warm); border: 1px solid var(--border);
-  padding: 4px 10px; border-radius: 6px;
-}
-.tc-name { font-size: 21px; font-weight: 700; margin-bottom: 4px; }
-.tc-role { font-family: var(--fm); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--rust); font-weight: 500; }
-.tc-body { padding: 26px 34px 30px; }
-.tc-bio { font-size: 14px; color: var(--ink3); line-height: 1.8; margin-bottom: 18px; }
-.tc-skills { display: flex; flex-wrap: wrap; gap: 7px; }
-.tc-skill {
-  font-size: 12px; font-weight: 600; padding: 4px 11px; border-radius: 7px;
-  background: var(--cream); border: 1px solid var(--border); color: var(--ink2);
-}
+   ======================================== */
+.team-sec{padding:110px 0;background:var(--warm)}
+.team-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.team-card{background:var(--paper);border:1px solid var(--border);border-radius:var(--r2);overflow:hidden;transition:transform .4s var(--spring),box-shadow .4s;will-change:transform;position:relative}
+.team-card::before{content:'';position:absolute;inset:-1px;border-radius:var(--r2);background:linear-gradient(135deg,var(--rust),var(--forest),var(--gold));z-index:-1;opacity:0;transition:opacity .4s;padding:1px}
+.team-card:hover::before{opacity:1}
+.team-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-xl)}
+.tm-head{padding:32px 28px 24px;position:relative;border-bottom:1px solid var(--border2)}
+.tm-ava{width:60px;height:60px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--cream);border:3px solid var(--border);margin-bottom:14px;transition:transform .4s var(--spring),border-color .3s;color:var(--ink3)}
+.team-card:hover .tm-ava{transform:scale(1.06);border-color:var(--rust)}
+.tm-exp{position:absolute;top:28px;right:24px;font-family:var(--fm);font-size:10px;color:var(--ink3);background:var(--warm);border:1px solid var(--border);padding:3px 10px;border-radius:6px}
+.tm-name{font-size:19px;font-weight:700;margin-bottom:3px}
+.tm-role{font-family:var(--fm);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--rust);font-weight:500}
+.tm-body{padding:22px 28px 26px}
+.tm-bio{font-size:14px;color:var(--ink3);line-height:1.8;margin-bottom:14px}
+.tm-skills{display:flex;flex-wrap:wrap;gap:6px}
+.tm-skill{font-size:12px;font-weight:600;padding:4px 10px;border-radius:7px;background:var(--cream);border:1px solid var(--border);color:var(--ink2);transition:transform .25s var(--spring),background .25s}
+.tm-skill:hover{transform:translateY(-2px);background:rgba(196,80,58,.07)}
 
-/* =============================================
-   TESTIMONIALS
-   ============================================= */
-.testi-section { padding: 110px 0; background: var(--paper); }
-.testi-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 22px; }
-.testi-card {
-  background: #fff; border: 1px solid var(--border);
-  border-radius: var(--r2); padding: 38px 34px;
-  display: flex; flex-direction: column; position: relative;
-  transition: box-shadow 0.25s, transform 0.25s;
-}
-.testi-card:hover { box-shadow: var(--shadow2); transform: translateY(-3px); }
-.testi-card.dark { background: var(--ink); border-color: transparent; }
-.testi-card.dark .testi-text { color: rgba(245,240,232,0.68); }
-.testi-card.dark .testi-name { color: var(--cream); }
-.testi-card.dark .testi-co   { color: rgba(245,240,232,0.42); }
-.testi-card.dark .t-person   { border-top-color: rgba(255,255,255,0.07); }
-.t-qmark {
-  font-family: var(--fh); font-size: 64px; line-height: 1;
-  color: var(--rust); opacity: 0.18;
-  position: absolute; top: 26px; right: 30px; pointer-events: none;
-}
-.t-stars { color: #c9920a; font-size: 15px; letter-spacing: 3px; margin-bottom: 18px; }
-.testi-card.dark .t-stars { color: #f5c842; }
-.testi-text { font-size: 15px; color: var(--ink3); line-height: 1.85; font-style: italic; flex: 1; margin-bottom: 26px; }
-.t-person { display: flex; align-items: center; gap: 13px; padding-top: 20px; border-top: 1px solid var(--border2); }
-.t-ava {
-  width: 44px; height: 44px; border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 20px; background: var(--warm); border: 1px solid var(--border); flex-shrink: 0;
-}
-.testi-card.dark .t-ava { background: rgba(255,255,255,0.07); border-color: rgba(255,255,255,0.1); }
-.testi-name { font-weight: 700; font-size: 15px; }
-.testi-co   { font-size: 12px; color: var(--ink3); margin-top: 1px; }
+/* ========================================
+   TESTIMONIALS — AUTO CAROUSEL
+   ======================================== */
+.testi-sec{padding:110px 0;background:var(--paper)}
+.testi-track{overflow:hidden;position:relative}
+.testi-slider{display:flex;transition:transform .6s var(--ease)}
+.testi-slide{min-width:100%;display:grid;grid-template-columns:repeat(3,1fr);gap:20px;padding:0 2px}
+.testi{background:rgba(255,255,255,.85);backdrop-filter:blur(12px);border:1px solid var(--border);border-radius:var(--r2);padding:32px 28px;display:flex;flex-direction:column;position:relative;transition:box-shadow .4s,transform .4s var(--spring);will-change:transform}
+body.dark .testi{background:rgba(255,255,255,.03)}
+.testi:hover{box-shadow:var(--shadow-xl);transform:translateY(-5px)}
+.testi.dark{background:var(--ink);border-color:transparent}
+body.dark .testi.dark{background:#0A0A0A}
+.testi.dark:hover{box-shadow:0 20px 60px rgba(0,0,0,.4)}
+.testi.dark .testi-txt{color:rgba(245,240,232,.65)}
+.testi.dark .testi-name{color:var(--cream)}
+.testi.dark .testi-co{color:rgba(245,240,232,.4)}
+.testi.dark .t-bot{border-top-color:rgba(255,255,255,.06)}
+.t-qm{font-family:var(--fh);font-size:60px;line-height:1;color:var(--rust);opacity:.15;position:absolute;top:22px;right:24px;pointer-events:none}
+.t-stars{display:flex;gap:3px;margin-bottom:14px;color:#c9920a}
+.testi.dark .t-stars{color:#f5c842}
+.testi-txt{font-size:15px;color:var(--ink3);line-height:1.85;font-style:italic;flex:1;margin-bottom:22px}
+.t-bot{display:flex;align-items:center;gap:12px;padding-top:16px;border-top:1px solid var(--border2)}
+.t-ava{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--warm);border:1px solid var(--border);flex-shrink:0;color:var(--ink3)}
+.testi.dark .t-ava{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.08)}
+.testi-name{font-weight:700;font-size:14px}
+.testi-co{font-size:12px;color:var(--ink3);margin-top:1px}
+.testi-dots{display:flex;justify-content:center;gap:8px;margin-top:28px}
+.testi-dot{width:8px;height:8px;border-radius:50%;background:var(--border);cursor:pointer;transition:all .3s var(--ease);border:none;padding:0}
+.testi-dot.active{background:var(--rust);transform:scale(1.3)}
 
-/* =============================================
-   CONTACT
-   ============================================= */
-.contact-section { padding: 110px 0; background: var(--cream); }
-.contact-grid { display: grid; grid-template-columns: 400px 1fr; gap: 80px; align-items: start; }
+/* ========================================
+   COMPARISON
+   ======================================== */
+.cmp-sec{padding:110px 0;background:var(--warm)}
+.cmp-table{max-width:780px;margin:0 auto;border-radius:var(--r2);overflow:hidden;border:1px solid var(--border);box-shadow:var(--shadow)}
+.cmp-hdr{display:grid;grid-template-columns:1.2fr 1fr 1fr;background:var(--ink)}
+body.dark .cmp-hdr{background:#0A0A0A}
+.cmp-hdr div{padding:18px 22px;font-family:var(--fm);font-size:11px;letter-spacing:.13em;text-transform:uppercase;font-weight:500}
+.cmp-hdr div:first-child{color:rgba(245,240,232,.38)}
+.cmp-hdr div:nth-child(2){color:rgba(245,240,232,.45);text-align:center;border-left:1px solid rgba(255,255,255,.05);border-right:1px solid rgba(255,255,255,.05)}
+.cmp-hdr div:nth-child(3){color:var(--rust-l);text-align:center}
+.cmp-row{display:grid;grid-template-columns:1.2fr 1fr 1fr;background:rgba(255,255,255,.85);border-bottom:1px solid var(--border2)}
+body.dark .cmp-row{background:rgba(255,255,255,.03)}
+.cmp-row:last-child{border-bottom:none}
+.cmp-row:nth-child(even){background:var(--paper)}
+body.dark .cmp-row:nth-child(even){background:rgba(255,255,255,.02)}
+.cmp-row div{padding:14px 22px;font-size:14px;display:flex;align-items:center}
+.cmp-row div:first-child{font-weight:600;color:var(--ink)}
+.cmp-row div:nth-child(2){justify-content:center;border-left:1px solid var(--border2);border-right:1px solid var(--border2);color:var(--ink3);font-size:13px;text-align:center}
+.cmp-row div:nth-child(3){justify-content:center;color:var(--forest);font-weight:600;gap:6px}
 
-.c-left h2 { font-size: clamp(28px,3.5vw,46px); font-weight: 800; line-height: 1.12; margin-bottom: 18px; }
-.c-left h2 em { font-style: italic; color: var(--rust); }
-.c-left p   { font-size: 16px; color: var(--ink3); margin-bottom: 40px; line-height: 1.8; }
+/* ========================================
+   FAQ
+   ======================================== */
+.faq-sec{padding:110px 0;background:var(--paper)}
+.faq-list{max-width:720px;margin:0 auto}
+.faq-item{border:1px solid var(--border);border-radius:var(--r2);margin-bottom:10px;overflow:hidden;background:rgba(255,255,255,.85);backdrop-filter:blur(8px);transition:box-shadow .3s}
+body.dark .faq-item{background:rgba(255,255,255,.03)}
+.faq-item:hover{box-shadow:var(--shadow)}
+.faq-q{display:flex;align-items:center;justify-content:space-between;padding:18px 22px;cursor:pointer;font-size:15px;font-weight:600;gap:14px;user-select:none;transition:color .2s}
+.faq-q:hover{color:var(--rust)}
+.faq-chev{flex-shrink:0;transition:transform .35s var(--ease);color:var(--ink3)}
+.faq-item.open .faq-chev{transform:rotate(180deg);color:var(--rust)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .4s var(--ease)}
+.faq-a-in{padding:0 22px 18px;font-size:14.5px;color:var(--ink3);line-height:1.8}
 
-.c-details { display: flex; flex-direction: column; gap: 16px; }
-.c-detail {
-  display: flex; align-items: flex-start; gap: 15px;
-  padding: 18px 20px; background: #fff;
-  border: 1px solid var(--border); border-radius: var(--r2); transition: box-shadow 0.2s;
-}
-.c-detail:hover { box-shadow: var(--shadow); }
-.c-icon {
-  width: 42px; height: 42px; border-radius: 11px; flex-shrink: 0;
-  background: var(--warm); border: 1px solid var(--border);
-  display: flex; align-items: center; justify-content: center; font-size: 19px;
-}
-.c-lbl   { font-family: var(--fm); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink3); margin-bottom: 4px; }
-.c-value { font-size: 15px; font-weight: 600; color: var(--ink); }
+/* ========================================
+   CTA BANNER — ANIMATED GRADIENT
+   ======================================== */
+.cta-sec{padding:100px 0;background:var(--ink);position:relative;overflow:hidden;text-align:center}
+body.dark .cta-sec{background:#0A0A0A}
+.cta-sec::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 20% 50%,rgba(196,80,58,.12),transparent 50%),radial-gradient(ellipse at 80% 30%,rgba(45,84,72,.1),transparent 50%),radial-gradient(ellipse at 50% 80%,rgba(184,134,11,.06),transparent 50%);pointer-events:none;animation:ctaGlow 8s ease-in-out infinite alternate}
+@keyframes ctaGlow{0%{transform:scale(1)}100%{transform:scale(1.15) rotate(2deg)}}
+.cta-sec .eyebrow{color:var(--rust-l)}.cta-sec .eyebrow::before{background:var(--rust-l)}
+.cta-sec h2{font-size:clamp(28px,4.5vw,56px);font-weight:800;color:var(--cream);margin-bottom:18px;line-height:1.08}
+.cta-sec h2 em{font-style:italic;color:var(--rust-l)}
+.cta-sec>div>p{font-size:17px;color:rgba(245,240,232,.42);max-width:520px;margin:0 auto 36px;line-height:1.8}
+.cta-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.cta-sec .btn-rust{padding:16px 36px;font-size:15px;border-radius:var(--r2)}
 
-.c-form {
-  background: #fff; border: 1px solid var(--border);
-  border-radius: var(--r3); padding: 50px 50px 46px; box-shadow: var(--shadow);
-}
-.cf-title { font-size: 25px; font-weight: 800; margin-bottom: 6px; font-family: var(--fh); }
-.cf-sub   { font-size: 14px; color: var(--ink3); margin-bottom: 34px; }
-.f-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-.f-grp { margin-bottom: 18px; }
-.f-grp label {
-  display: block; font-family: var(--fm); font-size: 11px; font-weight: 500;
-  letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink3); margin-bottom: 8px;
-}
-.f-grp input, .f-grp select, .f-grp textarea {
-  width: 100%; padding: 13px 16px;
-  background: var(--paper); border: 1.5px solid var(--border);
-  border-radius: var(--r); color: var(--ink); font-family: var(--fb); font-size: 15px;
-  outline: none; transition: border-color 0.2s, box-shadow 0.2s; appearance: none;
-}
-.f-grp input:focus, .f-grp select:focus, .f-grp textarea:focus {
-  border-color: var(--rust); box-shadow: 0 0 0 3px rgba(196,80,58,0.1); background: #fff;
-}
-.f-grp input::placeholder, .f-grp textarea::placeholder { color: var(--ink3); opacity: 0.5; }
-.f-grp textarea { resize: vertical; min-height: 130px; }
-.f-note { font-size: 13px; color: var(--ink3); margin-top: 14px; text-align: center; }
+/* ========================================
+   CONTACT — SPLIT LAYOUT
+   ======================================== */
+.contact-sec{padding:110px 0;background:var(--cream)}
+.contact-g{display:grid;grid-template-columns:380px 1fr;gap:72px;align-items:start}
+.c-left h2{font-size:clamp(26px,3.5vw,40px);font-weight:800;line-height:1.12;margin-bottom:16px}
+.c-left h2 em{font-style:italic;color:var(--rust)}
+.c-left>p{font-size:15px;color:var(--ink3);margin-bottom:36px;line-height:1.8}
+.c-dets{display:flex;flex-direction:column;gap:12px}
+.c-det{display:flex;align-items:flex-start;gap:14px;padding:16px 18px;background:rgba(255,255,255,.65);backdrop-filter:blur(8px);border:1px solid var(--border);border-radius:var(--r2);transition:box-shadow .3s,transform .3s var(--spring)}
+body.dark .c-det{background:rgba(255,255,255,.03)}
+.c-det:hover{box-shadow:var(--shadow);transform:translateX(5px)}
+.c-ic{width:40px;height:40px;border-radius:10px;flex-shrink:0;background:var(--warm);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--ink3);transition:transform .3s var(--spring)}
+.c-det:hover .c-ic{transform:scale(1.08) rotate(-3deg)}
+.c-lbl{font-family:var(--fm);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);margin-bottom:3px}
+.c-val{font-size:15px;font-weight:600;color:var(--ink)}
 
-/* =============================================
+.c-form{background:rgba(255,255,255,.82);backdrop-filter:blur(14px);border:1px solid var(--border);border-radius:var(--r3);padding:44px 44px 40px;box-shadow:var(--shadow);transition:box-shadow .4s}
+body.dark .c-form{background:rgba(255,255,255,.04)}
+.c-form:hover{box-shadow:var(--shadow-lg)}
+.cf-title{font-size:22px;font-weight:800;margin-bottom:5px;font-family:var(--fh)}
+.cf-sub{font-size:14px;color:var(--ink3);margin-bottom:28px}
+.f-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.f-grp{margin-bottom:14px;position:relative}
+.f-grp label{display:block;font-family:var(--fm);font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);margin-bottom:7px;transition:color .3s}
+.f-grp:focus-within label{color:var(--rust)}
+.f-grp input,.f-grp select,.f-grp textarea{width:100%;padding:12px 15px;background:var(--paper);border:1.5px solid var(--border);border-radius:var(--r);color:var(--ink);font-family:var(--fb);font-size:14px;outline:none;transition:all .3s var(--ease);appearance:none}
+.f-grp input:focus,.f-grp select:focus,.f-grp textarea:focus{border-color:var(--rust);box-shadow:0 0 0 4px rgba(196,80,58,.07);background:rgba(255,255,255,.85);transform:translateY(-1px)}
+.f-grp input::placeholder,.f-grp textarea::placeholder{color:var(--ink3);opacity:.45}
+.f-grp textarea{resize:vertical;min-height:110px}
+.f-note{font-size:13px;color:var(--ink3);margin-top:12px;text-align:center}
+
+/* ========================================
    FOOTER
-   ============================================= */
-footer { background: var(--ink); padding: 78px 0 36px; }
-.ft-top {
-  display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
-  gap: 60px; margin-bottom: 60px;
-}
-.ft-brand .logo-text  { color: var(--cream); }
-.ft-brand .logo-sub   { color: rgba(245,240,232,0.3); }
-.ft-brand .logo-mark  { background: var(--cream); color: var(--ink); }
-.ft-brand p { font-size: 14px; color: rgba(245,240,232,0.42); line-height: 1.8; max-width: 280px; margin-top: 16px; }
-.ft-col h4 {
-  font-family: var(--fm); font-size: 10px; font-weight: 500;
-  letter-spacing: 0.16em; text-transform: uppercase;
-  color: rgba(245,240,232,0.3); margin-bottom: 20px;
-}
-.ft-col ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
-.ft-col a { text-decoration: none; color: rgba(245,240,232,0.58); font-size: 14px; transition: color 0.2s; }
-.ft-col a:hover { color: var(--cream); }
-.ft-bottom {
-  border-top: 1px solid rgba(255,255,255,0.06);
-  padding-top: 30px; display: flex; justify-content: space-between; align-items: center;
-}
-.ft-bottom p { font-size: 13px; color: rgba(245,240,232,0.28); }
-.social-row { display: flex; gap: 10px; }
-.s-btn {
-  width: 38px; height: 38px; border-radius: var(--r);
-  background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08);
-  display: flex; align-items: center; justify-content: center;
-  text-decoration: none; font-size: 15px; transition: all 0.2s;
-}
-.s-btn:hover { background: var(--rust); border-color: var(--rust); transform: translateY(-2px); }
+   ======================================== */
+footer{background:var(--ink);padding:72px 0 30px;position:relative;overflow:hidden}
+body.dark footer{background:#0A0A0A}
+footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(196,80,58,.3),var(--gold-l),rgba(45,84,72,.3),transparent)}
+.ft-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:52px}
+.ft-brand .logo-t{color:var(--cream)}
+.ft-brand .logo-sub{font-size:11px;color:rgba(245,240,232,.3);margin-top:1px}
+.ft-brand .logo-m{background:var(--cream);color:var(--ink)}
+.ft-brand>p{font-size:14px;color:rgba(245,240,232,.38);line-height:1.8;max-width:270px;margin-top:14px}
+/* Newsletter */
+.ft-newsletter{margin-top:20px}
+.ft-newsletter label{font-family:var(--fm);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:rgba(245,240,232,.35);display:block;margin-bottom:8px}
+.ft-nl-row{display:flex;gap:6px}
+.ft-nl-row input{flex:1;padding:10px 14px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:8px;color:var(--cream);font-family:var(--fb);font-size:13px;outline:none;transition:border-color .3s}
+.ft-nl-row input::placeholder{color:rgba(245,240,232,.25)}
+.ft-nl-row input:focus{border-color:var(--rust)}
+.ft-nl-row button{padding:10px 16px;background:var(--rust);color:#fff;border:none;border-radius:8px;cursor:pointer;font-family:var(--fb);font-weight:600;font-size:13px;transition:all .3s;flex-shrink:0}
+.ft-nl-row button:hover{background:var(--rust-d)}
 
-/* =============================================
-   SCROLL ANIMATIONS
-   ============================================= */
-.reveal {
-  opacity: 0; transform: translateY(26px);
-  transition: opacity 0.65s ease, transform 0.65s ease;
-}
-.reveal.on { opacity: 1; transform: translateY(0); }
-.d1 { transition-delay: 0.08s; }
-.d2 { transition-delay: 0.16s; }
-.d3 { transition-delay: 0.24s; }
-.d4 { transition-delay: 0.32s; }
+.ft-col h4{font-family:var(--fm);font-size:10px;font-weight:500;letter-spacing:.15em;text-transform:uppercase;color:rgba(245,240,232,.28);margin-bottom:18px}
+.ft-col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+.ft-col a{text-decoration:none;color:rgba(245,240,232,.55);font-size:14px;transition:all .3s}
+.ft-col li{transition:transform .3s var(--ease)}
+.ft-col li:hover{transform:translateX(4px)}
+.ft-col a:hover{color:var(--cream)}
+.ft-bot{border-top:1px solid rgba(255,255,255,.05);padding-top:24px;display:flex;justify-content:space-between;align-items:center}
+.ft-bot p{font-size:13px;color:rgba(245,240,232,.25)}
+.socials{display:flex;gap:8px}
+.soc{width:36px;height:36px;border-radius:var(--r);background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);display:flex;align-items:center;justify-content:center;text-decoration:none;color:rgba(245,240,232,.45);transition:all .35s var(--spring)}
+.soc:hover{background:var(--rust);border-color:var(--rust);color:#fff;transform:translateY(-3px) scale(1.05);box-shadow:0 6px 20px rgba(196,80,58,.3)}
 
-/* =============================================
+/* ========================================
+   REVEAL ANIMATIONS
+   ======================================== */
+.reveal{opacity:0;transform:translateY(32px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+.reveal.on{opacity:1;transform:none}
+.d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}.d4{transition-delay:.4s}
+
+/* Wave Divider */
+.wave-divider{width:100%;height:60px;position:relative;overflow:hidden}
+.wave-divider svg{position:absolute;bottom:0;width:100%;height:100%}
+.wave-divider.flip{transform:scaleY(-1)}
+
+/* ========================================
    RESPONSIVE
-   ============================================= */
-@media (max-width: 1060px) {
-  .hero-grid   { grid-template-columns: 1fr; }
-  .hero-right  { display: none; }
-  .hero-left   { padding: 40px 0 80px; border-right: none; }
-  .svc-layout  { grid-template-columns: 1fr; }
-  .svc-sticky  { position: static; }
-  .svc-nav     { flex-direction: row; flex-wrap: wrap; }
-  .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 52px; }
-  .about-float { right: 0; }
-  .stack-cols  { grid-template-columns: 1fr; }
-  .stack-col:not(:last-child) { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.05); }
-  .ft-top { grid-template-columns: 1fr 1fr; gap: 40px; }
+   ======================================== */
+@media(max-width:1060px){
+  .hero-g{grid-template-columns:1fr}.hero-r{display:none}.hero-l{padding:36px 0 72px;border-right:none}
+  .svc-lay{grid-template-columns:1fr}.svc-side{position:static}.svc-links{flex-direction:row;flex-wrap:wrap}
+  .about-g,.contact-g{grid-template-columns:1fr;gap:48px}.about-float{right:0}
+  .stack-grid{grid-template-columns:1fr}
+  .code-grid{grid-template-columns:1fr;gap:48px}
+  .ft-top{grid-template-columns:1fr 1fr;gap:36px}
+  .stats-grid{grid-template-columns:repeat(2,1fr)}.stat-box:nth-child(2)::after{display:none}
+  .nav{left:14px;right:14px;transform:none}.nav.hide{transform:translateY(-120%)}
+  .case-row{grid-template-columns:1fr}.case-right{justify-content:flex-start;margin-top:12px}.case-arrow{display:none}
 }
-@media (max-width: 768px) {
-  .nav-menu { display: none; }
-  .nav-actions .btn-outline { display: none; }
-  .team-grid, .testi-grid { grid-template-columns: 1fr; }
-  .process-steps { grid-template-columns: 1fr 1fr; }
-  .process-steps::before { display: none; }
-  .svc-bottom { grid-template-columns: 1fr; }
-  .svc-top, .svc-bottom { padding-left: 26px; padding-right: 26px; }
-  .c-form { padding: 30px 24px; }
-  .f-row  { grid-template-columns: 1fr; }
-  .ft-top { grid-template-columns: 1fr; }
-  .ft-bottom { flex-direction: column; gap: 18px; text-align: center; }
-  .hero-proof { flex-wrap: wrap; gap: 28px; }
+@media(max-width:768px){
+  .container{padding:0 20px}
+  .nmenu{display:none}.nav-btns .btn-outline{display:none}.hbg{display:flex}
+  .team-grid,.testi-slide{grid-template-columns:1fr}
+  .proc-steps{grid-template-columns:1fr 1fr}.proc-steps::before,.proc-line-fill{display:none}
+  .sc-bot{grid-template-columns:1fr}.sc-top,.sc-bot{padding-left:22px;padding-right:22px}
+  .c-form{padding:24px 20px}.f-row{grid-template-columns:1fr}
+  .ft-top{grid-template-columns:1fr}.ft-bot{flex-direction:column;gap:16px;text-align:center}
+  .hero-proof{flex-wrap:wrap;gap:20px}
+  .stats-grid{grid-template-columns:1fr 1fr}.stat-box{padding:28px 16px}
+  .cmp-hdr div,.cmp-row div{padding:10px 12px;font-size:12px}
+  .cta-sec h2{font-size:clamp(22px,5vw,36px)}
+  .btt{bottom:18px;right:18px;width:42px;height:42px}
+  .code-grid{grid-template-columns:1fr;gap:36px}
 }
+@media(min-width:769px){.hbg{display:none}}
 </style>
 </head>
 <body>
 
-<!-- ======================================================
-     NAV
-     ====================================================== -->
-<div class="nav-wrap">
-  <div class="container">
-    <div class="nav-inner">
-      <a href="#home" class="logo-wrap">
-        <div class="logo-mark">T</div>
-        <div>
-          <div class="logo-text">TechForce</div>
-          <div class="logo-sub">Solutions</div>
-        </div>
-      </a>
-      <ul class="nav-menu">
-        <li><a href="#services">Services</a></li>
-        <li><a href="#techstack">Tech Stack</a></li>
-        <li><a href="#about">About</a></li>
-        <li><a href="#team">Team</a></li>
-        <li><a href="#testimonials">Clients</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
-      <div class="nav-actions">
-        <a href="#contact" class="btn btn-outline">Get a Quote</a>
-        <a href="#contact" class="btn btn-primary">Start a Project <span class="arr">→</span></a>
-      </div>
-    </div>
-  </div>
+<!-- Grain Texture -->
+<div class="grain"></div>
+
+<!-- Custom Cursor -->
+<div class="cursor-dot" id="cDot"></div>
+<div class="cursor-ring" id="cRing"></div>
+
+<!-- Page Loader -->
+<div class="loader" id="loader">
+  <div class="loader-mark">T</div>
+  <div class="loader-track"><div class="loader-bar" id="lBar"></div></div>
 </div>
 
-<!-- ======================================================
-     01 · HERO
-     ====================================================== -->
+<!-- Scroll Progress -->
+<div class="scroll-prog" id="sProg"></div>
+
+<!-- Back to Top -->
+<button class="btt" id="btt" aria-label="Back to top">
+  <span class="i i-20"><svg viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg></span>
+</button>
+
+<!-- Mobile Nav -->
+<div class="mob-nav" id="mobNav">
+  <a href="#home" onclick="closeMob()">Home</a>
+  <a href="#services" onclick="closeMob()">Services</a>
+  <a href="#cases" onclick="closeMob()">Work</a>
+  <a href="#about" onclick="closeMob()">About</a>
+  <a href="#team" onclick="closeMob()">Team</a>
+  <a href="#testimonials" onclick="closeMob()">Clients</a>
+  <a href="#contact" onclick="closeMob()">Contact</a>
+</div>
+
+<!-- NAV -->
+<nav class="nav" id="mainNav">
+  <div class="nav-in">
+    <a href="#home" class="logo">
+      <div class="logo-m">T</div>
+      <div class="logo-t">TechForce</div>
+    </a>
+    <ul class="nmenu">
+      <li><a href="#services">Services</a></li>
+      <li><a href="#cases">Work</a></li>
+      <li><a href="#techstack">Stack</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#team">Team</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="nav-btns">
+      <button class="dm-toggle" id="dmToggle" aria-label="Toggle dark mode">
+        <span class="i i-16" id="dmIcon"><svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></span>
+      </button>
+      <a href="#contact" class="btn btn-primary">Start Project <span class="arr">→</span></a>
+      <button class="hbg" id="hbg" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</nav>
+
+<!-- ===== HERO ===== -->
 <section class="hero" id="home">
+  <div class="mesh-gradient">
+    <div class="mesh-blob"></div>
+    <div class="mesh-blob"></div>
+    <div class="mesh-blob"></div>
+  </div>
+  <div class="dot-grid"></div>
   <div class="container">
-    <div class="hero-grid">
-
-      <div class="hero-left reveal">
-        <div class="hero-kicker">
-          <span class="kicker-dot"></span>
-          <span class="kicker-text">Salesforce & Full Stack — Based in Pune, India</span>
+    <div class="hero-g">
+      <div class="hero-l">
+        <div class="hero-kick">
+          <span class="kick-dot"></span>
+          <span class="kick-txt">Salesforce &amp; Full Stack · Pune, India</span>
         </div>
-
-        <h1>We Build Software<br/>That <em>Actually</em><br/>Moves Business</h1>
-
-        <p class="hero-desc">
-          End-to-end Salesforce CRM development and modern full-stack engineering — React, React Native, Node.js, Python. Trusted by several companies to ship fast, clean, and scalable digital products.
-        </p>
-
+        <h1>
+          <span class="ln"><span class="ln-in">We Build Software</span></span>
+          <span class="ln"><span class="ln-in">That <em>Actually</em></span></span>
+          <span class="ln"><span class="ln-in">Moves Business</span></span>
+        </h1>
+        <p class="hero-p">End-to-end Salesforce CRM development and modern full-stack engineering — React, React Native, Node.js, Python. Trusted by 50+ companies to ship fast, clean, and scalable digital products.</p>
         <div class="hero-ctas">
           <a href="#contact" class="btn btn-rust">Let's Talk About Your Project <span class="arr">→</span></a>
           <a href="#services" class="btn btn-outline">See What We Do</a>
         </div>
-
         <div class="hero-proof">
-          <div><div class="proof-num">15<sup>+</sup></div><div class="proof-label">Projects Delivered</div></div>
-          <div><div class="proof-num">10<sup>+</sup></div><div class="proof-label">Happy Clients</div></div>
-          <div><div class="proof-num">2<sup>+</sup></div><div class="proof-label">Years in Business</div></div>
-          <div><div class="proof-num">98<sup>%</sup></div><div class="proof-label">On-Time Delivery</div></div>
+          <div class="pf-item"><div class="pf-num"><span class="counter" data-target="80">0</span><sup>+</sup></div><div class="pf-label">Projects Delivered</div></div>
+          <div class="pf-item"><div class="pf-num"><span class="counter" data-target="50">0</span><sup>+</sup></div><div class="pf-label">Happy Clients</div></div>
+          <div class="pf-item"><div class="pf-num"><span class="counter" data-target="5">0</span><sup>+</sup></div><div class="pf-label">Years in Business</div></div>
+          <div class="pf-item"><div class="pf-num"><span class="counter" data-target="98">0</span><sup>%</sup></div><div class="pf-label">On-Time Delivery</div></div>
         </div>
       </div>
-
-      <div class="hero-right reveal d2">
-        <div class="hero-card">
-          <div class="hc-label">Service — 01</div>
-          <div class="hc-title">Salesforce CRM</div>
-          <div class="hc-desc">Full implementation, Apex development, LWC, integrations & managed support.</div>
-          <div class="tag-cloud">
-            <span class="tag t-rust">Sales Cloud</span>
-             <span class="tag t-rust">Service Cloud</span>
-              <span class="tag t-rust">Experience Cloud</span>
-               <span class="tag t-rust">CPQ</span>
-               <span class="tag t-rust">Customisation Over Salesforce Platform</span>
-                <span class="tag t-rust">Salesforce Admin</span>
-            <span class="tag t-rust">Apex</span>
-            <span class="tag t-rust">LWC</span>
-             <span class="tag t-rust">Visualforce</span>
-              <span class="tag t-rust">Integerations</span>
-               <span class="tag t-rust">Reports and DashBoard</span>
-
-            <!-- <span class="tag t-rust">CPQ</span> -->
+      <div class="hero-r">
+        <!-- Card 1 -->
+        <div class="hcard" data-glow>
+          <div class="hc-top">
+            <div class="hc-ic ir"><span class="i i-22"><svg viewBox="0 0 24 24"><path d="M19.35 10.04A7.49 7.49 0 0 0 12 4a7.48 7.48 0 0 0-6.64 4.04A5.99 5.99 0 0 0 1 14a6 6 0 0 0 6 6h12a5 5 0 0 0 .35-9.96z"/></svg></span></div>
+            <div><div class="hc-lbl">Service — 01</div><div class="hc-ttl">Salesforce CRM</div></div>
           </div>
-          <div class="status-row">
-            <div class="status-pill"><span></span>Available now</div>
-            <div class="status-time">Response &lt; 24h</div>
-          </div>
+          <div class="hc-desc">Full implementation, Apex development, LWC, integrations &amp; managed support.</div>
+          <div class="tags"><span class="tag tr">Sales Cloud</span><span class="tag tr">Apex</span><span class="tag tr">LWC</span><span class="tag tr">CPQ</span></div>
+          <div class="hc-foot"><div class="status"><span></span>Available now</div><div class="hc-time">Response &lt; 24h</div></div>
         </div>
-        <div class="hero-card">
-          <div class="hc-label">Service — 02</div>
-          <div class="hc-title">Full Stack Web Dev</div>
+        <!-- Card 2 -->
+        <div class="hcard" data-glow>
+          <div class="hc-top">
+            <div class="hc-ic ig"><span class="i i-22"><svg viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></span></div>
+            <div><div class="hc-lbl">Service — 02</div><div class="hc-ttl">Full Stack Web Dev</div></div>
+          </div>
           <div class="hc-desc">React.js frontends with Node.js or Python backends. Clean APIs, cloud-ready.</div>
-          <div class="tag-cloud">
-            <span class="tag t-forest">React.js</span>
-            <span class="tag t-forest">Node.js</span>
-            <span class="tag t-forest">Python</span>
-          </div>
+          <div class="tags"><span class="tag tg">React.js</span><span class="tag tg">Node.js</span><span class="tag tg">Python</span></div>
         </div>
-        <div class="hero-card">
-          <div class="hc-label">Service — 03</div>
-          <div class="hc-title">Mobile Apps</div>
-          <div class="hc-desc">Cross-platform iOS & Android apps using React Native — one codebase, native feel.</div>
-          <div class="tag-cloud">
-            <span class="tag t-gold">React Native</span>
-            <span class="tag t-gold">iOS</span>
-            <span class="tag t-gold">Android</span>
+        <!-- Card 3 -->
+        <div class="hcard" data-glow>
+          <div class="hc-top">
+            <div class="hc-ic iy"><span class="i i-22"><svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></span></div>
+            <div><div class="hc-lbl">Service — 03</div><div class="hc-ttl">Mobile Apps</div></div>
           </div>
+          <div class="hc-desc">Cross-platform iOS &amp; Android apps using React Native — one codebase, native feel.</div>
+          <div class="tags"><span class="tag ty">React Native</span><span class="tag ty">iOS</span><span class="tag ty">Android</span></div>
         </div>
       </div>
-
     </div>
   </div>
 </section>
 
-<!-- ======================================================
-     TRUST MARQUEE
-     ====================================================== -->
-<div class="trust-bar" aria-hidden="true">
-  <div class="marquee-track">
-    <div class="marquee-item"><span class="mdot"></span><strong>Salesforce</strong> Certified</div>
-    <div class="marquee-item"><span class="mdot"></span><strong>React.js</strong> Experts</div>
-    <div class="marquee-item"><span class="mdot"></span><strong>React Native</strong> Mobile</div>
-    <div class="marquee-item"><span class="mdot"></span><strong>Node.js</strong> Backend</div>
-    <div class="marquee-item"><span class="mdot"></span><strong>Python</strong> Development</div>
-    <div class="marquee-item"><span class="mdot"></span><strong>Apex & LWC</strong> Specialists</div>
-    <div class="marquee-item"><span class="mdot"></span><strong>15+</strong> Projects</div>
-    <div class="marquee-item"><span class="mdot"></span><strong>10+</strong> Happy Clients</div>
-    <div class="marquee-item"><span class="mdot"></span><strong>Salesforce</strong> Certified</div>
-    <div class="marquee-item"><span class="mdot"></span><strong>React.js</strong> Experts</div>
-    <div class="marquee-item"><span class="mdot"></span><strong>React Native</strong> Mobile</div>
-    <div class="marquee-item"><span class="mdot"></span><strong>Node.js</strong> Backend</div>
-    <div class="marquee-item"><span class="mdot"></span><strong>Python</strong> Development</div>
-    <div class="marquee-item"><span class="mdot"></span><strong>Apex & LWC</strong> Specialists</div>
-    <div class="marquee-item"><span class="mdot"></span><strong>15+</strong> Projects</div>
-    <div class="marquee-item"><span class="mdot"></span><strong>8+</strong> Happy Clients</div>
+<!-- CLIENT LOGOS — INFINITE SCROLL -->
+<section class="logos">
+  <div class="container"><div class="logos-lbl">Trusted by innovative teams</div></div>
+  <div class="logo-scroll">
+    <div class="logo-co"><span class="i i-18"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></span>NexaRetail</div>
+    <div class="logo-co"><span class="i i-18"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span>UrbanPulse</div>
+    <div class="logo-co"><span class="i i-18"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></span>FinoEdge</div>
+    <div class="logo-co"><span class="i i-18"><svg viewBox="0 0 24 24"><path d="M19.35 10.04A7.49 7.49 0 0 0 12 4a7.48 7.48 0 0 0-6.64 4.04A5.99 5.99 0 0 0 1 14a6 6 0 0 0 6 6h12a5 5 0 0 0 .35-9.96z"/></svg></span>CloudAxis</div>
+    <div class="logo-co"><span class="i i-18"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg></span>DataVault</div>
+    <div class="logo-co"><span class="i i-18"><svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></span>SwiftLogic</div>
+    <div class="logo-co"><span class="i i-18"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></span>GlobeTech</div>
+    <div class="logo-co"><span class="i i-18"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>SecureNet</div>
+    <!-- Duplicate for seamless loop -->
+    <div class="logo-co"><span class="i i-18"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></span>NexaRetail</div>
+    <div class="logo-co"><span class="i i-18"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span>UrbanPulse</div>
+    <div class="logo-co"><span class="i i-18"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></span>FinoEdge</div>
+    <div class="logo-co"><span class="i i-18"><svg viewBox="0 0 24 24"><path d="M19.35 10.04A7.49 7.49 0 0 0 12 4a7.48 7.48 0 0 0-6.64 4.04A5.99 5.99 0 0 0 1 14a6 6 0 0 0 6 6h12a5 5 0 0 0 .35-9.96z"/></svg></span>CloudAxis</div>
+    <div class="logo-co"><span class="i i-18"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg></span>DataVault</div>
+    <div class="logo-co"><span class="i i-18"><svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></span>SwiftLogic</div>
+    <div class="logo-co"><span class="i i-18"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></span>GlobeTech</div>
+    <div class="logo-co"><span class="i i-18"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>SecureNet</div>
+  </div>
+</section>
+
+<!-- TRUST MARQUEE -->
+<div class="marquee-wrap" aria-hidden="true">
+  <div class="marquee">
+    <div class="mq-item"><span class="mq-dot"></span><strong>Salesforce</strong> Certified</div>
+    <div class="mq-item"><span class="mq-dot"></span><strong>React.js</strong> Experts</div>
+    <div class="mq-item"><span class="mq-dot"></span><strong>React Native</strong> Mobile</div>
+    <div class="mq-item"><span class="mq-dot"></span><strong>Node.js</strong> Backend</div>
+    <div class="mq-item"><span class="mq-dot"></span><strong>Python</strong> Development</div>
+    <div class="mq-item"><span class="mq-dot"></span><strong>Apex &amp; LWC</strong> Specialists</div>
+    <div class="mq-item"><span class="mq-dot"></span><strong>80+</strong> Projects</div>
+    <div class="mq-item"><span class="mq-dot"></span><strong>50+</strong> Happy Clients</div>
+    <div class="mq-item"><span class="mq-dot"></span><strong>Salesforce</strong> Certified</div>
+    <div class="mq-item"><span class="mq-dot"></span><strong>React.js</strong> Experts</div>
+    <div class="mq-item"><span class="mq-dot"></span><strong>React Native</strong> Mobile</div>
+    <div class="mq-item"><span class="mq-dot"></span><strong>Node.js</strong> Backend</div>
+    <div class="mq-item"><span class="mq-dot"></span><strong>Python</strong> Development</div>
+    <div class="mq-item"><span class="mq-dot"></span><strong>Apex &amp; LWC</strong> Specialists</div>
+    <div class="mq-item"><span class="mq-dot"></span><strong>80+</strong> Projects</div>
+    <div class="mq-item"><span class="mq-dot"></span><strong>50+</strong> Happy Clients</div>
   </div>
 </div>
 
-<!-- ======================================================
-     02 · SERVICES
-     ====================================================== -->
-<section class="services-section" id="services">
+<!-- ===== BIG NUMBERS (NEW — Stripe-inspired) ===== -->
+<section class="stats-sec" id="stats">
+  <div class="dot-grid"></div>
   <div class="container">
-    <div class="svc-layout">
-
-      <div class="svc-sticky reveal">
-        <div class="eyebrow">What We Do</div>
-        <h2>Three Services. Done Well.</h2>
-        <p>We don't try to be everything. We focus deeply on three areas and deliver real results in each one.</p>
-        <ul class="svc-nav">
-          <li><a href="#svc-sf" class="active"><span class="sn">01 /</span> Salesforce CRM</a></li>
-          <li><a href="#svc-web"><span class="sn">02 /</span> Full Stack Web</a></li>
-          <li><a href="#svc-mob"><span class="sn">03 /</span> Mobile Apps</a></li>
-        </ul>
+    <div class="stats-grid reveal">
+      <div class="stat-box">
+        <div class="stat-num"><span class="counter" data-target="500000" data-format="comma">0</span><sup>+</sup></div>
+        <div class="stat-label">Transactions Powered Daily</div>
+        <div class="stat-sub">Across all client platforms</div>
       </div>
-
-      <div class="svc-cards">
-
-        <!-- Salesforce -->
-        <div class="svc-card reveal" id="svc-sf">
-          <div class="svc-top">
-            <div class="svc-big-num">01</div>
-            <div class="svc-icon si-r">☁️</div>
-            <h3>Salesforce CRM Development & Support</h3>
-            <p class="svc-desc">We handle the full Salesforce lifecycle — from initial discovery and architecture through implementation, customisation, integration, with 7 day free support. Whether you're starting fresh or untangling a messy legacy org, we bring structure and clarity to your CRM.</p>
-            <div class="tag-cloud" style="margin-top:20px;">
-              <span class="tag t-rust">Sales Cloud</span>
-              <span class="tag t-rust">Service Cloud</span>
-              <span class="tag t-rust">Marketing Cloud</span>
-              <span class="tag t-rust">Apex</span>
-              <span class="tag t-rust">Lightning Web Components</span>
-              <span class="tag t-rust">CPQ</span>
-              <span class="tag t-rust">Experience Cloud</span>
-              <span class="tag t-rust">REST & SOAP Integrations</span>
-            </div>
-          </div>
-          <div class="svc-bottom">
-            <div class="svc-feat"><div class="svc-chk chk-r">✓</div><span class="svc-feat-t">End-to-end implementation</span></div>
-            <div class="svc-feat"><div class="svc-chk chk-r">✓</div><span class="svc-feat-t">Custom Apex & LWC development</span></div>
-            <div class="svc-feat"><div class="svc-chk chk-r">✓</div><span class="svc-feat-t">Third-party integrations</span></div>
-            <div class="svc-feat"><div class="svc-chk chk-r">✓</div><span class="svc-feat-t">Data migration & cleansing</span></div>
-            <div class="svc-feat"><div class="svc-chk chk-r">✓</div><span class="svc-feat-t">Ongoing managed support</span></div>
-            <div class="svc-feat"><div class="svc-chk chk-r">✓</div><span class="svc-feat-t">User training & adoption</span></div>
-          </div>
-        </div>
-
-        <!-- Full Stack -->
-        <div class="svc-card reveal d1" id="svc-web">
-          <div class="svc-top">
-            <div class="svc-big-num">02</div>
-            <div class="svc-icon si-g">⚙️</div>
-            <h3>Full Stack Web Development</h3>
-            <p class="svc-desc">From product dashboards to enterprise web platforms — we architect and build using React.js on the frontend and Node.js or Python on the backend. Clean APIs, tested code, and systems built to scale as your user base grows.</p>
-            <div class="tag-cloud" style="margin-top:20px;">
-              <span class="tag t-forest">React.js</span>
-              <span class="tag t-forest">Node.js</span>
-              <span class="tag t-forest">Python</span>
-              <span class="tag t-forest">Django / FastAPI</span>
-              <span class="tag t-forest">REST & GraphQL</span>
-              <span class="tag t-forest">PostgreSQL</span>
-              <span class="tag t-forest">AWS / GCP</span>
-            </div>
-          </div>
-          <div class="svc-bottom">
-            <div class="svc-feat"><div class="svc-chk chk-g">✓</div><span class="svc-feat-t">SaaS & dashboard platforms</span></div>
-            <div class="svc-feat"><div class="svc-chk chk-g">✓</div><span class="svc-feat-t">REST & GraphQL API design</span></div>
-            <div class="svc-feat"><div class="svc-chk chk-g">✓</div><span class="svc-feat-t">Database design & optimisation</span></div>
-            <div class="svc-feat"><div class="svc-chk chk-g">✓</div><span class="svc-feat-t">Cloud deployment & DevOps</span></div>
-            <div class="svc-feat"><div class="svc-chk chk-g">✓</div><span class="svc-feat-t">Performance & security audits</span></div>
-            <div class="svc-feat"><div class="svc-chk chk-g">✓</div><span class="svc-feat-t">Code review & tech rescue</span></div>
-          </div>
-        </div>
-
-        <!-- Mobile -->
-        <div class="svc-card reveal d1" id="svc-mob">
-          <div class="svc-top">
-            <div class="svc-big-num">03</div>
-            <div class="svc-icon si-y">📱</div>
-            <h3>Mobile App Development</h3>
-            <p class="svc-desc">We build cross-platform mobile applications with React Native — delivering native-quality experiences for iOS and Android from a single codebase. Faster to market, easier to maintain, without compromising on performance or feel.</p>
-            <div class="tag-cloud" style="margin-top:20px;">
-              <span class="tag t-gold">React Native</span>
-              <span class="tag t-gold">iOS</span>
-              <span class="tag t-gold">Android</span>
-              <span class="tag t-gold">Expo</span>
-              <span class="tag t-gold">Push Notifications</span>
-              <span class="tag t-gold">Offline Support</span>
-            </div>
-          </div>
-          <div class="svc-bottom">
-            <div class="svc-feat"><div class="svc-chk chk-y">✓</div><span class="svc-feat-t">Single codebase, both platforms</span></div>
-            <div class="svc-feat"><div class="svc-chk chk-y">✓</div><span class="svc-feat-t">App Store & Play Store launch</span></div>
-            <div class="svc-feat"><div class="svc-chk chk-y">✓</div><span class="svc-feat-t">Native device API integrations</span></div>
-            <div class="svc-feat"><div class="svc-chk chk-y">✓</div><span class="svc-feat-t">Offline-first architecture</span></div>
-            <div class="svc-feat"><div class="svc-chk chk-y">✓</div><span class="svc-feat-t">Push notifications & analytics</span></div>
-            <div class="svc-feat"><div class="svc-chk chk-y">✓</div><span class="svc-feat-t">Ongoing maintenance & updates</span></div>
-          </div>
-        </div>
-
+      <div class="stat-box">
+        <div class="stat-num"><span class="counter" data-target="99.9" data-format="decimal">0</span><sup>%</sup></div>
+        <div class="stat-label">System Uptime</div>
+        <div class="stat-sub">Production SLA guarantee</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num"><span class="counter" data-target="135" data-format="comma">0</span><sup>+</sup></div>
+        <div class="stat-label">Salesforce Integrations</div>
+        <div class="stat-sub">Enterprise connectors deployed</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num"><span class="counter" data-target="4.9" data-format="decimal">0</span><sup>★</sup></div>
+        <div class="stat-label">Client Satisfaction</div>
+        <div class="stat-sub">Across all projects</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ======================================================
-     03 · TECH STACK
-     ====================================================== -->
-<section class="techstack-section" id="techstack">
+<!-- ===== SERVICES ===== -->
+<section class="svc-sec" id="services">
   <div class="container">
-    <div class="s-hdr centered reveal">
+    <div class="svc-lay">
+      <div class="svc-side reveal">
+        <div class="eyebrow">What We Do</div>
+        <h2>Three Services. Done Well.</h2>
+        <p>We don't try to be everything. We focus deeply on three areas and deliver real results in each one.</p>
+        <ul class="svc-links">
+          <li><a href="#svc1" class="act"><span class="sn">01 /</span> Salesforce CRM</a></li>
+          <li><a href="#svc2"><span class="sn">02 /</span> Full Stack Web</a></li>
+          <li><a href="#svc3"><span class="sn">03 /</span> Mobile Apps</a></li>
+        </ul>
+      </div>
+      <div class="svc-cards">
+        <!-- Salesforce -->
+        <div class="svc-card reveal" id="svc1" data-glow>
+          <div class="sc-top">
+            <div class="sc-bignum">01</div>
+            <div class="sc-icon sir"><span class="i i-28"><svg viewBox="0 0 24 24"><path d="M19.35 10.04A7.49 7.49 0 0 0 12 4a7.48 7.48 0 0 0-6.64 4.04A5.99 5.99 0 0 0 1 14a6 6 0 0 0 6 6h12a5 5 0 0 0 .35-9.96z"/></svg></span></div>
+            <h3>Salesforce CRM Development &amp; Support</h3>
+            <p class="sc-desc">We handle the full Salesforce lifecycle — from initial discovery and architecture through implementation, customisation, integration, and long-term managed support.</p>
+            <div class="tags" style="margin-top:18px"><span class="tag tr">Sales Cloud</span><span class="tag tr">Service Cloud</span><span class="tag tr">Marketing Cloud</span><span class="tag tr">Apex</span><span class="tag tr">Lightning Web Components</span><span class="tag tr">CPQ</span><span class="tag tr">Experience Cloud</span></div>
+          </div>
+          <div class="sc-bot reveal">
+            <div class="sc-ft"><div class="sc-chk chk-r"><span class="i i-14" style="width:14px;height:14px"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span></div><span>End-to-end implementation</span></div>
+            <div class="sc-ft"><div class="sc-chk chk-r"><span class="i i-14" style="width:14px;height:14px"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span></div><span>Custom Apex &amp; LWC development</span></div>
+            <div class="sc-ft"><div class="sc-chk chk-r"><span class="i i-14" style="width:14px;height:14px"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span></div><span>Third-party integrations</span></div>
+            <div class="sc-ft"><div class="sc-chk chk-r"><span class="i i-14" style="width:14px;height:14px"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span></div><span>Data migration &amp; cleansing</span></div>
+            <div class="sc-ft"><div class="sc-chk chk-r"><span class="i i-14" style="width:14px;height:14px"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span></div><span>Ongoing managed support</span></div>
+            <div class="sc-ft"><div class="sc-chk chk-r"><span class="i i-14" style="width:14px;height:14px"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span></div><span>User training &amp; adoption</span></div>
+          </div>
+        </div>
+        <!-- Full Stack -->
+        <div class="svc-card reveal d1" id="svc2" data-glow>
+          <div class="sc-top">
+            <div class="sc-bignum">02</div>
+            <div class="sc-icon sig"><span class="i i-28"><svg viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></span></div>
+            <h3>Full Stack Web Development</h3>
+            <p class="sc-desc">From product dashboards to enterprise web platforms — we architect and build using React.js on the frontend and Node.js or Python on the backend.</p>
+            <div class="tags" style="margin-top:18px"><span class="tag tg">React.js</span><span class="tag tg">Node.js</span><span class="tag tg">Python</span><span class="tag tg">Django / FastAPI</span><span class="tag tg">REST &amp; GraphQL</span><span class="tag tg">PostgreSQL</span><span class="tag tg">AWS / GCP</span></div>
+          </div>
+          <div class="sc-bot reveal">
+            <div class="sc-ft"><div class="sc-chk chk-g"><span class="i i-14" style="width:14px;height:14px"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span></div><span>SaaS &amp; dashboard platforms</span></div>
+            <div class="sc-ft"><div class="sc-chk chk-g"><span class="i i-14" style="width:14px;height:14px"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span></div><span>REST &amp; GraphQL API design</span></div>
+            <div class="sc-ft"><div class="sc-chk chk-g"><span class="i i-14" style="width:14px;height:14px"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span></div><span>Database design &amp; optimisation</span></div>
+            <div class="sc-ft"><div class="sc-chk chk-g"><span class="i i-14" style="width:14px;height:14px"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span></div><span>Cloud deployment &amp; DevOps</span></div>
+            <div class="sc-ft"><div class="sc-chk chk-g"><span class="i i-14" style="width:14px;height:14px"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span></div><span>Performance &amp; security audits</span></div>
+            <div class="sc-ft"><div class="sc-chk chk-g"><span class="i i-14" style="width:14px;height:14px"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span></div><span>Code review &amp; tech rescue</span></div>
+          </div>
+        </div>
+        <!-- Mobile -->
+        <div class="svc-card reveal d1" id="svc3" data-glow>
+          <div class="sc-top">
+            <div class="sc-bignum">03</div>
+            <div class="sc-icon siy"><span class="i i-28"><svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></span></div>
+            <h3>Mobile App Development</h3>
+            <p class="sc-desc">We build cross-platform mobile applications with React Native — delivering native-quality experiences for iOS and Android from a single codebase.</p>
+            <div class="tags" style="margin-top:18px"><span class="tag ty">React Native</span><span class="tag ty">iOS</span><span class="tag ty">Android</span><span class="tag ty">Expo</span><span class="tag ty">Push Notifications</span><span class="tag ty">Offline Support</span></div>
+          </div>
+          <div class="sc-bot reveal">
+            <div class="sc-ft"><div class="sc-chk chk-y"><span class="i i-14" style="width:14px;height:14px"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span></div><span>Single codebase, both platforms</span></div>
+            <div class="sc-ft"><div class="sc-chk chk-y"><span class="i i-14" style="width:14px;height:14px"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span></div><span>App Store &amp; Play Store launch</span></div>
+            <div class="sc-ft"><div class="sc-chk chk-y"><span class="i i-14" style="width:14px;height:14px"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span></div><span>Native device API integrations</span></div>
+            <div class="sc-ft"><div class="sc-chk chk-y"><span class="i i-14" style="width:14px;height:14px"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span></div><span>Offline-first architecture</span></div>
+            <div class="sc-ft"><div class="sc-chk chk-y"><span class="i i-14" style="width:14px;height:14px"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span></div><span>Push notifications &amp; analytics</span></div>
+            <div class="sc-ft"><div class="sc-chk chk-y"><span class="i i-14" style="width:14px;height:14px"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span></div><span>Ongoing maintenance &amp; updates</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CASE STUDIES — FULL-WIDTH ROWS (Awwwards-style) ===== -->
+<section class="cases-sec" id="cases">
+  <div class="container">
+    <div class="shdr cen reveal">
+      <div class="eyebrow">Our Work</div>
+      <h2>Projects That Speak for Themselves</h2>
+      <p>A selection of real engagements across Salesforce, web, and mobile — each one tailored, tested, and delivered on time.</p>
+    </div>
+    <div class="cases-list reveal d1">
+      <div class="case-row">
+        <div class="case-left">
+          <div class="case-idx">01</div>
+          <div class="case-info">
+            <h3>NexaRetail CRM Overhaul</h3>
+            <div class="case-tag">Salesforce · Retail · 200-person team</div>
+          </div>
+        </div>
+        <div class="case-right">
+          <div class="case-metrics">
+            <div class="cm-item"><div class="cm-num">87%</div><div class="cm-lbl">Faster leads</div></div>
+            <div class="cm-item"><div class="cm-num">3 mo</div><div class="cm-lbl">Delivered</div></div>
+          </div>
+          <div class="case-arrow"><span class="i i-18"><svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span></div>
+        </div>
+      </div>
+      <div class="case-row">
+        <div class="case-left">
+          <div class="case-idx">02</div>
+          <div class="case-info">
+            <h3>FinoEdge Transaction Engine</h3>
+            <div class="case-tag">Full Stack · Fintech · Node.js + React</div>
+          </div>
+        </div>
+        <div class="case-right">
+          <div class="case-metrics">
+            <div class="cm-item"><div class="cm-num">500k+</div><div class="cm-lbl">Daily txns</div></div>
+            <div class="cm-item"><div class="cm-num">99.9%</div><div class="cm-lbl">Uptime</div></div>
+          </div>
+          <div class="case-arrow"><span class="i i-18"><svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span></div>
+        </div>
+      </div>
+      <div class="case-row">
+        <div class="case-left">
+          <div class="case-idx">03</div>
+          <div class="case-info">
+            <h3>UrbanPulse Mobile App</h3>
+            <div class="case-tag">React Native · Urban Tech · iOS &amp; Android</div>
+          </div>
+        </div>
+        <div class="case-right">
+          <div class="case-metrics">
+            <div class="cm-item"><div class="cm-num">50k+</div><div class="cm-lbl">Active users</div></div>
+            <div class="cm-item"><div class="cm-num">4.8★</div><div class="cm-lbl">Rating</div></div>
+          </div>
+          <div class="case-arrow"><span class="i i-18"><svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span></div>
+        </div>
+      </div>
+      <div class="case-row">
+        <div class="case-left">
+          <div class="case-idx">04</div>
+          <div class="case-info">
+            <h3>CloudAxis Service Cloud</h3>
+            <div class="case-tag">Salesforce · Logistics · 500+ agents</div>
+          </div>
+        </div>
+        <div class="case-right">
+          <div class="case-metrics">
+            <div class="cm-item"><div class="cm-num">62%</div><div class="cm-lbl">Fewer tickets</div></div>
+            <div class="cm-item"><div class="cm-num">4 mo</div><div class="cm-lbl">Go-live</div></div>
+          </div>
+          <div class="case-arrow"><span class="i i-18"><svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span></div>
+        </div>
+      </div>
+      <div class="case-row">
+        <div class="case-left">
+          <div class="case-idx">05</div>
+          <div class="case-info">
+            <h3>DataVault Analytics Dashboard</h3>
+            <div class="case-tag">Full Stack · Data · Python + React</div>
+          </div>
+        </div>
+        <div class="case-right">
+          <div class="case-metrics">
+            <div class="cm-item"><div class="cm-num">10x</div><div class="cm-lbl">Faster reports</div></div>
+            <div class="cm-item"><div class="cm-num">2 mo</div><div class="cm-lbl">Delivered</div></div>
+          </div>
+          <div class="case-arrow"><span class="i i-18"><svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CODE TERMINAL (NEW — Linear-inspired) ===== -->
+<section class="code-sec">
+  <div class="container">
+    <div class="code-grid">
+      <div class="code-copy reveal">
+        <div class="eyebrow" style="color:var(--rust-l)">Engineering Quality</div>
+        <h2>Code That <em>Scales</em> With Your Business</h2>
+        <p>Every line of code we write follows engineering best practices — type-safe, tested, documented, and built for maintainability.</p>
+        <div class="code-features">
+          <div class="code-feat"><div class="cf-dot r"></div><span>100% TypeScript — zero runtime surprises</span></div>
+          <div class="code-feat"><div class="cf-dot g"></div><span>80%+ test coverage on every project</span></div>
+          <div class="code-feat"><div class="cf-dot y"></div><span>CI/CD pipelines from day one</span></div>
+          <div class="code-feat"><div class="cf-dot r"></div><span>Code review on every pull request</span></div>
+          <div class="code-feat"><div class="cf-dot g"></div><span>Documentation that your team can follow</span></div>
+        </div>
+        <div style="margin-top:32px"><a href="#contact" class="btn btn-rust">Discuss Your Architecture <span class="arr">→</span></a></div>
+      </div>
+      <div class="terminal reveal d2">
+        <div class="term-bar">
+          <div class="term-dot red"></div>
+          <div class="term-dot yellow"></div>
+          <div class="term-dot green"></div>
+          <div class="term-title">api/services/salesforce.ts</div>
+        </div>
+        <div class="term-body" id="termBody">
+          <div class="term-line"><span class="ln">1</span><span class="kw">import</span> <span class="tx">{ SalesforceClient }</span> <span class="kw">from</span> <span class="str">'@techforce/sf-sdk'</span><span class="op">;</span></div>
+          <div class="term-line"><span class="ln">2</span></div>
+          <div class="term-line"><span class="ln">3</span><span class="cm">// Initialize with automatic retry &amp; circuit breaker</span></div>
+          <div class="term-line"><span class="ln">4</span><span class="kw">const</span> <span class="tx">client</span> <span class="op">=</span> <span class="kw">new</span> <span class="fn">SalesforceClient</span><span class="op">({</span></div>
+          <div class="term-line"><span class="ln">5</span><span class="tx">  org:</span> <span class="str">'production'</span><span class="op">,</span></div>
+          <div class="term-line"><span class="ln">6</span><span class="tx">  retries:</span> <span class="str">3</span><span class="op">,</span></div>
+          <div class="term-line"><span class="ln">7</span><span class="tx">  timeout:</span> <span class="str">5000</span></div>
+          <div class="term-line"><span class="ln">8</span><span class="op">});</span><span class="term-cursor"></span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== TECH STACK ===== -->
+<section class="tech-sec" id="techstack">
+  <div class="container">
+    <div class="shdr cen reveal">
       <div class="eyebrow">Our Arsenal</div>
       <h2>Tools We Use Every Day</h2>
       <p>Carefully chosen technologies that are proven, well-supported, and genuinely suited to what we build.</p>
     </div>
-    <div class="stack-cols reveal d1">
-
+    <div class="stack-grid reveal d1">
+      <!-- Frontend -->
       <div class="stack-col">
-        <div class="sc-head">
-          <div class="sc-icon sci-r">⚛️</div>
-          <div>
-            <div class="sc-lbl">Layer</div>
-            <div class="sc-title">Frontend</div>
-          </div>
-        </div>
-        <div class="t-row">
-          <div class="t-emoji">⚛️</div>
-          <div><div class="t-name">React.js</div><div class="t-role">UI Library</div></div>
-          <div class="t-badge tb-c">Core</div>
-        </div>
-        <div class="t-row">
-          <div class="t-emoji">📱</div>
-          <div><div class="t-name">React Native</div><div class="t-role">Mobile Apps</div></div>
-          <div class="t-badge tb-c">Core</div>
-        </div>
-        <div class="t-row">
-          <div class="t-emoji">🔷</div>
-          <div><div class="t-name">TypeScript</div><div class="t-role">Type Safety</div></div>
-          <div class="t-badge tb-p">Primary</div>
-        </div>
-        <div class="t-row">
-          <div class="t-emoji">🎨</div>
-          <div><div class="t-name">Tailwind CSS</div><div class="t-role">Styling</div></div>
-          <div class="t-badge tb-p">Primary</div>
-        </div>
-        <div class="t-row">
-          <div class="t-emoji">⚡</div>
-          <div><div class="t-name">Next.js / Vite</div><div class="t-role">Build & SSR</div></div>
-          <div class="t-badge tb-p">Primary</div>
-        </div>
+        <div class="stk-head"><div class="stk-ic sir"><span class="i i-20"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="2"/><ellipse cx="12" cy="12" rx="10" ry="4"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(120 12 12)"/></svg></span></div><div><div class="stk-lbl">Layer</div><div class="stk-title">Frontend</div></div></div>
+        <div class="tr"><div class="tr-ic"><span class="i i-16"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="2"/><ellipse cx="12" cy="12" rx="10" ry="4"/></svg></span></div><div><div class="tr-name">React.js</div><div class="tr-role">UI Library</div></div><div class="tr-badge tb-c">Core</div></div>
+        <div class="tr"><div class="tr-ic"><span class="i i-16"><svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></span></div><div><div class="tr-name">React Native</div><div class="tr-role">Mobile Apps</div></div><div class="tr-badge tb-c">Core</div></div>
+        <div class="tr"><div class="tr-ic"><span class="i i-16"><svg viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></span></div><div><div class="tr-name">TypeScript</div><div class="tr-role">Type Safety</div></div><div class="tr-badge tb-p">Primary</div></div>
+        <div class="tr"><div class="tr-ic"><span class="i i-16"><svg viewBox="0 0 24 24"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg></span></div><div><div class="tr-name">Tailwind CSS</div><div class="tr-role">Styling</div></div><div class="tr-badge tb-p">Primary</div></div>
+        <div class="tr"><div class="tr-ic"><span class="i i-16"><svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></span></div><div><div class="tr-name">Next.js / Vite</div><div class="tr-role">Build &amp; SSR</div></div><div class="tr-badge tb-p">Primary</div></div>
       </div>
-
+      <!-- Backend -->
       <div class="stack-col">
-        <div class="sc-head">
-          <div class="sc-icon sci-g">🔧</div>
-          <div>
-            <div class="sc-lbl">Layer</div>
-            <div class="sc-title">Backend</div>
-          </div>
-        </div>
-        <div class="t-row">
-          <div class="t-emoji">🟢</div>
-          <div><div class="t-name">Node.js</div><div class="t-role">Runtime + Express</div></div>
-          <div class="t-badge tb-c">Core</div>
-        </div>
-        <div class="t-row">
-          <div class="t-emoji">🐍</div>
-          <div><div class="t-name">Python</div><div class="t-role">Django / FastAPI</div></div>
-          <div class="t-badge tb-c">Core</div>
-        </div>
-        <div class="t-row">
-          <div class="t-emoji">🐘</div>
-          <div><div class="t-name">PostgreSQL</div><div class="t-role">Primary Database</div></div>
-          <div class="t-badge tb-p">Primary</div>
-        </div>
-        <div class="t-row">
-          <div class="t-emoji">🔴</div>
-          <div><div class="t-name">Redis</div><div class="t-role">Cache & Queues</div></div>
-          <div class="t-badge tb-p">Primary</div>
-        </div>
-        <div class="t-row">
-          <div class="t-emoji">🐳</div>
-          <div><div class="t-name">Docker + CI/CD</div><div class="t-role">Deployment</div></div>
-          <div class="t-badge tb-p">Primary</div>
-        </div>
+        <div class="stk-head"><div class="stk-ic sig"><span class="i i-20"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></span></div><div><div class="stk-lbl">Layer</div><div class="stk-title">Backend</div></div></div>
+        <div class="tr"><div class="tr-ic"><span class="i i-16"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></span></div><div><div class="tr-name">Node.js</div><div class="tr-role">Runtime + Express</div></div><div class="tr-badge tb-c">Core</div></div>
+        <div class="tr"><div class="tr-ic"><span class="i i-16"><svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></span></div><div><div class="tr-name">Python</div><div class="tr-role">Django / FastAPI</div></div><div class="tr-badge tb-c">Core</div></div>
+        <div class="tr"><div class="tr-ic"><span class="i i-16"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg></span></div><div><div class="tr-name">PostgreSQL</div><div class="tr-role">Primary Database</div></div><div class="tr-badge tb-p">Primary</div></div>
+        <div class="tr"><div class="tr-ic"><span class="i i-16"><svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></span></div><div><div class="tr-name">Redis</div><div class="tr-role">Cache &amp; Queues</div></div><div class="tr-badge tb-p">Primary</div></div>
+        <div class="tr"><div class="tr-ic"><span class="i i-16"><svg viewBox="0 0 24 24"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg></span></div><div><div class="tr-name">Docker + CI/CD</div><div class="tr-role">Deployment</div></div><div class="tr-badge tb-p">Primary</div></div>
       </div>
-
+      <!-- Salesforce -->
       <div class="stack-col">
-        <div class="sc-head">
-          <div class="sc-icon sci-y">☁️</div>
-          <div>
-            <div class="sc-lbl">Platform</div>
-            <div class="sc-title">Salesforce</div>
-          </div>
-        </div>
-        <div class="t-row">
-          <div class="t-emoji">☁️</div>
-          <div><div class="t-name">Sales Cloud</div><div class="t-role">CRM Core</div></div>
-          <div class="t-badge tb-t">Certified</div>
-        </div>
-        <div class="t-row">
-          <div class="t-emoji">🎧</div>
-          <div><div class="t-name">Service Cloud</div><div class="t-role">Support Ops</div></div>
-          <div class="t-badge tb-t">Certified</div>
-        </div>
-        <div class="t-row">
-          <div class="t-emoji">⚡</div>
-          <div><div class="t-name">Apex & LWC</div><div class="t-role">Custom Dev</div></div>
-          <div class="t-badge tb-c">Core</div>
-        </div>
-        <div class="t-row">
-          <div class="t-emoji">🔗</div>
-          <div><div class="t-name">REST / SOAP APIs</div><div class="t-role">Integrations</div></div>
-          <div class="t-badge tb-p">Primary</div>
-        </div>
-        <div class="t-row">
-          <div class="t-emoji">🟠</div>
-          <div><div class="t-name">AWS / GCP</div><div class="t-role">Cloud Hosting</div></div>
-          <div class="t-badge tb-p">Primary</div>
-        </div>
+        <div class="stk-head"><div class="stk-ic siy"><span class="i i-20"><svg viewBox="0 0 24 24"><path d="M19.35 10.04A7.49 7.49 0 0 0 12 4a7.48 7.48 0 0 0-6.64 4.04A5.99 5.99 0 0 0 1 14a6 6 0 0 0 6 6h12a5 5 0 0 0 .35-9.96z"/></svg></span></div><div><div class="stk-lbl">Platform</div><div class="stk-title">Salesforce</div></div></div>
+        <div class="tr"><div class="tr-ic"><span class="i i-16"><svg viewBox="0 0 24 24"><path d="M19.35 10.04A7.49 7.49 0 0 0 12 4a7.48 7.48 0 0 0-6.64 4.04A5.99 5.99 0 0 0 1 14a6 6 0 0 0 6 6h12a5 5 0 0 0 .35-9.96z"/></svg></span></div><div><div class="tr-name">Sales Cloud</div><div class="tr-role">CRM Core</div></div><div class="tr-badge tb-t">Certified</div></div>
+        <div class="tr"><div class="tr-ic"><span class="i i-16"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span></div><div><div class="tr-name">Service Cloud</div><div class="tr-role">Support Ops</div></div><div class="tr-badge tb-t">Certified</div></div>
+        <div class="tr"><div class="tr-ic"><span class="i i-16"><svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></span></div><div><div class="tr-name">Apex &amp; LWC</div><div class="tr-role">Custom Dev</div></div><div class="tr-badge tb-c">Core</div></div>
+        <div class="tr"><div class="tr-ic"><span class="i i-16"><svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></span></div><div><div class="tr-name">REST / SOAP APIs</div><div class="tr-role">Integrations</div></div><div class="tr-badge tb-p">Primary</div></div>
+        <div class="tr"><div class="tr-ic"><span class="i i-16"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></span></div><div><div class="tr-name">AWS / GCP</div><div class="tr-role">Cloud Hosting</div></div><div class="tr-badge tb-p">Primary</div></div>
       </div>
-
     </div>
   </div>
 </section>
 
-<!-- ======================================================
-     04 · ABOUT
-     ====================================================== -->
-<section class="about-section" id="about">
+<!-- ===== ABOUT ===== -->
+<section class="about-sec" id="about">
   <div class="container">
-    <div class="about-grid">
-
-      <div class="about-visual reveal">
-        <div class="about-bg-num">5+</div>
-        <div class="about-main-card">
-          <div class="amc-top">
-            <h3>Why teams choose us</h3>
-            <p>A straightforward answer from the people who work with us daily.</p>
-          </div>
-          <div class="amc-body">
-            <div class="val-grid">
-              <div class="val-item">
-                <div class="val-icon">🎯</div>
-                <h4>Deep Specialisation</h4>
-                <p>We don't do everything. We do three things really well.</p>
-              </div>
-              <div class="val-item">
-                <div class="val-icon">🤝</div>
-                <h4>Long-Term Thinking</h4>
-                <p>We build for maintainability, not just the demo.</p>
-              </div>
-              <div class="val-item">
-                <div class="val-icon">🔍</div>
-                <h4>Transparent Process</h4>
-                <p>Weekly demos, clear timelines, honest updates.</p>
-              </div>
-              <div class="val-item">
-                <div class="val-icon">📐</div>
-                <h4>Clean Architecture</h4>
-                <p>Code your future developers will thank you for.</p>
-              </div>
+    <div class="about-g">
+      <div class="about-vis reveal">
+        <div class="about-bgn">5+</div>
+        <div class="about-card">
+          <div class="ac-top"><h3>Why teams choose us</h3><p>A straightforward answer from the people who work with us daily.</p></div>
+          <div class="ac-body">
+            <div class="vals">
+              <div class="val"><div class="val-ic vic-r"><span class="i i-20"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></span></div><h4>Deep Specialisation</h4><p>We don't do everything. We do three things really well.</p></div>
+              <div class="val"><div class="val-ic vic-g"><span class="i i-20"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span></div><h4>Long-Term Thinking</h4><p>We build for maintainability, not just the demo.</p></div>
+              <div class="val"><div class="val-ic vic-y"><span class="i i-20"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span></div><h4>Transparent Process</h4><p>Weekly demos, clear timelines, honest updates.</p></div>
+              <div class="val"><div class="val-ic vic-n"><span class="i i-20"><svg viewBox="0 0 24 24"><path d="M2 20h20"/><path d="M5 20V8l7-4 7 4v12"/><path d="M9 20v-4h6v4"/></svg></span></div><h4>Clean Architecture</h4><p>Code your future developers will thank you for.</p></div>
             </div>
           </div>
         </div>
-        <div class="about-float">
-          <div class="af-num">98%</div>
-          <div class="af-label">On-time delivery rate</div>
-        </div>
+        <div class="about-float"><div class="af-num">98%</div><div class="af-lbl">On-time delivery rate</div></div>
       </div>
-
       <div class="about-copy reveal d2">
         <div class="eyebrow">Who We Are</div>
         <h2>A Small Team That Punches <em>Well Above</em> Its Weight</h2>
         <p>TechForce Solutions was built on one simple belief: a focused, senior team with genuine expertise will always outperform a large generalist agency with a junior bench.</p>
-        <p>We work with startups building their first CRM and enterprises modernising decade-old platforms. In both cases, we bring the same level of care — thoughtful architecture, clear communication, and code that doesn't embarrass you six months later.</p>
-
+        <p>We work with startups building their first CRM and enterprises modernising decade-old platforms. In both cases, we bring the same level of care.</p>
         <div class="pillars">
-          <div class="pillar">
-            <div class="pillar-icon pi-r">☁️</div>
-            <div>
-              <h4>Salesforce-First Mindset</h4>
-              <p>Our Salesforce practitioners hold multiple certifications across Admin, Developer, Architect, and Consultant tracks — built over years of real project delivery.</p>
-            </div>
-          </div>
-          <div class="pillar">
-            <div class="pillar-icon pi-g">🛠️</div>
-            <div>
-              <h4>Engineering That Scales</h4>
-              <p>Every system we build is designed with growth in mind. Proper data modelling, test coverage, CI/CD pipelines — foundations that hold when traffic doubles.</p>
-            </div>
-          </div>
-          <div class="pillar">
-            <div class="pillar-icon pi-y">🤝</div>
-            <div>
-              <h4>A True Partnership Model</h4>
-              <p>We embed into your team — weekly syncs, shared boards, fast responses. We behave like colleagues, not contractors.</p>
-            </div>
-          </div>
+          <div class="pillar"><div class="pl-ic pl-r"><span class="i i-20"><svg viewBox="0 0 24 24"><path d="M19.35 10.04A7.49 7.49 0 0 0 12 4a7.48 7.48 0 0 0-6.64 4.04A5.99 5.99 0 0 0 1 14a6 6 0 0 0 6 6h12a5 5 0 0 0 .35-9.96z"/></svg></span></div><div><h4>Salesforce-First Mindset</h4><p>Our Salesforce practitioners hold multiple certifications across Admin, Developer, Architect, and Consultant tracks.</p></div></div>
+          <div class="pillar"><div class="pl-ic pl-g"><span class="i i-20"><svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></span></div><div><h4>Engineering That Scales</h4><p>Proper data modelling, test coverage, CI/CD pipelines — foundations that hold when traffic doubles.</p></div></div>
+          <div class="pillar"><div class="pl-ic pl-y"><span class="i i-20"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span></div><div><h4>A True Partnership Model</h4><p>We embed into your team — weekly syncs, shared boards, fast responses. Colleagues, not contractors.</p></div></div>
         </div>
-
-        <div style="margin-top:36px;">
-          <a href="#contact" class="btn btn-primary">Start the Conversation <span class="arr">→</span></a>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- ======================================================
-     05 · PROCESS
-     ====================================================== -->
-<section class="process-section">
-  <div class="container">
-    <div class="s-hdr centered reveal">
-      <div class="eyebrow">How We Work</div>
-      <h2>A Process That Keeps You in Control</h2>
-      <p>Clear stages, no surprises. Every project follows a proven rhythm that keeps delivery on track and clients genuinely informed.</p>
-    </div>
-    <div class="process-steps">
-      <div class="p-step reveal">
-        <div class="p-circle"><div class="p-num">01</div></div>
-        <h3>Discovery</h3>
-        <p>We learn your business goals, existing systems, and user needs. No assumptions — just careful listening and the right questions.</p>
-      </div>
-      <div class="p-step reveal d1">
-        <div class="p-circle"><div class="p-num">02</div></div>
-        <h3>Architecture</h3>
-        <p>We design the technical blueprint — data models, API contracts, component structure — before a single line of code is written.</p>
-      </div>
-      <div class="p-step reveal d2">
-        <div class="p-circle"><div class="p-num">03</div></div>
-        <h3>Development</h3>
-        <p>Two-week sprints, regular demos, continuous feedback. You always know exactly where the project stands.</p>
-      </div>
-      <div class="p-step reveal d3">
-        <div class="p-circle"><div class="p-num">04</div></div>
-        <h3>Launch & Support</h3>
-        <p>Smooth go-live, handover docs, team training, and ongoing support that keeps your solution healthy long-term.</p>
+        <div style="margin-top:32px"><a href="#contact" class="btn btn-primary">Start the Conversation <span class="arr">→</span></a></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ======================================================
-     06 · TEAM
-     ====================================================== -->
-<section class="team-section" id="team">
+<!-- ===== PROCESS — ANIMATED TIMELINE ===== -->
+<section class="proc-sec">
   <div class="container">
-    <div class="s-hdr centered reveal">
-      <div class="eyebrow">The People</div>
-      <h2>The Experts Who'll Build Your Product</h2>
-      <p>A handpicked group of senior engineers and consultants. No juniors learning on your project.</p>
+    <div class="shdr cen reveal"><div class="eyebrow">How We Work</div><h2>A Process That Keeps You in Control</h2><p>Clear stages, no surprises. Every project follows a proven rhythm.</p></div>
+    <div class="proc-steps" id="procSteps">
+      <div class="proc-line-fill"></div>
+      <div class="p-step reveal"><div class="p-num">STEP 01</div><div class="p-circ"><span class="i i-28"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span></div><h3>Discovery</h3><p>We learn your business goals, existing systems, and user needs.</p></div>
+      <div class="p-step reveal d1"><div class="p-num">STEP 02</div><div class="p-circ"><span class="i i-28"><svg viewBox="0 0 24 24"><path d="M2 20h20"/><path d="M5 20V8l7-4 7 4v12"/><path d="M9 20v-4h6v4"/></svg></span></div><h3>Architecture</h3><p>We design the technical blueprint before a single line of code is written.</p></div>
+      <div class="p-step reveal d2"><div class="p-num">STEP 03</div><div class="p-circ"><span class="i i-28"><svg viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></span></div><h3>Development</h3><p>Two-week sprints, regular demos, continuous feedback.</p></div>
+      <div class="p-step reveal d3"><div class="p-num">STEP 04</div><div class="p-circ"><span class="i i-28"><svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></span></div><h3>Launch &amp; Support</h3><p>Smooth go-live, docs, training, and ongoing support.</p></div>
     </div>
+  </div>
+</section>
+
+<!-- ===== TEAM ===== -->
+<section class="team-sec" id="team">
+  <div class="container">
+    <div class="shdr cen reveal"><div class="eyebrow">The People</div><h2>The Experts Who'll Build Your Product</h2><p>A handpicked group of senior engineers and consultants.</p></div>
     <div class="team-grid">
-
       <div class="team-card reveal">
-        <div class="tc-head">
-          <div class="tc-avatar">👨‍💼</div>
-          <div class="tc-exp">8 yrs</div>
-          <div class="tc-name">Arjun Sharma</div>
-          <div class="tc-role">Founder · Salesforce Architect</div>
+        <div class="tm-head">
+          <div class="tm-ava"><span class="i i-32"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span></div>
+          <div class="tm-exp">8 yrs</div>
+          <div class="tm-name">Arjun Sharma</div>
+          <div class="tm-role">Founder · Salesforce Architect</div>
         </div>
-        <div class="tc-body">
-          <p class="tc-bio">8+ years designing Salesforce solutions for enterprise clients across BFSI, retail, and logistics. Certified across Admin, Developer, Platform App Builder, and Sales Cloud Consultant tracks.</p>
-          <div class="tc-skills">
-            <span class="tc-skill">Salesforce</span>
-            <span class="tc-skill">Apex</span>
-            <span class="tc-skill">LWC</span>
-            <span class="tc-skill">CPQ</span>
-            <span class="tc-skill">Architecture</span>
-          </div>
-        </div>
+        <div class="tm-body"><p class="tm-bio">8+ years designing Salesforce solutions for enterprise clients across BFSI, retail, and logistics.</p><div class="tm-skills"><span class="tm-skill">Salesforce</span><span class="tm-skill">Apex</span><span class="tm-skill">LWC</span><span class="tm-skill">CPQ</span><span class="tm-skill">Architecture</span></div></div>
       </div>
-
       <div class="team-card reveal d1">
-        <div class="tc-head">
-          <div class="tc-avatar">👩‍💻</div>
-          <div class="tc-exp">7 yrs</div>
-          <div class="tc-name">Priya Mehta</div>
-          <div class="tc-role">Lead Full Stack Engineer</div>
+        <div class="tm-head">
+          <div class="tm-ava"><span class="i i-32"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span></div>
+          <div class="tm-exp">7 yrs</div>
+          <div class="tm-name">Priya Mehta</div>
+          <div class="tm-role">Lead Full Stack Engineer</div>
         </div>
-        <div class="tc-body">
-          <p class="tc-bio">Specialises in React and Node.js with deep experience building SaaS platforms and data-intensive dashboards. Known for clean component design and scalable API architecture.</p>
-          <div class="tc-skills">
-            <span class="tc-skill">React.js</span>
-            <span class="tc-skill">Node.js</span>
-            <span class="tc-skill">Python</span>
-            <span class="tc-skill">AWS</span>
-            <span class="tc-skill">PostgreSQL</span>
-          </div>
-        </div>
+        <div class="tm-body"><p class="tm-bio">Specialises in React and Node.js with deep experience building SaaS platforms and data-intensive dashboards.</p><div class="tm-skills"><span class="tm-skill">React.js</span><span class="tm-skill">Node.js</span><span class="tm-skill">Python</span><span class="tm-skill">AWS</span><span class="tm-skill">PostgreSQL</span></div></div>
       </div>
-
       <div class="team-card reveal d2">
-        <div class="tc-head">
-          <div class="tc-avatar">👨‍🔬</div>
-          <div class="tc-exp">6 yrs</div>
-          <div class="tc-name">Rahul Kapoor</div>
-          <div class="tc-role">Mobile & DevOps Lead</div>
+        <div class="tm-head">
+          <div class="tm-ava"><span class="i i-32"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span></div>
+          <div class="tm-exp">6 yrs</div>
+          <div class="tm-name">Rahul Kapoor</div>
+          <div class="tm-role">Mobile &amp; DevOps Lead</div>
         </div>
-        <div class="tc-body">
-          <p class="tc-bio">Leads React Native development and cloud infrastructure. Has shipped 20+ apps to both stores, with expertise in offline-first architecture and real-time features.</p>
-          <div class="tc-skills">
-            <span class="tc-skill">React Native</span>
-            <span class="tc-skill">Expo</span>
-            <span class="tc-skill">Docker</span>
-            <span class="tc-skill">CI/CD</span>
-            <span class="tc-skill">iOS / Android</span>
-          </div>
-        </div>
+        <div class="tm-body"><p class="tm-bio">Leads React Native development and cloud infrastructure. Has shipped 20+ apps to both stores.</p><div class="tm-skills"><span class="tm-skill">React Native</span><span class="tm-skill">Expo</span><span class="tm-skill">Docker</span><span class="tm-skill">CI/CD</span><span class="tm-skill">iOS / Android</span></div></div>
       </div>
-
     </div>
   </div>
 </section>
 
-<!-- ======================================================
-     07 · TESTIMONIALS
-     ====================================================== -->
-<section class="testi-section" id="testimonials">
+<!-- ===== TESTIMONIALS — AUTO CAROUSEL ===== -->
+<section class="testi-sec" id="testimonials">
   <div class="container">
-    <div class="s-hdr centered reveal">
-      <div class="eyebrow">Client Stories</div>
-      <h2>What Clients Actually Say</h2>
-      <p>From the teams we've worked with — in their own words, not ours.</p>
-    </div>
-    <div class="testi-grid">
-
-      <div class="testi-card reveal">
-        <div class="t-qmark">"</div>
-        <div class="t-stars">★★★★★</div>
-        <p class="testi-text">TechForce completely rebuilt our Salesforce org from the ground up. What used to take our sales team 40 minutes now takes five. The Apex work they delivered is clean, documented, and our admins can actually maintain it.</p>
-        <div class="t-person">
-          <div class="t-ava">👤</div>
-          <div>
-            <div class="testi-name">Sarah Mitchell</div>
-            <div class="testi-co">VP Sales — NexaRetail Inc.</div>
+    <div class="shdr cen reveal"><div class="eyebrow">Client Stories</div><h2>What Clients Actually Say</h2><p>From the teams we've worked with — in their own words.</p></div>
+    <div class="testi-track reveal d1">
+      <div class="testi-slider" id="testiSlider">
+        <div class="testi-slide">
+          <div class="testi">
+            <div class="t-qm">"</div>
+            <div class="t-stars"><span class="i i-16 i-filled"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span><span class="i i-16 i-filled"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span><span class="i i-16 i-filled"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span><span class="i i-16 i-filled"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span><span class="i i-16 i-filled"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span></div>
+            <p class="testi-txt">TechForce completely rebuilt our Salesforce org from the ground up. What used to take our sales team 40 minutes now takes five.</p>
+            <div class="t-bot"><div class="t-ava"><span class="i i-18"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span></div><div><div class="testi-name">Sarah Mitchell</div><div class="testi-co">VP Sales — NexaRetail Inc.</div></div></div>
+          </div>
+          <div class="testi dark">
+            <div class="t-qm">"</div>
+            <div class="t-stars"><span class="i i-16 i-filled"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span><span class="i i-16 i-filled"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span><span class="i i-16 i-filled"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span><span class="i i-16 i-filled"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span><span class="i i-16 i-filled"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span></div>
+            <p class="testi-txt">We'd had two failed mobile projects before TechForce. They spent two weeks in discovery before writing a line of code — and it showed.</p>
+            <div class="t-bot"><div class="t-ava"><span class="i i-18"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span></div><div><div class="testi-name">David Chen</div><div class="testi-co">CTO — UrbanPulse</div></div></div>
+          </div>
+          <div class="testi">
+            <div class="t-qm">"</div>
+            <div class="t-stars"><span class="i i-16 i-filled"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span><span class="i i-16 i-filled"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span><span class="i i-16 i-filled"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span><span class="i i-16 i-filled"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span><span class="i i-16 i-filled"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span></div>
+            <p class="testi-txt">The Node.js backend they built handles over 500k transactions a day without missing a beat. Genuinely glad we chose them.</p>
+            <div class="t-bot"><div class="t-ava"><span class="i i-18"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span></div><div><div class="testi-name">Aisha Patel</div><div class="testi-co">Head of Engineering — FinoEdge</div></div></div>
           </div>
         </div>
       </div>
-
-      <div class="testi-card dark reveal d1">
-        <div class="t-qmark">"</div>
-        <div class="t-stars">★★★★★</div>
-        <p class="testi-text">We'd had two failed mobile projects before TechForce. They spent two weeks in discovery before writing a line of code — and it showed. Delivered on time, on budget. The app now has 50k active users.</p>
-        <div class="t-person">
-          <div class="t-ava">👤</div>
-          <div>
-            <div class="testi-name">David Chen</div>
-            <div class="testi-co">CTO — UrbanPulse</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="testi-card reveal d2">
-        <div class="t-qmark">"</div>
-        <div class="t-stars">★★★★★</div>
-        <p class="testi-text">The Node.js backend they built handles over 500k transactions a day without missing a beat. Their architecture decisions were thoughtful and future-proof. Genuinely glad we chose them over cheaper alternatives.</p>
-        <div class="t-person">
-          <div class="t-ava">👤</div>
-          <div>
-            <div class="testi-name">Aisha Patel</div>
-            <div class="testi-co">Head of Engineering — FinoEdge</div>
-          </div>
-        </div>
-      </div>
-
     </div>
   </div>
 </section>
 
-<!-- ======================================================
-     08 · CONTACT
-     ====================================================== -->
-<section class="contact-section" id="contact">
+<!-- ===== COMPARISON ===== -->
+<section class="cmp-sec">
   <div class="container">
-    <div class="contact-grid">
+    <div class="shdr cen reveal"><div class="eyebrow">Why TechForce</div><h2>Us vs. the Typical Agency</h2><p>A clear look at what makes our approach different.</p></div>
+    <div class="cmp-table reveal d1">
+      <div class="cmp-hdr"><div>Feature</div><div>Typical Agency</div><div>TechForce</div></div>
+      <div class="cmp-row"><div>Team seniority</div><div>Junior devs learning on your project</div><div><span class="i i-16" style="color:var(--forest)"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span> Senior engineers only</div></div>
+      <div class="cmp-row"><div>Communication</div><div>Monthly email updates</div><div><span class="i i-16" style="color:var(--forest)"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span> Weekly demos + Slack</div></div>
+      <div class="cmp-row"><div>Architecture</div><div>Copy-paste templates</div><div><span class="i i-16" style="color:var(--forest)"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span> Custom-designed systems</div></div>
+      <div class="cmp-row"><div>Code quality</div><div>No reviews, no tests</div><div><span class="i i-16" style="color:var(--forest)"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span> Reviews + 80%+ coverage</div></div>
+      <div class="cmp-row"><div>Post-launch support</div><div>Disappears after deploy</div><div><span class="i i-16" style="color:var(--forest)"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span> Ongoing maintenance</div></div>
+      <div class="cmp-row"><div>On-time delivery</div><div>~60% of the time</div><div><span class="i i-16" style="color:var(--forest)"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span> 98% delivery rate</div></div>
+    </div>
+  </div>
+</section>
 
+<!-- ===== FAQ ===== -->
+<section class="faq-sec" id="faq">
+  <div class="container">
+    <div class="shdr cen reveal"><div class="eyebrow">Common Questions</div><h2>Frequently Asked Questions</h2><p>The answers you need before starting a conversation with us.</p></div>
+    <div class="faq-list reveal d1">
+      <div class="faq-item"><div class="faq-q">What does a typical project cost?<span class="i i-20 faq-chev"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></span></div><div class="faq-a"><div class="faq-a-in">Projects typically range from $15k for a focused Salesforce customisation to $80k+ for a full-stack platform build. We scope every project individually after a discovery call — no generic pricing tiers.</div></div></div>
+      <div class="faq-item"><div class="faq-q">How long does a project take?<span class="i i-20 faq-chev"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></span></div><div class="faq-a"><div class="faq-a-in">Most projects take 2–5 months depending on scope. We always define a clear timeline in the architecture phase so there are no surprises. Two-week sprint cycles keep everything predictable.</div></div></div>
+      <div class="faq-item"><div class="faq-q">Do you work with startups or only enterprises?<span class="i i-20 faq-chev"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></span></div><div class="faq-a"><div class="faq-a-in">Both. We've helped seed-stage startups build their first product and helped large enterprises modernise legacy systems. The common thread is teams that value quality engineering over just "getting something done."</div></div></div>
+      <div class="faq-item"><div class="faq-q">What's your tech stack?<span class="i i-20 faq-chev"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></span></div><div class="faq-a"><div class="faq-a-in">React.js and Next.js on the frontend, Node.js and Python (Django/FastAPI) on the backend, PostgreSQL for databases, and the full Salesforce platform (Apex, LWC, Flows). We pick the right tool for each project.</div></div></div>
+      <div class="faq-item"><div class="faq-q">Do you provide post-launch support?<span class="i i-20 faq-chev"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></span></div><div class="faq-a"><div class="faq-a-in">Absolutely. We offer ongoing managed support packages — bug fixes, feature additions, performance monitoring, and Salesforce admin support. Most of our clients stay with us long-term.</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CTA — ANIMATED GRADIENT ===== -->
+<section class="cta-sec">
+  <div class="container"><div class="reveal">
+    <div class="eyebrow" style="justify-content:center">Ready to Start?</div>
+    <h2>Let's Turn Your Vision Into<br/><em>Production-Ready</em> Software</h2>
+    <p>Whether it's a Salesforce overhaul, a new web platform, or a mobile app — we're ready when you are.</p>
+    <div class="cta-btns">
+      <a href="#contact" class="btn btn-rust">Start Your Project <span class="arr">→</span></a>
+      <a href="#services" class="btn btn-outline" style="color:var(--cream);border-color:rgba(245,240,232,.18)">Explore Services</a>
+    </div>
+  </div></div>
+</section>
+
+<!-- ===== CONTACT ===== -->
+<section class="contact-sec" id="contact">
+  <div class="container">
+    <div class="contact-g">
       <div class="c-left reveal">
         <div class="eyebrow">Get In Touch</div>
         <h2>Let's Build Something <em>Worth Building</em></h2>
-        <p>Tell us about your project. We'll review it, ask the right questions, and come back with an honest assessment — not a sales pitch.</p>
-
-        <div class="c-details">
-          <div class="c-detail">
-            <div class="c-icon">📧</div>
-            <div><div class="c-lbl">Email</div><div class="c-value">hello@techforcesolutions.com</div></div>
-          </div>
-          <div class="c-detail">
-            <div class="c-icon">📞</div>
-            <div><div class="c-lbl">Phone</div><div class="c-value">+91 98765 43210</div></div>
-          </div>
-          <div class="c-detail">
-            <div class="c-icon">📍</div>
-            <div><div class="c-lbl">Location</div><div class="c-value">Baner, Pune, Maharashtra — India</div></div>
-          </div>
-          <div class="c-detail">
-            <div class="c-icon">🕐</div>
-            <div><div class="c-lbl">Hours</div><div class="c-value">Mon–Fri · 9:00 AM – 7:00 PM IST</div></div>
-          </div>
+        <p>Tell us about your project. We'll review it, ask the right questions, and come back with an honest assessment.</p>
+        <div class="c-dets">
+          <div class="c-det"><div class="c-ic"><span class="i i-20"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></span></div><div><div class="c-lbl">Email</div><div class="c-val">hello@techforcesolutions.com</div></div></div>
+          <div class="c-det"><div class="c-ic"><span class="i i-20"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span></div><div><div class="c-lbl">Phone</div><div class="c-val">+91 98765 43210</div></div></div>
+          <div class="c-det"><div class="c-ic"><span class="i i-20"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span></div><div><div class="c-lbl">Location</div><div class="c-val">Baner, Pune, Maharashtra — India</div></div></div>
+          <div class="c-det"><div class="c-ic"><span class="i i-20"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span></div><div><div class="c-lbl">Hours</div><div class="c-val">Mon–Fri · 9:00 AM – 7:00 PM IST</div></div></div>
         </div>
       </div>
-
       <div class="c-form reveal d2">
         <div class="cf-title">Send Us a Message</div>
         <div class="cf-sub">We typically respond within one business day.</div>
-
-        <div class="f-row">
-          <div class="f-grp">
-            <label>First Name</label>
-            <input type="text" placeholder="John"/>
-          </div>
-          <div class="f-grp">
-            <label>Last Name</label>
-            <input type="text" placeholder="Doe"/>
-          </div>
-        </div>
-        <div class="f-grp">
-          <label>Work Email</label>
-          <input type="email" placeholder="john@company.com"/>
-        </div>
-        <div class="f-grp">
-          <label>Company Name</label>
-          <input type="text" placeholder="Your Company"/>
-        </div>
-        <div class="f-grp">
-          <label>What Do You Need?</label>
-          <select>
-            <option value="">Select a service...</option>
-            <option>Salesforce CRM — New Implementation</option>
-            <option>Salesforce CRM — Support & Enhancement</option>
-            <option>Full Stack Web Development</option>
-            <option>Mobile App — React Native</option>
-            <option>End-to-End Project (Multiple Services)</option>
-            <option>Technical Consultation / Discovery</option>
-             <option>Other Services</option>
-          </select>
-        </div>
-        <div class="f-grp">
-          <label>Tell Us About Your Project</label>
-          <textarea placeholder="What are you trying to build? What's broken? What's the timeline? Any detail helps us give you a more useful first response."></textarea>
-        </div>
-        <a href="a.ksinghworks@gmail.com" class="btn btn-rust" style="width:100%; justify-content:center; padding:15px 28px; font-size:15px;">
-          Send Message <span class="arr">→</span>
-        </a>
+        <form id="cForm">
+          <div class="f-row"><div class="f-grp"><label>First Name</label><input type="text" placeholder="John" required/></div><div class="f-grp"><label>Last Name</label><input type="text" placeholder="Doe" required/></div></div>
+          <div class="f-grp"><label>Work Email</label><input type="email" placeholder="john@company.com" required/></div>
+          <div class="f-grp"><label>Company Name</label><input type="text" placeholder="Your Company"/></div>
+          <div class="f-grp"><label>What Do You Need?</label><select required><option value="">Select a service...</option><option>Salesforce CRM — New Implementation</option><option>Salesforce CRM — Support &amp; Enhancement</option><option>Full Stack Web Development</option><option>Mobile App — React Native</option><option>End-to-End Project (Multiple Services)</option><option>Technical Consultation / Discovery</option></select></div>
+          <div class="f-grp"><label>Tell Us About Your Project</label><textarea placeholder="What are you trying to build? What's broken? What's the timeline?" required></textarea></div>
+          <button type="submit" class="btn btn-rust" style="width:100%;justify-content:center;padding:14px 28px;font-size:15px">Send Message <span class="arr">→</span></button>
+        </form>
         <p class="f-note">No spam. No obligation. Just a real conversation.</p>
       </div>
-
     </div>
   </div>
 </section>
 
-<!-- ======================================================
-     FOOTER
-     ====================================================== -->
+<!-- FOOTER -->
 <footer>
   <div class="container">
     <div class="ft-top">
       <div class="ft-brand">
-        <a href="#home" class="logo-wrap" style="margin-bottom:0;">
-          <div class="logo-mark">T</div>
-          <div>
-            <div class="logo-text">TechForce</div>
-            <div class="logo-sub">Solutions</div>
-          </div>
-        </a>
+        <a href="#home" class="logo" style="margin-bottom:0"><div class="logo-m">T</div><div><div class="logo-t">TechForce</div><div class="logo-sub">Solutions</div></div></a>
         <p>Salesforce CRM development and full-stack engineering for businesses that want software that actually works. Based in Pune — working globally.</p>
+        <div class="ft-newsletter">
+          <label>Stay in the loop</label>
+          <div class="ft-nl-row">
+            <input type="email" placeholder="you@company.com"/>
+            <button type="button" id="nlBtn">Subscribe</button>
+          </div>
+        </div>
       </div>
-      <div class="ft-col">
-        <h4>Services</h4>
-        <ul>
-          <li><a href="#services">Salesforce CRM</a></li>
-          <li><a href="#services">Full Stack Dev</a></li>
-          <li><a href="#services">Mobile Apps</a></li>
-          <li><a href="#services">CRM Support</a></li>
-          <li><a href="#services">Integrations</a></li>
-        </ul>
-      </div>
-      <div class="ft-col">
-        <h4>Company</h4>
-        <ul>
-          <li><a href="#about">About Us</a></li>
-          <li><a href="#team">Our Team</a></li>
-          <li><a href="#techstack">Tech Stack</a></li>
-          <li><a href="#contact">Careers</a></li>
-          <li><a href="#contact">Blog</a></li>
-        </ul>
-      </div>
-      <div class="ft-col">
-        <h4>Connect</h4>
-        <ul>
-          <li><a href="#">LinkedIn</a></li>
-          <li><a href="#">Twitter / X</a></li>
-          <li><a href="#">GitHub</a></li>
-          <li><a href="#">Clutch.co</a></li>
-          <li><a href="#contact">Contact Us</a></li>
-        </ul>
-      </div>
+      <div class="ft-col"><h4>Services</h4><ul><li><a href="#services">Salesforce CRM</a></li><li><a href="#services">Full Stack Dev</a></li><li><a href="#services">Mobile Apps</a></li><li><a href="#services">CRM Support</a></li><li><a href="#services">Integrations</a></li></ul></div>
+      <div class="ft-col"><h4>Company</h4><ul><li><a href="#about">About Us</a></li><li><a href="#team">Our Team</a></li><li><a href="#techstack">Tech Stack</a></li><li><a href="#contact">Careers</a></li><li><a href="#faq">FAQ</a></li></ul></div>
+      <div class="ft-col"><h4>Connect</h4><ul><li><a href="#">LinkedIn</a></li><li><a href="#">Twitter / X</a></li><li><a href="#">GitHub</a></li><li><a href="#">Clutch.co</a></li><li><a href="#contact">Contact Us</a></li></ul></div>
     </div>
-    <div class="ft-bottom">
-      <p>© 2026 TechForce Solutions. All rights reserved. Made with care in Pune, India.</p>
-      <div class="social-row">
-        <a href="#" class="s-btn">💼</a>
-        <a href="#" class="s-btn">🐦</a>
-        <a href="#" class="s-btn">👾</a>
+    <div class="ft-bot">
+      <p>&copy; 2026 TechForce Solutions. All rights reserved. Made with care in Pune, India.</p>
+      <div class="socials">
+        <a href="#" class="soc" aria-label="LinkedIn"><span class="i i-16"><svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></span></a>
+        <a href="#" class="soc" aria-label="Twitter"><span class="i i-16"><svg viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/></svg></span></a>
+        <a href="#" class="soc" aria-label="GitHub"><span class="i i-16"><svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg></span></a>
       </div>
     </div>
   </div>
 </footer>
 
+<!-- ========================================
+   JAVASCRIPT
+   ======================================== -->
 <script>
-  // Scroll reveal
-  const obs = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if (e.isIntersecting) { e.target.classList.add('on'); obs.unobserve(e.target); }
-    });
-  }, { threshold: 0.1 });
-  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+(()=>{
+  'use strict';
 
-  // Nav highlight
-  const sects  = document.querySelectorAll('section[id]');
-  const navAs  = document.querySelectorAll('.nav-menu a');
-  const onScroll = () => {
-    let cur = '';
-    sects.forEach(s => { if (scrollY >= s.offsetTop - 120) cur = s.id; });
-    navAs.forEach(a => {
-      const active = a.getAttribute('href') === '#' + cur;
-      a.classList.toggle('active', active);
-    });
-  };
-  window.addEventListener('scroll', onScroll, { passive: true });
+  /* --- LOADER --- */
+  const lBar=document.getElementById('lBar'),loader=document.getElementById('loader');
+  let lp=0;const li=setInterval(()=>{lp+=Math.random()*22+10;if(lp>=100)lp=100;lBar.style.width=lp+'%';if(lp>=100){clearInterval(li);setTimeout(()=>loader.classList.add('done'),280)}},140);
 
-  // Service sidebar highlight
-  const svcIds   = ['svc-sf','svc-web','svc-mob'];
-  const svcLinks = document.querySelectorAll('.svc-nav a');
-  window.addEventListener('scroll', () => {
-    let cur = '';
-    svcIds.forEach(id => {
-      const el = document.getElementById(id);
-      if (el && scrollY >= el.offsetTop - 180) cur = id;
+  /* --- CUSTOM CURSOR --- */
+  const cDot=document.getElementById('cDot'),cRing=document.getElementById('cRing');
+  if(cDot&&cRing){
+    let mx=0,my=0,rx=0,ry=0;
+    document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cDot.style.left=mx-4+'px';cDot.style.top=my-4+'px'});
+    (function aR(){rx+=(mx-rx)*.11;ry+=(my-ry)*.11;cRing.style.left=rx-18+'px';cRing.style.top=ry-18+'px';requestAnimationFrame(aR)})();
+    document.querySelectorAll('a,.btn,button,.faq-q,.tag,.hcard,.team-card,.testi,.svc-card,.case-row,.logo-co,.pillar,.dm-toggle,.soc').forEach(el=>{
+      el.addEventListener('mouseenter',()=>cRing.classList.add('hov'));
+      el.addEventListener('mouseleave',()=>cRing.classList.remove('hov'));
     });
-    svcLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + cur));
-  }, { passive: true });
+  }
+
+  /* --- MOUSE FOLLOW GLOW ON CARDS --- */
+  document.querySelectorAll('[data-glow]').forEach(card=>{
+    card.addEventListener('mousemove',e=>{
+      const r=card.getBoundingClientRect();
+      card.style.setProperty('--mouse-x',e.clientX-r.left+'px');
+      card.style.setProperty('--mouse-y',e.clientY-r.top+'px');
+    });
+  });
+
+  /* --- SCROLL PROGRESS --- */
+  const sProg=document.getElementById('sProg');
+  const updSP=()=>{const s=window.scrollY,d=document.documentElement.scrollHeight-innerHeight;sProg.style.width=(d>0?(s/d)*100:0)+'%'};
+
+  /* --- NAV --- */
+  const nav=document.getElementById('mainNav');let lsy=0;
+  const btt=document.getElementById('btt');
+  const updNav=()=>{const c=scrollY;c>60?nav.classList.add('scrolled'):nav.classList.remove('scrolled');c>lsy&&c>260?nav.classList.add('hide'):nav.classList.remove('hide');lsy=c;c>500?btt.classList.add('vis'):btt.classList.remove('vis')};
+
+  let tick=false;
+  window.addEventListener('scroll',()=>{if(!tick){requestAnimationFrame(()=>{updSP();updNav();tick=false});tick=true}},{passive:true});
+
+  /* --- BACK TO TOP --- */
+  btt.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+
+  /* --- DARK MODE --- */
+  const dmToggle=document.getElementById('dmToggle'),dmIcon=document.getElementById('dmIcon');
+  const sunSVG='<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>';
+  const moonSVG='<svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
+  let isDark=localStorage.getItem('tf-dark')==='true';
+  if(isDark){document.body.classList.add('dark');dmIcon.innerHTML=sunSVG}
+  dmToggle.addEventListener('click',()=>{
+    isDark=!isDark;document.body.classList.toggle('dark');
+    dmIcon.innerHTML=isDark?sunSVG:moonSVG;
+    localStorage.setItem('tf-dark',isDark);
+  });
+
+  /* --- REVEAL --- */
+  const ro=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');ro.unobserve(e.target)}})},{threshold:.06,rootMargin:'0px 0px -30px 0px'});
+  document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
+
+  /* --- COUNTERS (with comma/decimal formatting) --- */
+  const cObs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){
+    const el=e.target,tgt=+el.dataset.target,fmt=el.dataset.format||'',dur=1800,st=performance.now();
+    const ease=t=>t===1?1:1-Math.pow(2,-10*t);
+    (function a(now){
+      const p=Math.min((now-st)/dur,1),v=ease(p)*tgt;
+      if(fmt==='comma')el.textContent=Math.round(v).toLocaleString();
+      else if(fmt==='decimal')el.textContent=v.toFixed(1);
+      else el.textContent=Math.round(v);
+      if(p<1)requestAnimationFrame(a);
+    })(performance.now());
+    cObs.unobserve(el);
+  }})},{threshold:.4});
+  document.querySelectorAll('.counter').forEach(el=>cObs.observe(el));
+
+  /* --- PROCESS TIMELINE ANIMATION --- */
+  const procSteps=document.getElementById('procSteps');
+  if(procSteps){
+    const pObs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){procSteps.classList.add('animated');pObs.unobserve(procSteps)}})},{threshold:.3});
+    pObs.observe(procSteps);
+  }
+
+  /* --- NAV HIGHLIGHT --- */
+  const sects=document.querySelectorAll('section[id]'),nAs=document.querySelectorAll('.nmenu a');
+  window.addEventListener('scroll',()=>{let c='';sects.forEach(s=>{if(scrollY>=s.offsetTop-120)c=s.id});nAs.forEach(a=>a.classList.toggle('act',a.getAttribute('href')==='#'+c))},{passive:true});
+
+  /* --- SVC SIDEBAR --- */
+  const sIds=['svc1','svc2','svc3'],sLnk=document.querySelectorAll('.svc-links a');
+  window.addEventListener('scroll',()=>{let c='';sIds.forEach(id=>{const el=document.getElementById(id);if(el&&scrollY>=el.offsetTop-170)c=id});sLnk.forEach(a=>a.classList.toggle('act',a.getAttribute('href')==='#'+c))},{passive:true});
+
+  /* --- MOBILE MENU --- */
+  const hbg=document.getElementById('hbg'),mobNav=document.getElementById('mobNav');
+  hbg.addEventListener('click',()=>{hbg.classList.toggle('on');mobNav.classList.toggle('open');document.body.style.overflow=mobNav.classList.contains('open')?'hidden':''});
+  window.closeMob=()=>{hbg.classList.remove('on');mobNav.classList.remove('open');document.body.style.overflow=''};
+
+  /* --- FORM --- */
+  document.getElementById('cForm').addEventListener('submit',function(e){
+    e.preventDefault();const b=this.querySelector('.btn-rust'),o=b.innerHTML;
+    b.innerHTML='<span class="i i-18" style="width:18px;height:18px"><svg viewBox="0 0 24 24" stroke="#fff" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span> Message Sent!';
+    b.style.background='var(--forest)';b.style.pointerEvents='none';
+    setTimeout(()=>{b.innerHTML=o;b.style.background='';b.style.pointerEvents='';this.reset()},3000);
+  });
+
+  /* --- NEWSLETTER --- */
+  const nlBtn=document.getElementById('nlBtn');
+  if(nlBtn){nlBtn.addEventListener('click',function(){
+    const inp=this.parentElement.querySelector('input');
+    if(inp.value.includes('@')){const o=this.textContent;this.textContent='Subscribed ✓';this.style.background='var(--forest)';inp.value='';setTimeout(()=>{this.textContent=o;this.style.background=''},2500)}
+  })}
+
+  /* --- FAQ --- */
+  document.querySelectorAll('.faq-q').forEach(q=>{q.addEventListener('click',()=>{
+    const item=q.parentElement,a=item.querySelector('.faq-a'),inn=item.querySelector('.faq-a-in');
+    const wasOpen=item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(i=>{i.classList.remove('open');i.querySelector('.faq-a').style.maxHeight='0'});
+    if(!wasOpen){item.classList.add('open');a.style.maxHeight=inn.scrollHeight+'px'}
+  })});
+
+  /* --- 3D TILT --- */
+  document.querySelectorAll('.hcard,.team-card,.testi').forEach(c=>{
+    c.addEventListener('mousemove',e=>{const r=c.getBoundingClientRect(),x=e.clientX-r.left,y=e.clientY-r.top,cx=r.width/2,cy=r.height/2;c.style.transform=`perspective(800px) rotateX(${((y-cy)/cy)*-2.5}deg) rotateY(${((x-cx)/cx)*2.5}deg) translateY(-4px)`});
+    c.addEventListener('mouseleave',()=>{c.style.transform=''});
+  });
+
+  /* --- PARALLAX BG NUM --- */
+  const bgn=document.querySelector('.about-bgn');
+  if(bgn)window.addEventListener('scroll',()=>{const r=bgn.parentElement.getBoundingClientRect();if(r.top<innerHeight&&r.bottom>0)bgn.style.transform=`translateY(${(innerHeight-r.top)*.035}px)`},{passive:true});
+
+  /* --- MESH BLOB PARALLAX --- */
+  window.addEventListener('scroll',()=>{
+    const blobs=document.querySelectorAll('.mesh-blob');
+    const s=scrollY;
+    blobs.forEach((b,i)=>{b.style.transform+=` translateY(${s*(.02+i*.01)}px)`});
+  },{passive:true});
+
+  /* --- TERMINAL ANIMATION (restart on view) --- */
+  const termBody=document.getElementById('termBody');
+  if(termBody){
+    const tObs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){
+      termBody.querySelectorAll('.term-line').forEach(l=>{l.style.animation='none';l.offsetHeight;l.style.animation=''});
+      tObs.unobserve(termBody);
+    }})},{threshold:.5});
+    tObs.observe(termBody);
+  }
+
+  /* --- SMOOTH ANCHORS --- */
+  document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click',function(e){
+    const id=this.getAttribute('href');if(id==='#')return;
+    const t=document.querySelector(id);if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'})}
+  })});
+
+  /* --- MAGNETIC BUTTONS --- */
+  document.querySelectorAll('.btn-rust,.btn-primary').forEach(btn=>{
+    btn.addEventListener('mousemove',e=>{
+      const r=btn.getBoundingClientRect(),x=e.clientX-r.left-r.width/2,y=e.clientY-r.top-r.height/2;
+      btn.style.transform=`translate(${x*.15}px,${y*.15}px)`;
+    });
+    btn.addEventListener('mouseleave',()=>{btn.style.transform=''});
+  });
+
+  /* --- CASE ROW HOVER EXPAND --- */
+  document.querySelectorAll('.case-row').forEach(row=>{
+    row.addEventListener('mousemove',e=>{
+      const r=row.getBoundingClientRect();
+      row.style.setProperty('--mouse-x',e.clientX-r.left+'px');
+    });
+  });
+
+})();
 </script>
 </body>
 </html>
